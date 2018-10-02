@@ -51,6 +51,9 @@ namespace DataFramework {
         /// <summary>Acciones a realizar en merge</summary>
         public enum dbMrA { Insert, Update, Delete }
 
+        /// <summary>Tipos de output en una consulta</summary>
+        public enum dbOut { Undefined, Inserted, Deleted }
+
         /// <summary>Metodo de serialización de resultados a xml</summary>
         public enum dbXml { Raw, Auto, Explicit, Path }
 
@@ -111,7 +114,14 @@ namespace DataFramework {
             }
         }
 
-        protected internal class Join {
+        /// <summary>Representa la salida de informacion del query principal</summary>
+        protected internal class OutputClause {
+            public dbOut type { get; set; }
+            public List<string> columns = new List<string>();
+            public string table { get; set; }
+        }
+
+        protected internal class JoinTable {
             public string tableAlias;
             public dbJoi type;
         }
@@ -157,7 +167,7 @@ namespace DataFramework {
             protected internal List<Field> lstFields;
             protected internal List<Aggregate> lstAggFields;
             protected internal List<Table> lstFrom;
-            protected internal List<Join> lstJoin;
+            protected internal List<JoinTable> lstJoin;
             protected internal List<Comparison> lstJoinOn;
             protected internal List<Comparison> lstWhere;
             protected internal List<Expression> lstGroupBy;
@@ -168,7 +178,7 @@ namespace DataFramework {
                 lstFields = new List<Field>();
                 lstAggFields = new List<Aggregate>();
                 lstFrom = new List<Table>();
-                lstJoin = new List<Join>();
+                lstJoin = new List<JoinTable>();
                 lstJoinOn = new List<Comparison>();
                 lstWhere = new List<Comparison>();
                 lstGroupBy = new List<Expression>();
@@ -193,6 +203,7 @@ namespace DataFramework {
         protected internal List<UnionSelect> lstUnion = new List<UnionSelect>();
 
         protected dbItr instruction;
+        protected OutputClause output = new OutputClause();
         protected StoredProcedure stProc = new StoredProcedure();
         protected List<string> lstParams = new List<string>();
         protected DataTable insFields = new DataTable();
@@ -264,11 +275,16 @@ namespace DataFramework {
                     break;
 
                 case dbItr.ins:
-
                     sqlQuery += "INSERT INTO "
                         + (string.IsNullOrEmpty(lstUnion[0].lstFrom[0].database) ? "" : lstUnion[0].lstFrom[0].database + ".")
                         + (string.IsNullOrEmpty(lstUnion[0].lstFrom[0].schema) ? "" : lstUnion[0].lstFrom[0].schema + ".")
                         + lstUnion[0].lstFrom[0].table;
+                    if (!string.IsNullOrEmpty(output.table)) {
+                        string outputOrigin = output.type != dbOut.Undefined ? output.type.ToString().ToUpper() + "." : "";
+                        sqlQuery += " OUTPUT ";
+                        sqlQuery += string.Join(", ", output.columns.Select(c => outputOrigin + c).ToArray());
+                        sqlQuery += " INTO " + output.table;
+                    }
                     if (insQuery != null) {
                         IEnumerable<string> lstDestFields = insQuery.curUnion.lstFields.Select(f => string.IsNullOrEmpty(f.nameAlias) ? f.name : f.nameAlias);
                         sqlQuery += ConcatList(" (", " ", lstDestFields, ",") + " )";
@@ -404,12 +420,11 @@ namespace DataFramework {
             bool isFirstTable = true;
             bool joinFound;
             string onWhere = "";
-            int iCnd;
             foreach (Table tbl in union.lstFrom) {
                 //Si no es la primera tabla del from, agrega el tipo de union con la previa
                 if (!isFirstTable) {
                     joinFound = false;
-                    List<Join> lstJoin = union.lstJoin.Select(j => j).ToList(); //Clonar lista
+                    List<JoinTable> lstJoin = union.lstJoin.Select(j => j).ToList(); //Clonar lista
                     for (int iAls = 0; iAls < lstJoin.Count; iAls++) {
                         if (tbl.tableAlias == lstJoin[iAls].tableAlias) {
                             sqlQuery.Append(" " + lstJoin[iAls].type.ToString().ToUpper() + " JOIN");
@@ -431,7 +446,7 @@ namespace DataFramework {
                     string[] condicionesJoin = lstJoinOn
                         .Where(j => j.owner == tbl.tableAlias)
                         .Select(j => EvalComparison(j)).ToArray();
-                    Join currentJoin = union.lstJoin.First(j => j.tableAlias == tbl.tableAlias);
+                    JoinTable currentJoin = union.lstJoin.First(j => j.tableAlias == tbl.tableAlias);
                     if (currentJoin.type != dbJoi.Cross) {
                         onWhere += " ON " + string.Join(" AND ", condicionesJoin);
                     }

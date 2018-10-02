@@ -302,6 +302,35 @@ namespace DataFramework {
             return FromAs("", table);
         }
 
+        /// <summary>Agrega una clausula de salida</summary>
+        public Query Output(dbOut type, string table, params string[] columns) {
+            output.type = type;
+            output.table = table;
+            output.columns.AddRange(columns);
+            return this;
+        }
+
+        /// <summary>Agrega una clausula de salida</summary>
+        public Query Output(string table, params string[] columns) {
+            return Output(dbOut.Undefined, table, new string[] { });
+        }
+
+        /// <summary>Agrega una clausula de salida</summary>
+        public Query Output(dbOut type, string table) {
+            return Output(type, table, new string[] { });
+        }
+
+        /// <summary>Agrega una clausula de salida</summary>
+        public Query Output(string table) {
+            return Output(dbOut.Undefined, table, new string[] { });
+        }
+
+        /// <summary>Agrega columnas a la clausula de salida</summary>
+        public Query OutputCols(string[] columns) {
+            output.columns.AddRange(columns);
+            return this;
+        }
+
         /// <summary>Agrega una tabla al listado de tablas a unir</summary>
         public Query Join(dbJoi joinType, string tableAlias, Query table) {
             Table tbl = new Table("( " + table.ToString() + " )");
@@ -312,7 +341,7 @@ namespace DataFramework {
             if (curUnion.lstJoin.Any(j => j.tableAlias == tableAlias)) {
                 throw new Exception("Ya existe el alias " + SanitizeSQL(tableAlias) + " en la consulta");
             }
-            curUnion.lstJoin.Add(new Join() { tableAlias = SanitizeSQL(tableAlias), type = joinType });
+            curUnion.lstJoin.Add(new JoinTable() { tableAlias = SanitizeSQL(tableAlias), type = joinType });
             return this;
         }
 
@@ -331,7 +360,7 @@ namespace DataFramework {
             if (curUnion.lstJoin.Any(j => j.tableAlias == tableAlias)) {
                 throw new Exception("Ya existe el alias " + SanitizeSQL(tableAlias) + " en la consulta");
             }
-            curUnion.lstJoin.Add(new Join() { tableAlias = SanitizeSQL(tableAlias), type = joinType });
+            curUnion.lstJoin.Add(new JoinTable() { tableAlias = SanitizeSQL(tableAlias), type = joinType });
             return this;
         }
 
