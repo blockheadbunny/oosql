@@ -610,11 +610,11 @@ namespace DataFramework {
             //Cadenas vacias
             validaciones.Add("");
             //Comillas a principio y fin y sin comillas intermedias
-            validaciones.Add("[N]?('([^']|'')*')");
+            validaciones.Add("(N?'([^']|'')*')");
             //Corchetes al principio y fin sin corchetes intermedios
             validaciones.Add(@"\[[^\[\]]+\]");
             //Iniciando una letra y despues letras, numeros o guion bajo, un punto que puede o no estar y despues letras, numeros o guion bajo
-            validaciones.Add("([a-zñA-ZÑ][a-zñA-ZÑ0-9_]*([.][a-zñA-ZÑ][a-zñA-ZÑ0-9_]*)?)");
+            validaciones.Add("((@|[a-zñA-ZÑ])[a-zñA-ZÑ0-9_]*([.][a-zñA-ZÑ][a-zñA-ZÑ0-9_]*)?)");
             //Numeros con o sin signo y con o sin punto (obligatorio numero a la izquierda del punto)
             validaciones.Add("([-+]?[0-9]+[.]?[0-9]*)");
             //Numeros con o sin signo y con o sin punto (obligatorio numero a la derecha del punto)
