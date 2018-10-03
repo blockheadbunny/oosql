@@ -298,9 +298,9 @@ namespace DataFramework {
 
         /// <summary>Agrega una clausula de salida</summary>
         public Query Output(dbOut type, string table, params string[] columns) {
-            IEnumerable<Field> fields = columns.Select(c => new Field(c));
+            IEnumerable<Field> fields = columns.Select(c => new Field(SanitizeSQL(c)));
             if (instruction == dbItr.mer) {
-                merge.MergeOut(type, table);
+                merge.MergeOut(type, SanitizeSQL(table));
                 merge.MergeOutCols(fields.ToArray());
             }
             else {
@@ -323,7 +323,7 @@ namespace DataFramework {
 
         /// <summary>Agrega columnas a la clausula de salida</summary>
         public Query OutputCols(string[] columns) {
-            IEnumerable<Field> fields = columns.Select(c => new Field(c));
+            IEnumerable<Field> fields = columns.Select(c => new Field(SanitizeSQL(c)));
             if (instruction == dbItr.mer) {
                 merge.MergeOutCols(fields.ToArray());
             }
@@ -335,8 +335,8 @@ namespace DataFramework {
 
         /// <summary>Agrega columnas a la clausula de salida</summary>
         public Query OutputCol(string origin, string column) {
-            Field field = new Field(column);
-            field.nameAlias = origin;
+            Field field = new Field(SanitizeSQL(column));
+            field.nameAlias = SanitizeSQL(origin);
             if (instruction == dbItr.mer) {
                 merge.MergeOutCols(field);
             }
