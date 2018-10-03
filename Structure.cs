@@ -81,7 +81,7 @@ namespace DataFramework {
             StringBuilder declaration = new StringBuilder();
             declaration.Append("DECLARE @" + Name);
             if (Type == StrucType.table) {
-                declaration.Append(" ( ");
+                declaration.Append(" TABLE ( ");
                 string[] serializedColumns = Columns
                     .Select(c => c.Name + DataTypeToString(c))
                     .ToArray();
