@@ -323,11 +323,6 @@ namespace DataFramework {
         }
 
         /// <summary>Agrega una clausula de salida</summary>
-        public Query Output(dbOut type, string table) {
-            return Output(type, table, new string[] { });
-        }
-
-        /// <summary>Agrega una clausula de salida</summary>
         public Query Output(string table) {
             return Output(dbOut.Undefined, table, new string[] { });
         }
