@@ -72,6 +72,7 @@ namespace DataFramework {
         }
 
         public void MergeOut(Constructor.dbOut type, string table) {
+            currentAction.outputClause.type = type;
             currentAction.outputClause.table = table;
         }
 

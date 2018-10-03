@@ -334,9 +334,9 @@ namespace DataFramework {
         }
 
         /// <summary>Agrega columnas a la clausula de salida</summary>
-        public Query OutputCol(string alias, string column) {
+        public Query OutputCol(string origin, string column) {
             Field field = new Field(column);
-            field.nameAlias = alias;
+            field.nameAlias = origin;
             if (instruction == dbItr.mer) {
                 merge.MergeOutCols(field);
             }
