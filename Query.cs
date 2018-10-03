@@ -304,15 +304,22 @@ namespace DataFramework {
 
         /// <summary>Agrega una clausula de salida</summary>
         public Query Output(dbOut type, string table, params string[] columns) {
-            output.type = type;
-            output.table = table;
-            output.columns.AddRange(columns);
+            IEnumerable<Field> fields = columns.Select(c => new Field(c));
+            if (instruction == dbItr.mer) {
+                merge.MergeOut(type, table);
+                merge.MergeOutCols(fields.ToArray());
+            }
+            else {
+                output.type = type;
+                output.table = table;
+                output.columns.AddRange(fields);
+            }
             return this;
         }
 
         /// <summary>Agrega una clausula de salida</summary>
         public Query Output(string table, params string[] columns) {
-            return Output(dbOut.Undefined, table, new string[] { });
+            return Output(dbOut.Undefined, table, columns);
         }
 
         /// <summary>Agrega una clausula de salida</summary>
@@ -327,8 +334,32 @@ namespace DataFramework {
 
         /// <summary>Agrega columnas a la clausula de salida</summary>
         public Query OutputCols(string[] columns) {
-            output.columns.AddRange(columns);
+            IEnumerable<Field> fields = columns.Select(c => new Field(c));
+            if (instruction == dbItr.mer) {
+                merge.MergeOutCols(fields.ToArray());
+            }
+            else {
+                output.columns.AddRange(fields);
+            }
             return this;
+        }
+
+        /// <summary>Agrega columnas a la clausula de salida</summary>
+        public Query OutputCol(string alias, string column) {
+            Field field = new Field(column);
+            field.nameAlias = alias;
+            if (instruction == dbItr.mer) {
+                merge.MergeOutCols(field);
+            }
+            else {
+                output.columns.Add(field);
+            }
+            return this;
+        }
+
+        /// <summary>Agrega columnas a la clausula de salida</summary>
+        public Query OutputCol(string column) {
+            return OutputCol(null, column);
         }
 
         /// <summary>Agrega una tabla al listado de tablas a unir</summary>

@@ -31,6 +31,7 @@ namespace DataFramework {
             public List<Constructor.Comparison> Conditions = new List<Constructor.Comparison>();
             public Constructor.dbMrA Action;
             public Dictionary<string, object> Values;
+            public Constructor.OutputClause outputClause = new Constructor.OutputClause();
         }
 
         public MergerDestiny Destiny = new MergerDestiny();
@@ -68,6 +69,14 @@ namespace DataFramework {
         public void MergeThen(Constructor.dbMrA action, Dictionary<string, object> values) {
             currentAction.Action = action;
             currentAction.Values = values;
+        }
+
+        public void MergeOut(Constructor.dbOut type, string table) {
+            currentAction.outputClause.table = table;
+        }
+
+        public void MergeOutCols(params Constructor.Field[] columns) {
+            currentAction.outputClause.columns.AddRange(columns);
         }
     }
 }

@@ -117,8 +117,23 @@ namespace DataFramework {
         /// <summary>Representa la salida de informacion del query principal</summary>
         protected internal class OutputClause {
             public dbOut type { get; set; }
-            public List<string> columns = new List<string>();
+            public List<Field> columns = new List<Field>();
             public string table { get; set; }
+
+            public override string ToString() {
+                if (string.IsNullOrEmpty(table)) {
+                    return "";
+                }
+                StringBuilder outp = new StringBuilder();
+                string outputOrigin = type != dbOut.Undefined ? type.ToString().ToUpper() + "." : "";
+                string[] fields = columns
+                    .Select(c => (string.IsNullOrEmpty(c.nameAlias) ? outputOrigin : c.nameAlias) + c.name)
+                    .ToArray();
+                outp.Append(" OUTPUT ");
+                outp.Append(string.Join(", ", fields));
+                outp.Append(" INTO " + table);
+                return outp.ToString();
+            }
         }
 
         protected internal class JoinTable {
@@ -279,12 +294,7 @@ namespace DataFramework {
                         + (string.IsNullOrEmpty(lstUnion[0].lstFrom[0].database) ? "" : lstUnion[0].lstFrom[0].database + ".")
                         + (string.IsNullOrEmpty(lstUnion[0].lstFrom[0].schema) ? "" : lstUnion[0].lstFrom[0].schema + ".")
                         + lstUnion[0].lstFrom[0].table;
-                    if (!string.IsNullOrEmpty(output.table)) {
-                        string outputOrigin = output.type != dbOut.Undefined ? output.type.ToString().ToUpper() + "." : "";
-                        sqlQuery += " OUTPUT ";
-                        sqlQuery += string.Join(", ", output.columns.Select(c => outputOrigin + c).ToArray());
-                        sqlQuery += " INTO " + output.table;
-                    }
+                    sqlQuery += output.ToString();
                     if (insQuery != null) {
                         IEnumerable<string> lstDestFields = insQuery.curUnion.lstFields.Select(f => string.IsNullOrEmpty(f.nameAlias) ? f.name : f.nameAlias);
                         sqlQuery += ConcatList(" (", " ", lstDestFields, ",") + " )";
@@ -346,6 +356,7 @@ namespace DataFramework {
                             case dbMrA.Insert:
                                 sqlQuery += ConcatList(" (", " ", act.Values.Keys, ",") + " )";
                                 sqlQuery += " VALUES" + ConcatList(" (", " ", act.Values.Keys.Select(k => merge.Origin.Alias + "." + k), ",") + " )";
+                                sqlQuery += act.outputClause.ToString();
                                 break;
                             case dbMrA.Update:
                                 sqlQuery += ConcatList(" SET", " ", act.Values.Keys.Select(k => merge.Destiny.Alias + "." + k + " = " + merge.Origin.Alias + "." + k), ",");
