@@ -665,25 +665,10 @@ namespace DataFramework {
             curUnion.topCount = rows;
             return this;
         }
-        /// <summary>Agrega un argumento al listado de argumentos del procedimiento almacenado</summary>
-        public Query Arg(string param) {
-            lstParams.Add(SanitizeSQL(param));
-            return this;
-        }
 
         /// <summary>Agrega los argumentos al listado de argumentos del procedimiento almacenado</summary>
-        public Query Arg(params string[] prms) {
-            foreach (string prm in prms) {
-                Arg(prm);
-            }
-            return this;
-        }
-
-        /// <summary>Agrega una lista de argumentos al listado de argumentos del procedimiento almacenado</summary>
-        public Query Arg(List<string> prms) {
-            foreach (string prm in prms) {
-                Arg(prm);
-            }
+        public Query Arg(params Expression[] prms) {
+            lstParams.AddRange(prms);
             return this;
         }
 

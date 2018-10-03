@@ -220,7 +220,7 @@ namespace DataFramework {
         protected dbItr instruction;
         protected OutputClause output = new OutputClause();
         protected StoredProcedure stProc = new StoredProcedure();
-        protected List<string> lstParams = new List<string>();
+        protected List<Expression> lstParams = new List<Expression>();
         protected DataTable insFields = new DataTable();
         protected Query insQuery;
         protected Table updateFrom;
@@ -247,7 +247,7 @@ namespace DataFramework {
 
                 case dbItr.sProc:
                     //sqlQuery += "EXECUTE " + storedProcedure + " " + string.Join(", ", lstParams.ToArray());
-                    string spParams = string.Join(", ", lstParams.ToArray());
+                    string spParams = string.Join(", ", lstParams.Select(e => e.ToString()).ToArray());
 
                     sqlQuery += "EXECUTE ";
                     sqlQuery += string.IsNullOrEmpty(stProc.database) ? "" : stProc.database + ".";
