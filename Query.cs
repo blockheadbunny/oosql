@@ -167,23 +167,17 @@ namespace DataFramework {
 
         /// <summary>Prepara el query para realizar una consulta select de multiples registros agregando comillas a las cadenas</summary>
         public Query SelVal(IEnumerable<Dictionary<string, object>> rows) {
-            Dictionary<string, object>[] orderedRows = rows.ToArray();
-            foreach (Dictionary<string, object> row in orderedRows) {
-                KeyValuePair<string, object>[] fixedReferenceRow = row.Cast<KeyValuePair<string, object>>().ToArray();
-                foreach (KeyValuePair<string, object> kv in fixedReferenceRow) {
-                    if (row[kv.Key] is System.String) {
-                        row[kv.Key] = AddSingleQuotesIfMissing(kv.Value.ToString());
-                    }
-                }
-            }
-            Sel(rows);
-            return this;
+            IEnumerable<Dictionary<string, object>> quotedRows = rows
+                .Select(dic =>
+                    dic.ToDictionary(kv => kv.Key, kv => kv.Value is string ? AddSingleQuotesIfMissing((string)kv.Value) : kv.Value)
+                );
+            return Sel(quotedRows);
         }
 
         /// <summary>Prepara el query para realizar una consulta select agregando comillas a las cadenas</summary>
         public Query SelVal(Dictionary<string, object> row) {
             foreach (KeyValuePair<string, object> kv in row) {
-                if (kv.Value is System.String) {
+                if (kv.Value is string) {
                     SelAs(kv.Key, AddSingleQuotesIfMissing(kv.Value.ToString()));
                 }
                 else {
