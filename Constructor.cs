@@ -127,7 +127,7 @@ namespace DataFramework {
                 StringBuilder outp = new StringBuilder();
                 string outputOrigin = type != dbOut.Undefined ? type.ToString().ToUpper() + "." : "";
                 string[] fields = columns
-                    .Select(c => (string.IsNullOrEmpty(c.nameAlias) ? outputOrigin : c.nameAlias) + c.name)
+                    .Select(c => (string.IsNullOrEmpty(c.nameAlias) ? outputOrigin : c.nameAlias + ".") + c.name)
                     .ToArray();
                 outp.Append(" OUTPUT ");
                 outp.Append(string.Join(", ", fields));
