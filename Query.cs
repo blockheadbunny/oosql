@@ -322,7 +322,7 @@ namespace DataFramework {
         }
 
         /// <summary>Agrega columnas a la clausula de salida</summary>
-        public Query OutputCols(string[] columns) {
+        public Query OutputCols(params string[] columns) {
             IEnumerable<Field> fields = columns.Select(c => new Field(SanitizeSQL(c)));
             if (instruction == dbItr.mer) {
                 merge.MergeOutCols(fields.ToArray());
