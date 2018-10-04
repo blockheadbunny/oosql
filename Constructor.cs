@@ -294,10 +294,10 @@ namespace DataFramework {
                         + (string.IsNullOrEmpty(lstUnion[0].lstFrom[0].database) ? "" : lstUnion[0].lstFrom[0].database + ".")
                         + (string.IsNullOrEmpty(lstUnion[0].lstFrom[0].schema) ? "" : lstUnion[0].lstFrom[0].schema + ".")
                         + lstUnion[0].lstFrom[0].table;
-                    sqlQuery += output.ToString();
                     if (insQuery != null) {
                         IEnumerable<string> lstDestFields = insQuery.curUnion.lstFields.Select(f => string.IsNullOrEmpty(f.nameAlias) ? f.name : f.nameAlias);
                         sqlQuery += ConcatList(" (", " ", lstDestFields, ",") + " )";
+                        sqlQuery += output.ToString();
                         sqlQuery += " " + insQuery.ToString();
                     }
                     else {
@@ -306,6 +306,7 @@ namespace DataFramework {
                             lstDestFields.Add(dest.ColumnName);
                         }
                         sqlQuery += ConcatList(" (", " ", lstDestFields, ",") + " )";
+                        sqlQuery += output.ToString();
                         foreach (DataRow row in insFields.Rows) {
                             List<string> lstOrigFields = new List<string>();
                             foreach (DataColumn col in row.Table.Columns) {
