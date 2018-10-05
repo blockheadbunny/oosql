@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Data;
 using System.Data.SqlClient;
+using System.Reflection;
 
 namespace DataFramework {
     /// <summary>Manipulador de conexiones y consultas a la base de datos</summary>
@@ -123,6 +124,23 @@ namespace DataFramework {
         /// <summary>Ejecuta el ultimo query almacenado y devuelve la primer tabla del resultado</summary>
         public DataTable ExecTable() {
             return ExecTable(Bch);
+        }
+
+        /// <summary>Ejecuta el query proveido y devuelve la primer tabla del resultado convirtiendo cada registro en el typo solicitado</summary>
+        public List<T> ExecList<T>(IQryable query) where T : new() {
+            DataTable dttRes = ExecTable(query);
+            List<T> entities = new List<T>();
+            IEnumerable<PropertyInfo> properties = (typeof(T)).GetProperties();
+            foreach (DataRow row in dttRes.Rows) {
+                T entity = new T();
+                foreach (PropertyInfo prop in properties) {
+                    if (dttRes.Columns.Contains(prop.Name)) {
+                        prop.SetValue(entity, row[prop.Name], null);
+                    }
+                }
+                entities.Add(entity);
+            }
+            return entities;
         }
 
         /// <summary>Ejecuta el query proveido y devuelve el primer renglon de la primer tabla del resultado</summary>
