@@ -43,7 +43,7 @@ namespace DataFramework {
         public enum dbLog { Where, And, Or }
 
         /// <summary>Tipos de datos</summary>
-        public enum dbTyp { Int, Varchar, Date, DateTime, Decimal }
+        public enum dbTyp { Int, Varchar, Date, DateTime, Decimal, Bit }
 
         /// <summary>Intervalos de tiempo</summary>
         public enum dbTim { Year, Quarter, Month, DayOfYear, Day, Week, Hour, Minute, Second, Millisecond, Microsecond, Nanosecond }
