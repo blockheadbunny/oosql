@@ -666,6 +666,13 @@ namespace DataFramework {
             return this;
         }
 
+        /// <summary>Agrega los argumentos al listado de argumentos del procedimiento almacenado, colocando comillas a las cadenas faltantes</summary>
+        public Query ArgVal(params object[] prms) {
+            IEnumerable<Expression> curatedParams = prms.Select(p => p is string ? AddSingleQuotesIfMissing((string)p) : ObjectToExpression(p));
+            lstParams.AddRange(curatedParams);
+            return this;
+        }
+
         /// <summary>Agrega un campo destino y el valor correspondiente para la consulta insert</summary>
         public Query InsFld(string destField, Expression origField) {
             //Agrega un nuevo renglon en caso de ser necesario
