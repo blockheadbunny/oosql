@@ -1,0 +1,774 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DataFramework</name>
+    </assembly>
+    <members>
+        <member name="T:DataFramework.Batch">
+            <summary>Aloja multiples consultas para su ejecucion en conjunto</summary>
+        </member>
+        <member name="M:DataFramework.Batch.ToString">
+            <summary>Devuelve el texto de todos los querys almacenados</summary>
+        </member>
+        <member name="M:DataFramework.Batch.GetStatements">
+            <summary>Devuelve el texto correspondiente a las declaraciones de opciones del batch</summary>
+        </member>
+        <member name="M:DataFramework.Batch.NewQuery">
+            <summary>Crea un nuevo query vacio y lo alista para su posterior ejecucion</summary>
+        </member>
+        <member name="M:DataFramework.Batch.AddInstruction(DataFramework.IQryable[])">
+            <summary>Agrega un nuevo query al listado para su posterior ejecucion</summary>
+        </member>
+        <member name="M:DataFramework.Batch.AddStatement(DataFramework.Batch.SetStatement,System.Boolean)">
+            <summary>Activa o desactiva la opcion indicada para todo el batch</summary>
+        </member>
+        <member name="M:DataFramework.Batch.Tran">
+            <summary>Agrega una instruccion de inicio de transaccion al batch</summary>
+        </member>
+        <member name="M:DataFramework.Batch.Commit">
+            <summary>Agrega una instruccion de terminacion de transaccion al batch</summary>
+        </member>
+        <member name="M:DataFramework.Batch.Rollback">
+            <summary>Agrega una instruccion de terminacion de transaccion al batch</summary>
+        </member>
+        <member name="M:DataFramework.Batch.Declare(System.String)">
+            <summary>Agrega una instruccion de declaracion de tabla</summary>
+        </member>
+        <member name="M:DataFramework.Batch.Declare(DataFramework.Constructor.dbTyp,DataFramework.Expression,System.String,System.Int32[])">
+            <summary>Agrega una instruccion de declaracion de variable</summary>
+        </member>
+        <member name="M:DataFramework.Batch.Declare(DataFramework.Constructor.dbTyp,System.String,System.Int32[])">
+            <summary>Agrega una instruccion de declaracion de variable</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.dbItr">
+            <summary>Listado de instrucciones a ejecutar</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.dbCom">
+            <summary>Tipos de Comparaciones</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.dbJoi">
+            <summary>Tipos de uniones de tablas</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.dbAgr">
+            <summary>Tipos de funciones agregadas</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.dbWTy">
+            <summary>Tipo de funcion de ventana</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.dbWin">
+            <summary>Funciones de ventana</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.dbOrd">
+            <summary>Tipo de ordenamiento</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.dbUni">
+            <summary>Tipo de Union</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.dbOpe">
+            <summary>Operadores para expresiones</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.dbFun">
+            <summary>Funciones de base expresiones</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.dbLog">
+            <summary>Operadores Logicos</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.dbTyp">
+            <summary>Tipos de datos</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.dbTim">
+            <summary>Intervalos de tiempo</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.dbMrA">
+            <summary>Acciones a realizar en merge</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.dbOut">
+            <summary>Tipos de output en una consulta</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.dbXml">
+            <summary>Metodo de serialización de resultados a xml</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.StoredProcedure">
+            <summary>Procedimiento Almacenado</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.Field">
+            <summary>Elemento del listado de campos</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.Table">
+            <summary>Elemento del listado de tablas</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.OutputClause">
+            <summary>Representa la salida de informacion del query principal</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.Comparison">
+            <summary>Elemento del listado de comparaciones</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.Aggregate">
+            <summary>Elemento del listado de funciones agregadas</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.CommonTableExpression">
+            <summary>Estructura de consulta de uso repetido</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.ForXMLClause">
+            <summary>Clausula de transformación de resultados a xml</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.UnionSelect">
+            <summary>Elemento de cada parte de las uniones</summary>
+        </member>
+        <member name="M:DataFramework.Constructor.GetSQLText">
+            <summary>Construye la cadena de texto que constituye el query</summary>
+        </member>
+        <member name="M:DataFramework.Constructor.ConcatList(System.String,System.String,System.Collections.Generic.IEnumerable{System.String},System.String)">
+            <summary>Concatena precedingStr y divider antes y despues de cada elemento en lstStrVal y antepone start al resultado</summary>
+        </member>
+        <member name="M:DataFramework.Constructor.ConcatWhere(System.Collections.Generic.List{DataFramework.Constructor.Comparison})">
+            <summary>Concatena el listado de condiciones para la clausula where</summary>
+        </member>
+        <member name="M:DataFramework.Constructor.ConcatWhere(System.String,System.Collections.Generic.List{DataFramework.Constructor.Comparison})">
+            <summary>Concatena el listado de condiciones para la clausula where</summary>
+        </member>
+        <member name="M:DataFramework.Constructor.EvalComparison(DataFramework.Constructor.Comparison)">
+            <summary>Obtiene la representación textual de una comparación lógica</summary>
+        </member>
+        <member name="M:DataFramework.Constructor.ConcatJoin(DataFramework.Constructor.UnionSelect)">
+            <summary>Concatena la estructura de tablas para la clausula from</summary>
+        </member>
+        <member name="M:DataFramework.Constructor.FormatVarchar(System.Object)">
+            <summary>Devuelve la cadena que representa el valor del objeto y agrega comillas a los textos del objeto si ya son de tipo cadena</summary>
+        </member>
+        <member name="M:DataFramework.Constructor.ObjectToExpression(System.Object)">
+            <summary>Convierte el objeto a expression dependiendo de su tipo</summary>
+        </member>
+        <member name="M:DataFramework.Constructor.AddSingleQuotesIfMissing(System.String)">
+            <summary>Agrega comillas a la cadena en caso de que esta no posea comillas al principio y al final</summary>
+        </member>
+        <member name="M:DataFramework.Constructor.dbComToString(DataFramework.Constructor.dbCom)">
+            <summary>Devuelve los caracteres específicos para la comparación de base de datos</summary>
+        </member>
+        <member name="M:DataFramework.Constructor.dbUniToString(DataFramework.Constructor.dbUni)">
+            <summary>Devuelve la palabra reservada especifica para el tipo de union</summary>
+        </member>
+        <member name="M:DataFramework.Constructor.dbOpeToString(DataFramework.Constructor.dbOpe)">
+            <summary>Devuelve los caracteres especificos para la operación solicitada</summary>
+        </member>
+        <member name="M:DataFramework.Constructor.dbLogToString(DataFramework.Constructor.dbLog)">
+            <summary>Devuelve los caracteres especificos para la operación lógica solicitada</summary>
+        </member>
+        <member name="M:DataFramework.Constructor.SanitizeSQL(System.String)">
+            <summary>Limpia el elemento enviado para prevencion de inyeccion de SQL</summary>
+        </member>
+        <member name="M:DataFramework.Constructor.SanitizeSQL(System.String[])">
+            <summary>Limpia el arreglo de elementos enviado para prevencion de inyeccion de SQL</summary>
+        </member>
+        <member name="T:DataFramework.DataManager">
+            <summary>Manipulador de conexiones y consultas a la base de datos</summary>
+        </member>
+        <member name="M:DataFramework.DataManager.NewBatch(DataFramework.Batch.Option[])">
+            <summary>Crea un nuevo batch vacio y lo alista para su posterior ejecucion</summary>
+        </member>
+        <member name="M:DataFramework.DataManager.NewBatch">
+            <summary>Crea un nuevo batch vacio y lo alista para su posterior ejecucion</summary>
+        </member>
+        <member name="M:DataFramework.DataManager.NewQuery">
+            <summary>Crea un nuevo query vacio y lo alista para su posterior ejecucion</summary>
+        </member>
+        <member name="M:DataFramework.DataManager.NewMapper(System.String)">
+            <summary>Crea un nuevo mapeador en base a una tabla y lo alista para su posterior ejecucion</summary>
+        </member>
+        <member name="M:DataFramework.DataManager.Exec(DataFramework.IQryable,System.Boolean)">
+            <summary>Ejecuta el query proveido y devuelve un dataset con los resultados del mismo</summary>
+        </member>
+        <member name="M:DataFramework.DataManager.Exec(DataFramework.IQryable)">
+            <summary>Ejecuta el query proveido y devuelve un dataset con los resultados del mismo</summary>
+        </member>
+        <member name="M:DataFramework.DataManager.Exec">
+            <summary>Ejecuta el ultimo query almacenado y devuelve un dataset con los resultados del mismo</summary>
+        </member>
+        <member name="M:DataFramework.DataManager.ExecTran(DataFramework.Query[])">
+            <summary>Ejecuta los queries enviados en una transacción de rollback automático</summary>
+        </member>
+        <member name="M:DataFramework.DataManager.ExecTable(DataFramework.IQryable)">
+            <summary>Ejecuta el query proveido y devuelve la primer tabla del resultado</summary>
+        </member>
+        <member name="M:DataFramework.DataManager.ExecTable">
+            <summary>Ejecuta el ultimo query almacenado y devuelve la primer tabla del resultado</summary>
+        </member>
+        <member name="M:DataFramework.DataManager.ExecList``1(DataFramework.IQryable)">
+            <summary>Ejecuta el query proveido y devuelve la primer tabla del resultado convirtiendo cada registro en el typo solicitado</summary>
+        </member>
+        <member name="M:DataFramework.DataManager.ExecRow(DataFramework.IQryable)">
+            <summary>Ejecuta el query proveido y devuelve el primer renglon de la primer tabla del resultado</summary>
+        </member>
+        <member name="M:DataFramework.DataManager.ExecRow">
+            <summary>Ejecuta el ultimo query almacenado y devuelve el primer renglon de la primer tabla del resultado</summary>
+        </member>
+        <member name="M:DataFramework.DataManager.ExecScalar(DataFramework.IQryable)">
+            <summary>Ejecuta el query proveido y devuelve el valor de la primera celda del primer renglon de la primer tabla del resultado</summary>
+        </member>
+        <member name="M:DataFramework.DataManager.ExecScalar">
+            <summary>Ejecuta el ultimo query almacenado y devuelve el valor de la primera celda del primer renglon de la primer tabla del resultado</summary>
+        </member>
+        <member name="M:DataFramework.DataManager.ExecMap(DataFramework.DataMapper,DataFramework.DataMapper.Type)">
+            <summary>Ejecuta el mapeo proveido y devuelve un dataset con los resultados del mismo</summary>
+        </member>
+        <member name="M:DataFramework.DataManager.ExecMap(DataFramework.DataMapper.Type)">
+            <summary>Ejecuta el ultimo mapeo almacenado y devuelve un dataset con los resultados del mismo</summary>
+        </member>
+        <member name="T:DataFramework.DataMapper">
+            <summary>Facilita consultas de lectura y escritura de objetos logicos</summary>
+        </member>
+        <member name="M:DataFramework.DataMapper.#ctor(System.String)">
+            <summary>Campo llave para identificar los registros que se afectaran</summary>
+        </member>
+        <member name="M:DataFramework.DataMapper.AddItems(System.String[])">
+            <summary>Crea y/o establece el valor en cadena vacia de las propiedades nombradas</summary>
+        </member>
+        <member name="M:DataFramework.DataMapper.AddItems(System.Collections.Generic.Dictionary{System.String,System.String}.ValueCollection)">
+            <summary>Crea y/o establece el valor en cadena vacia de las propiedades nombradas</summary>
+        </member>
+        <member name="M:DataFramework.DataMapper.GetItem(System.String)">
+            <summary>devuelve el valor de la propiedad nombrada</summary>
+        </member>
+        <member name="M:DataFramework.DataMapper.GetKey(System.String)">
+            <summary>devuelve el valor del campo llave nombrado</summary>
+        </member>
+        <member name="M:DataFramework.DataMapper.GetField(System.String,System.Collections.Generic.List{DataFramework.DataMapper.FieldMap})">
+            <summary>Obtiene el valor de una posicion en una lista de cadenas</summary>
+        </member>
+        <member name="M:DataFramework.DataMapper.SetItem(System.String,System.String)">
+            <summary>crea o establece el valor de la propiedad nombrada</summary>
+        </member>
+        <member name="M:DataFramework.DataMapper.SetKey(System.String,System.String)">
+            <summary>crea o establece el valor del campo llave nombrado</summary>
+        </member>
+        <member name="M:DataFramework.DataMapper.SetField(System.String,System.String,System.Collections.Generic.List{DataFramework.DataMapper.FieldMap})">
+            <summary>Crea o asigna el valor de una posicion en una lista de cadenas</summary>
+        </member>
+        <member name="M:DataFramework.DataMapper.MapQuery(DataFramework.DataMapper.Type)">
+            <summary>Genera el objeto query correspondiente al mapeo</summary>
+        </member>
+        <member name="M:DataFramework.DataMapper.MapQuerySelect">
+            <summary>Genera el objeto query correspondiente al mapeo del select</summary>
+        </member>
+        <member name="M:DataFramework.DataMapper.MapQueryInsert">
+            <summary>Genera el objeto query correspondiente al mapeo del insert</summary>
+        </member>
+        <member name="M:DataFramework.DataMapper.MapQueryUpdate">
+            <summary>Genera el objeto query correspondiente al mapeo del update</summary>
+        </member>
+        <member name="M:DataFramework.DataMapper.MapQueryDelete">
+            <summary>Genera el objeto query correspondiente al mapeo del delete</summary>
+        </member>
+        <member name="M:DataFramework.DataMapper.SelectResult(System.Data.DataTable)">
+            <summary>Asigna los valores de los campos consultados en la base de datos de vuelta al listado de campos</summary>
+        </member>
+        <member name="T:DataFramework.Expression">
+            <summary>Operaciónes que representan un mismo campo en una consulta</summary>
+        </member>
+        <member name="M:DataFramework.Expression.#ctor(System.String)">
+            <summary>Inicia una nueva expresión matemática, lógica, de casos o de función</summary>
+        </member>
+        <member name="M:DataFramework.Expression.ToString">
+            <summary>Evalua la expressión y devuelve su representación textual</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Clone">
+            <summary>Crea una copia superficial de la expresión y sus particulas</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Operate(DataFramework.Constructor.dbOpe,DataFramework.Expression)">
+            <summary>Operador general</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Operate(DataFramework.Constructor.Comparison,DataFramework.Expression)">
+            <summary>Operacion para case</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Operate(DataFramework.Constructor.dbLog,DataFramework.Constructor.Comparison)">
+            <summary>Operacion para expresiones lógicas</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Operate(DataFramework.Constructor.dbLog,DataFramework.Expression)">
+            <summary>Operacion para expresiones lógicas compuestas</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Fun(DataFramework.Constructor.dbFun,System.String[])">
+            <summary>Engloba la expresión en una funcion de sql</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Round(DataFramework.Expression,System.Int32)">
+            <summary>Cantidad redondeada</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Coalesce(DataFramework.Expression[])">
+            <summary>Devuelve el primer valor no nulo del listado</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Cast(DataFramework.Expression,DataFramework.Constructor.dbTyp,System.Int32[])">
+            <summary>Convierte el valor en el tipo indicado</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Convert(DataFramework.Constructor.dbTyp,DataFramework.Expression,System.Int32[])">
+            <summary>Convierte el valor en el tipo indicado</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Convert(System.Int32,DataFramework.Constructor.dbTyp,DataFramework.Expression,System.Int32[])">
+            <summary>Convierte el valor de tipo fecha en el tipo indicado</summary>
+        </member>
+        <member name="M:DataFramework.Expression.CharIndex(DataFramework.Expression,DataFramework.Expression,System.Int32)">
+            <summary>Busca la expresion en dentro de una cadena iniciando en el caracter indicado</summary>
+        </member>
+        <member name="M:DataFramework.Expression.CharIndex(DataFramework.Expression,DataFramework.Expression)">
+            <summary>Busca la expresion en dentro de una cadena iniciando en el caracter indicado</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Right(DataFramework.Expression,System.Int32)">
+            <summary>Devuelve la cantidad de caracteres indicados de la parte derecha de la cadena</summary>
+        </member>
+        <member name="M:DataFramework.Expression.SubString(DataFramework.Expression,System.Int32,System.Int32)">
+            <summary>Devuelve el segmento del texto indicado</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Replace(DataFramework.Expression,DataFramework.Expression,DataFramework.Expression)">
+            <summary>Reemplaza un patron dentro de una cadena</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Stuff(DataFramework.Expression,System.Int32,System.Int32,System.String)">
+            <summary>Inserta una cadena dentro de otra cadena</summary>
+        </member>
+        <member name="M:DataFramework.Expression.DateDiff(DataFramework.Constructor.dbTim,DataFramework.Expression,DataFramework.Expression)">
+            <summary>Devuelve la diferencia entre las dos fechas indicadas</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Year(DataFramework.Expression)">
+            <summary>Obtiene el componente anio de la fecha</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Month(DataFramework.Expression)">
+            <summary>Obtiene el componente mes de la fecha</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Day(DataFramework.Expression)">
+            <summary>Obtiene el componente dia la fecha</summary>
+        </member>
+        <member name="M:DataFramework.Expression.GetDate">
+            <summary>Obtiene la fecha y hora al momento de su uso</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Upper(DataFramework.Expression)">
+            <summary>Convierte la cadena a mayusculas</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Lower(DataFramework.Expression)">
+            <summary>Convierte la cadena a mayusculas</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Where(DataFramework.Expression)">
+            <summary>Expresión lógica que permite anidar otras expresiones</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Where(DataFramework.Constructor.dbCom,DataFramework.Expression,DataFramework.Expression[])">
+            <summary>Expresión lógica que permite uso de OR</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Where(DataFramework.Expression,DataFramework.Expression[])">
+            <summary>Expresión lógica de equidad que permite uso de OR</summary>
+        </member>
+        <member name="M:DataFramework.Expression.WhereVal(DataFramework.Expression,System.String)">
+            <summary>Expresión lógica que permite uso de OR y agrega comillas en caso de ser requeridas</summary>
+        </member>
+        <member name="M:DataFramework.Expression.WhereVal(DataFramework.Constructor.dbCom,DataFramework.Expression,System.String[])">
+            <summary>Expresión lógica que permite uso de OR y agrega comillas en caso de ser requeridas</summary>
+        </member>
+        <member name="M:DataFramework.Expression.And(DataFramework.Constructor.dbCom,DataFramework.Expression,DataFramework.Expression[])">
+            <summary>And para expresión lógica</summary>
+        </member>
+        <member name="M:DataFramework.Expression.And(DataFramework.Expression,DataFramework.Expression[])">
+            <summary>And para expresión lógica de equidad</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Or(DataFramework.Constructor.dbCom,DataFramework.Expression,DataFramework.Expression[])">
+            <summary>Or para expresión lógica</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Or(DataFramework.Expression,DataFramework.Expression[])">
+            <summary>Or para expresión lógica de equidad</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Or(DataFramework.Expression)">
+            <summary>Or para expresión lógica a partir de otra expresión lógica</summary>
+        </member>
+        <member name="M:DataFramework.Expression.CaseWhen(DataFramework.Expression,System.Boolean,DataFramework.Constructor.dbCom,DataFramework.Expression,DataFramework.Expression[])">
+            <summary>Inicia una estructura de control de flujo case</summary>
+        </member>
+        <member name="M:DataFramework.Expression.CaseWhen(DataFramework.Expression,DataFramework.Constructor.dbCom,DataFramework.Expression,DataFramework.Expression[])">
+            <summary>Inicia una estructura de control de flujo case</summary>
+        </member>
+        <member name="M:DataFramework.Expression.CaseWhen(DataFramework.Expression,DataFramework.Expression,DataFramework.Expression[])">
+            <summary>Inicia una estructura de control de flujo case</summary>
+        </member>
+        <member name="M:DataFramework.Expression.When(DataFramework.Expression,DataFramework.Constructor.dbCom,DataFramework.Expression,DataFramework.Expression[])">
+            <summary>Agrega una condicion a una estructura de control case</summary>
+        </member>
+        <member name="M:DataFramework.Expression.When(DataFramework.Expression,DataFramework.Expression,DataFramework.Expression[])">
+            <summary>Agrega una condicion a una estructura de control case</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Else(DataFramework.Expression)">
+            <summary>Agrega una condicion por defecto a una estructura de control case</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Sum(DataFramework.Expression)">
+            <summary>Sumatoria</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Count(DataFramework.Expression)">
+            <summary>Conteo</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Max(DataFramework.Expression)">
+            <summary>Máximo</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Min(DataFramework.Expression)">
+            <summary>Mínimo</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Avg(DataFramework.Expression)">
+            <summary>Promedio</summary>
+        </member>
+        <member name="M:DataFramework.FileManager.AppendCSVFile(System.String,System.String,System.Data.DataTable)">
+            <summary>Crea o agrega datos a un archivo separado por comas y saltos de linea</summary>
+        </member>
+        <member name="M:DataFramework.FileManager.AppendCSVFile(System.String,System.String,System.Data.DataTable,System.Boolean)">
+            <summary>Crea o agrega datos a un archivo separado por comas y saltos de linea</summary>
+        </member>
+        <member name="M:DataFramework.FileManager.CreateTextFile(System.String,System.String,System.String,System.Boolean)">
+            <summary>Genera un archivo si existe la localizacion indicada</summary>
+        </member>
+        <member name="M:DataFramework.FileManager.CreateTextFile(System.String,System.String,System.String)">
+            <summary>Genera un archivo si existe la localizacion indicada y no hay presente un archivo con el nombre indicado</summary>
+        </member>
+        <member name="M:DataFramework.FileManager.ReadTextFile(System.String)">
+            <summary>Devuelve el contenido del archivo solicitado</summary>
+        </member>
+        <member name="T:DataFramework.Mapper">
+            <summary>
+            Genera consultas basicas de altas bajas y cambios sobre objetos 
+            cuyos nombres de clase y nombres de propiedades 
+            equivalen al nombre de la tabla y al nombre de las columnas respectivamente
+            </summary>
+        </member>
+        <member name="M:DataFramework.Mapper.GettMany``1(DataFramework.Expression)">
+            <summary>Obtiene un listado de instancias de T a partir de la información obtenida en la base de datos filtrando con condición where</summary>
+        </member>
+        <member name="M:DataFramework.Mapper.GettMany``1">
+            <summary>Obtiene un listado de instancias de T a partir de la información obtenida en la base de datos</summary>
+        </member>
+        <member name="M:DataFramework.Mapper.Gett``1(DataFramework.Expression)">
+            <summary>Obtiene una instancia de T a partir de la información obtenida en la base de datos filtrando con condición where</summary>
+        </member>
+        <member name="M:DataFramework.Mapper.QueryMerge``1(System.Collections.Generic.IEnumerable{``0},DataFramework.Expression,System.String[])">
+            <summary>Devuelve un query que compara las instancias de T en base a la condición de expresión, las actualiza si las encuentra y las inserta si no las encuentra</summary>
+        </member>
+        <member name="M:DataFramework.Mapper.QueryMerge``1(System.Collections.Generic.IEnumerable{``0},System.String[])">
+            <summary>Devuelve un query que compara las instancias de T en base a las llaves, las actualiza si las encuentra y las inserta si no las encuentra</summary>
+        </member>
+        <member name="M:DataFramework.Mapper.Merge``1(System.Collections.Generic.IEnumerable{``0},DataFramework.Expression,System.String[])">
+            <summary>Compara las instancias de T en base a la condición de expresión, las actualiza si las encuentra y las inserta si no las encuentra</summary>
+        </member>
+        <member name="M:DataFramework.Mapper.Merge``1(System.Collections.Generic.IEnumerable{``0},System.String[])">
+            <summary>Compara las instancias de T en base a las llaves, las actualiza si las encuentra y las inserta si no las encuentra</summary>
+        </member>
+        <member name="M:DataFramework.Particle.SetValue(DataFramework.Expression)">
+            <summary>Asigna el valor que se opera</summary>
+        </member>
+        <member name="M:DataFramework.Particle.GetValue">
+            <summary>Obtiene el valor de cadena sin la operación</summary>
+        </member>
+        <member name="M:DataFramework.Particle.GetValue(System.Boolean)">
+            <summary>Obtiene el valor de cadena sin la operación</summary>
+        </member>
+        <member name="T:DataFramework.Query">
+            <summary>Constructor de CommandText</summary>
+        </member>
+        <member name="M:DataFramework.Query.Union(DataFramework.Constructor.dbUni)">
+            <summary>Prepara la consulta actual para realizar una union</summary>
+        </member>
+        <member name="M:DataFramework.Query.Union(DataFramework.Constructor.dbUni,DataFramework.Query)">
+            <summary>Realiza la union de la consulta actual con la proveida</summary>
+        </member>
+        <member name="M:DataFramework.Query.NoQuery">
+            <summary>Prepara el query para que al ser ejecutado no se envie nada al servidor</summary>
+        </member>
+        <member name="M:DataFramework.Query.SP(System.String,System.String,System.String)">
+            <summary>Prepara el query para accesar al procedimiento almacenado indicado</summary>
+        </member>
+        <member name="M:DataFramework.Query.SP(System.String,System.String)">
+            <summary>Prepara el query para accesar al procedimiento almacenado indicado</summary>
+        </member>
+        <member name="M:DataFramework.Query.SP(System.String)">
+            <summary>Prepara el query para accesar al procedimiento almacenado indicado</summary>
+        </member>
+        <member name="M:DataFramework.Query.SelAs(System.String,DataFramework.Query)">
+            <summary>Prepara el query para realizar una consulta select y agrega un campo al listado de campos</summary>
+        </member>
+        <member name="M:DataFramework.Query.SelAs(System.String,DataFramework.Expression)">
+            <summary>Prepara el query para realizar una consulta select y agrega un campo al listado de campos</summary>
+        </member>
+        <member name="M:DataFramework.Query.SelAs(System.String,System.String)">
+            <summary>Prepara el query para realizar una consulta select y agrega un campo al listado de campos</summary>
+        </member>
+        <member name="M:DataFramework.Query.SelValAs(System.String,System.String)">
+            <summary>Prepara el query para realizar una consulta select y agrega un campo al listado de campos agregando comillas en caso de que este no posea</summary>
+        </member>
+        <member name="M:DataFramework.Query.SelValAs(System.String,DataFramework.Expression)">
+            <summary>Prepara el query para realizar una consulta select y agrega un campo al listado de campos agregando comillas en caso de que este no posea</summary>
+        </member>
+        <member name="M:DataFramework.Query.SelAs(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
+            <summary>Prepara el query para realizar una consulta select y agrega los campos al listado de campos</summary>
+        </member>
+        <member name="M:DataFramework.Query.Sel(System.String[])">
+            <summary>Prepara el query para realizar una consulta select y agrega los campos al listado de campos</summary>
+        </member>
+        <member name="M:DataFramework.Query.Sel(System.Collections.Generic.List{System.String})">
+            <summary>Prepara el query para realizar una consulta select y agrega una lista de campos al listado de campos</summary>
+        </member>
+        <member name="M:DataFramework.Query.Sel(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>Prepara el query para realizar una consulta select y agrega una lista de campos al listado de campos</summary>
+        </member>
+        <member name="M:DataFramework.Query.Sel(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>Prepara el query para realizar una consulta select y agrega una lista de campos al listado de campos</summary>
+        </member>
+        <member name="M:DataFramework.Query.Sel(System.Collections.Generic.IEnumerable{System.Collections.Generic.Dictionary{System.String,System.Object}})">
+            <summary>Prepara el query para realizar una consulta select de multiples registros</summary>
+        </member>
+        <member name="M:DataFramework.Query.SelVal(System.Collections.Generic.IEnumerable{System.Collections.Generic.Dictionary{System.String,System.Object}})">
+            <summary>Prepara el query para realizar una consulta select de multiples registros agregando comillas a las cadenas</summary>
+        </member>
+        <member name="M:DataFramework.Query.SelVal(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>Prepara el query para realizar una consulta select agregando comillas a las cadenas</summary>
+        </member>
+        <member name="M:DataFramework.Query.Insert(System.String,System.String,System.String)">
+            <summary>Prepara el query para realizar una consulta insert y asigna la tabla afectada en el esquema correspondiente de la base de datos indicada</summary>
+        </member>
+        <member name="M:DataFramework.Query.Insert(System.String,System.String)">
+            <summary>Prepara el query para realizar una consulta insert y asigna la tabla afectada en el esquema correspondiente</summary>
+        </member>
+        <member name="M:DataFramework.Query.Insert(System.String)">
+            <summary>Prepara el query para realizar una consulta insert y asigna la tabla afectada</summary>
+        </member>
+        <member name="M:DataFramework.Query.Update(System.String,System.String,System.String)">
+            <summary>Prepara el query para realizar una consulta update y asigna la tabla afectada</summary>
+        </member>
+        <member name="M:DataFramework.Query.Update(System.String,System.String)">
+            <summary>Prepara el query para realizar una consulta update y asigna la tabla afectada</summary>
+        </member>
+        <member name="M:DataFramework.Query.Update(System.String)">
+            <summary>Prepara el query para realizar una consulta update y asigna la tabla afectada</summary>
+        </member>
+        <member name="M:DataFramework.Query.Delete(System.String,System.String,System.String)">
+            <summary>Prepara el query para realizar una consulta delete y asigna la tabla afectada</summary>
+        </member>
+        <member name="M:DataFramework.Query.Delete(System.String,System.String)">
+            <summary>Prepara el query para realizar una consulta delete y asigna la tabla afectada</summary>
+        </member>
+        <member name="M:DataFramework.Query.Delete(System.String)">
+            <summary>Prepara el query para realizar una consulta delete y asigna la tabla afectada</summary>
+        </member>
+        <member name="M:DataFramework.Query.Merge(System.String,System.String,System.String,DataFramework.Query)">
+            <summary>Prepara el query para realizar una consulta merge y asigna las tablas afectadas</summary>
+        </member>
+        <member name="M:DataFramework.Query.Merge(System.String,DataFramework.Query)">
+            <summary>Prepara el query para realizar una consulta merge y asigna las tablas afectadas</summary>
+        </member>
+        <member name="M:DataFramework.Query.FromAs(System.String,DataFramework.Query)">
+            <summary>Agrega una tabla basada en un query con un alias al listado de tablas</summary>
+        </member>
+        <member name="M:DataFramework.Query.FromAs(System.String,System.String,System.String,System.String)">
+            <summary>Agrega una tabla con un alias al listado de tablas</summary>
+        </member>
+        <member name="M:DataFramework.Query.FromAs(System.String,System.String,System.String)">
+            <summary>Agrega una tabla con un alias al listado de tablas</summary>
+        </member>
+        <member name="M:DataFramework.Query.FromAs(System.String,System.String)">
+            <summary>Agrega una tabla con un alias al listado de tablas</summary>
+        </member>
+        <member name="M:DataFramework.Query.From(System.String)">
+            <summary>Agrega una tabla al listado de tablas</summary>
+        </member>
+        <member name="M:DataFramework.Query.Output(DataFramework.Constructor.dbOut,System.String,System.String[])">
+            <summary>Agrega una clausula de salida</summary>
+        </member>
+        <member name="M:DataFramework.Query.Output(System.String,System.String[])">
+            <summary>Agrega una clausula de salida</summary>
+        </member>
+        <member name="M:DataFramework.Query.Output(System.String)">
+            <summary>Agrega una clausula de salida</summary>
+        </member>
+        <member name="M:DataFramework.Query.OutputCols(System.String[])">
+            <summary>Agrega columnas a la clausula de salida</summary>
+        </member>
+        <member name="M:DataFramework.Query.OutputCol(System.String,System.String)">
+            <summary>Agrega columnas a la clausula de salida</summary>
+        </member>
+        <member name="M:DataFramework.Query.OutputCol(System.String)">
+            <summary>Agrega columnas a la clausula de salida</summary>
+        </member>
+        <member name="M:DataFramework.Query.Join(DataFramework.Constructor.dbJoi,System.String,DataFramework.Query)">
+            <summary>Agrega una tabla al listado de tablas a unir</summary>
+        </member>
+        <member name="M:DataFramework.Query.Join(System.String,DataFramework.Query)">
+            <summary>Agrega una tabla al listado de tablas a unir bajo inner join</summary>
+        </member>
+        <member name="M:DataFramework.Query.Join(DataFramework.Constructor.dbJoi,System.String,System.String,System.String,System.String)">
+            <summary>Agrega una tabla al listado de tablas a unir</summary>
+        </member>
+        <member name="M:DataFramework.Query.Join(DataFramework.Constructor.dbJoi,System.String,System.String,System.String)">
+            <summary>Agrega una tabla al listado de tablas a unir</summary>
+        </member>
+        <member name="M:DataFramework.Query.Join(DataFramework.Constructor.dbJoi,System.String,System.String)">
+            <summary>Agrega una tabla al listado de tablas a unir</summary>
+        </member>
+        <member name="M:DataFramework.Query.Join(System.String,System.String)">
+            <summary>Agrega una tabla al listado de tablas a unir bajo inner join</summary>
+        </member>
+        <member name="M:DataFramework.Query.JoinOn(DataFramework.Expression)">
+            <summary>Agrega una condicion de union para las tablas usando una expression</summary>
+        </member>
+        <member name="M:DataFramework.Query.JoinOn(DataFramework.Constructor.dbCom,DataFramework.Expression,DataFramework.Expression[])">
+            <summary>Agrega una condicion de union para las tablas</summary>
+        </member>
+        <member name="M:DataFramework.Query.JoinOn(DataFramework.Expression,DataFramework.Expression)">
+            <summary>Agrega una condicion de union de equidad para las tablas</summary>
+        </member>
+        <member name="M:DataFramework.Query.JoinOnVal(DataFramework.Constructor.dbCom,System.String,System.String[])">
+            <summary>Agrega una condicion de union a valor para las tablas</summary>
+        </member>
+        <member name="M:DataFramework.Query.JoinOnVal(System.String,System.String)">
+            <summary>Agrega una condicion de union de equidad a valor para las tablas</summary>
+        </member>
+        <member name="M:DataFramework.Query.MergeOn(DataFramework.Constructor.dbCom,DataFramework.Expression,DataFramework.Expression)">
+            <summary>Agrega una condición de union para el origen y el destino de la consulta merge</summary>
+        </member>
+        <member name="M:DataFramework.Query.MergeOn(DataFramework.Expression,DataFramework.Expression)">
+            <summary>Agrega una condición de union de equidad para el origen y el destino de la consulta merge</summary>
+        </member>
+        <member name="M:DataFramework.Query.MergeOn(DataFramework.Expression)">
+            <summary>Agrega una condición de union de tipo expressión para el origen y el destino de la consulta merge</summary>
+        </member>
+        <member name="M:DataFramework.Query.MergeWhen(System.Boolean)">
+            <summary>Agrega un nuevo criterio a comparar de registros de origen y destino en la consulta merge</summary>
+        </member>
+        <member name="M:DataFramework.Query.MergeWhen(DataFramework.Constructor.dbCom,DataFramework.Expression,DataFramework.Expression[])">
+            <summary>Agrega una condición al criterio a comparar de registros de origen y destino en la consulta merge</summary>
+        </member>
+        <member name="M:DataFramework.Query.MergeWhen(DataFramework.Expression,DataFramework.Expression[])">
+            <summary>Agrega una condición de igualdad al criterio a comparar de registros de origen y destino en la consulta merge</summary>
+        </member>
+        <member name="M:DataFramework.Query.MergeThen(DataFramework.Constructor.dbMrA,System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>Especifica la acción a realizar para la comparación en la consulta merge</summary>
+        </member>
+        <member name="M:DataFramework.Query.MergeThen(DataFramework.Constructor.dbMrA,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>Especifica la acción a realizar para la comparación en la consulta merge</summary>
+        </member>
+        <member name="M:DataFramework.Query.MergeThen(DataFramework.Constructor.dbMrA,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>Especifica la acción a realizar para la comparación en la consulta merge</summary>
+        </member>
+        <member name="M:DataFramework.Query.MergeThen(DataFramework.Constructor.dbMrA,System.String[])">
+            <summary>Especifica la acción a realizar para la comparación en la consulta merge</summary>
+        </member>
+        <member name="M:DataFramework.Query.MergeThen(DataFramework.Constructor.dbMrA)">
+            <summary>Especifica la acción a realizar para la comparación en la consulta merge</summary>
+        </member>
+        <member name="M:DataFramework.Query.Where(DataFramework.Expression)">
+            <summary>Agrega una condición de expresion lógica al listado de condiciones</summary>
+        </member>
+        <member name="M:DataFramework.Query.Where(DataFramework.Constructor.dbCom,DataFramework.Expression,DataFramework.Expression[])">
+            <summary>Agrega una o varias condiciones al listado de condiciones</summary>
+        </member>
+        <member name="M:DataFramework.Query.Where(DataFramework.Constructor.dbCom,DataFramework.Expression,System.Object[])">
+            <summary>Agrega una o varias condiciones envasadas al listado de condiciones</summary>
+        </member>
+        <member name="M:DataFramework.Query.Where(DataFramework.Expression,System.Object)">
+            <summary>Agrega una condicion envasada de equidad al listado de condiciones</summary>
+        </member>
+        <member name="M:DataFramework.Query.Where(DataFramework.Constructor.dbCom,DataFramework.Expression,System.String[])">
+            <summary>Agrega una o varias condiciones al listado de condiciones</summary>
+        </member>
+        <member name="M:DataFramework.Query.Where(DataFramework.Constructor.dbCom,DataFramework.Expression,System.Int32[])">
+            <summary>Agrega una o varias condiciones al listado de condiciones</summary>
+        </member>
+        <member name="M:DataFramework.Query.Where(DataFramework.Expression,DataFramework.Expression)">
+            <summary>Agrega una condicion de equidad al listado de condiciones</summary>
+        </member>
+        <member name="M:DataFramework.Query.WhereVal(DataFramework.Constructor.dbCom,DataFramework.Expression,System.String[])">
+            <summary>Agrega una condicion a valor al listado de condiciones</summary>
+        </member>
+        <member name="M:DataFramework.Query.WhereVal(DataFramework.Expression,System.String)">
+            <summary>Agrega una condicion de equidad a valor al listado de condiciones</summary>
+        </member>
+        <member name="M:DataFramework.Query.GroupBy(DataFramework.Expression[])">
+            <summary>Agrega un campo al listado de campos de agrupacion</summary>
+        </member>
+        <member name="M:DataFramework.Query.GroupBy(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>Agrega una lista de campos al listado de campos de agrupacion</summary>
+        </member>
+        <member name="M:DataFramework.Query.GroupByMissing">
+            <summary>Agrega los campos faltantes al listado de campos de agrupacion</summary>
+        </member>
+        <member name="M:DataFramework.Query.Having(DataFramework.Constructor.dbCom,DataFramework.Expression,DataFramework.Expression[])">
+            <summary>Agrega una condicion al listado de condiciones de agrupacion</summary>
+        </member>
+        <member name="M:DataFramework.Query.Having(DataFramework.Expression,DataFramework.Expression)">
+            <summary>Agrega una condicion de equidad al listado de condiciones de agrupacion</summary>
+        </member>
+        <member name="M:DataFramework.Query.Having(DataFramework.Expression)">
+            <summary>Agrega una condicion al listado de condiciones de agrupacion</summary>
+        </member>
+        <member name="M:DataFramework.Query.OrderBy(System.String,DataFramework.Constructor.dbOrd)">
+            <summary>Agrega un campo al listado de campos de orden</summary>
+        </member>
+        <member name="M:DataFramework.Query.OrderBy(System.String[])">
+            <summary>Agrega un campo al listado de campos de orden</summary>
+        </member>
+        <member name="M:DataFramework.Query.With(System.String,DataFramework.Query)">
+            <summary>Genera una expresion de tabla comun</summary>
+        </member>
+        <member name="M:DataFramework.Query.ForXML(DataFramework.Constructor.dbXml,System.String)">
+            <summary>Serializa en XML el resultado de la consulta</summary>
+        </member>
+        <member name="M:DataFramework.Query.ForXML(DataFramework.Constructor.dbXml)">
+            <summary>Serializa en XML el resultado de la consulta</summary>
+        </member>
+        <member name="M:DataFramework.Query.Top(System.Int32)">
+            <summary>Limita la cantidad de registros en la tabla resultante</summary>
+        </member>
+        <member name="M:DataFramework.Query.Arg(DataFramework.Expression[])">
+            <summary>Agrega los argumentos al listado de argumentos del procedimiento almacenado</summary>
+        </member>
+        <member name="M:DataFramework.Query.ArgVal(System.Object[])">
+            <summary>Agrega los argumentos al listado de argumentos del procedimiento almacenado, colocando comillas a las cadenas faltantes</summary>
+        </member>
+        <member name="M:DataFramework.Query.InsFld(System.String,DataFramework.Expression)">
+            <summary>Agrega un campo destino y el valor correspondiente para la consulta insert</summary>
+        </member>
+        <member name="M:DataFramework.Query.InsFld(System.String,System.Object)">
+            <summary>Agrega un campo de destino y el valor correspondiente para la consulta insert</summary>
+        </member>
+        <member name="M:DataFramework.Query.InsFldVal(System.String,System.String)">
+            <summary>Agrega un campo destino y el valor correspondiente para la consulta insert</summary>
+        </member>
+        <member name="M:DataFramework.Query.InsFldVal(System.String,System.Object)">
+            <summary>Agrega un campo destino y el valor correspondiente para la consulta insert</summary>
+        </member>
+        <member name="M:DataFramework.Query.InsFlds(System.Data.DataTable)">
+            <summary>Agrega los campos de la tabla a la tabla de insercion</summary>
+        </member>
+        <member name="M:DataFramework.Query.InsFlds(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>Agrega los campos de la tabla a la tabla de insercion</summary>
+        </member>
+        <member name="M:DataFramework.Query.InsFlds(DataFramework.Query)">
+            <summary>Agrega el query como origen de datos a la consulta insert</summary>
+        </member>
+        <member name="M:DataFramework.Query.SetUpd(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>Agrega un campo a asignar en la instruccion update</summary>
+        </member>
+        <member name="M:DataFramework.Query.SetUpd(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>Agrega un campo a asignar en la instruccion update</summary>
+        </member>
+        <member name="M:DataFramework.Query.SetUpd(System.String,DataFramework.Expression)">
+            <summary>Agrega un campo a asignar en la instruccion update</summary>
+        </member>
+        <member name="M:DataFramework.Query.SetUpdVal(System.String,System.String)">
+            <summary>Agrega un valor a asignar en la instruccion update</summary>
+        </member>
+        <member name="M:DataFramework.Query.AggAs(DataFramework.Constructor.dbAgr,System.String,System.String)">
+            <summary>Agrega un campo con funcion agregada al listado de campos</summary>
+        </member>
+        <member name="M:DataFramework.Query.AggAs(DataFramework.Constructor.dbAgr,DataFramework.Query,System.String)">
+            <summary>Agrega un campo con funcion agregada al listado de campos</summary>
+        </member>
+        <member name="M:DataFramework.Query.AggAs(DataFramework.Constructor.dbAgr,DataFramework.Expression,System.String)">
+            <summary>Agrega un campo con funcion agregada al listado de campos</summary>
+        </member>
+        <member name="M:DataFramework.Query.Agg(DataFramework.Constructor.dbAgr,System.String)">
+            <summary>Agrega un campo con funcion agregada al listado de campos</summary>
+        </member>
+        <member name="M:DataFramework.Query.Agg(DataFramework.Constructor.dbAgr,DataFramework.Query)">
+            <summary>Agrega un campo con funcion agregada al listado de campos</summary>
+        </member>
+        <member name="M:DataFramework.Query.Agg(DataFramework.Constructor.dbAgr,DataFramework.Expression)">
+            <summary>Agrega un campo con funcion agregada al listado de campos</summary>
+        </member>
+    </members>
+</doc>
