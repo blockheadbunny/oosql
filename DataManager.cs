@@ -26,7 +26,7 @@ namespace DataFramework {
         private string StripConnString(string ConectionString) {
             string[] parms;
             string finalParms = "";
-            string[] validParms = { "User ID", "UID", "Password", "PWD", "Initial Catalog", "Database", "Data Source", "Server", "Packet Size", "Workstation ID", "WSID", "Timeout" };
+            string[] validParms = { "User ID", "UID", "Password", "PWD", "Initial Catalog", "Database", "Data Source", "Addr", "Server", "Packet Size", "Workstation ID", "WSID", "Timeout" };
             parms = ConectionString.Split(new char[] { ';' });
             foreach (string prm in parms) {
                 foreach (string vld in validParms) {
