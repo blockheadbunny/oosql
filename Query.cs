@@ -291,9 +291,19 @@ namespace DataFramework {
             return FromAs(tableAlias, table, "", "");
         }
 
+        /// <summary>Agrega una tabla al listado de tablas con esquema y base de datos</summary>
+        public Query From(string table, string schema, string database) {
+            return FromAs("", table, schema, database);
+        }
+
+        /// <summary>Agrega una tabla al listado de tablas con esquema</summary>
+        public Query From(string table, string schema) {
+            return FromAs("", table, schema, "");
+        }
+
         /// <summary>Agrega una tabla al listado de tablas</summary>
         public Query From(string table) {
-            return FromAs("", table);
+            return FromAs("", table, "", "");
         }
 
         /// <summary>Agrega una clausula de salida</summary>

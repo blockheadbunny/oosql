@@ -1,6 +1,8 @@
 Properties/
-bin/
+bin/debug/
 obj/
 *.user
 *.suo
+*.pdb
 .vs/
+
