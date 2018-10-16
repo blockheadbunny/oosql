@@ -563,6 +563,12 @@
         <member name="M:DataFramework.Query.FromAs(System.String,System.String)">
             <summary>Agrega una tabla con un alias al listado de tablas</summary>
         </member>
+        <member name="M:DataFramework.Query.From(System.String,System.String,System.String)">
+            <summary>Agrega una tabla al listado de tablas con esquema y base de datos</summary>
+        </member>
+        <member name="M:DataFramework.Query.From(System.String,System.String)">
+            <summary>Agrega una tabla al listado de tablas con esquema</summary>
+        </member>
         <member name="M:DataFramework.Query.From(System.String)">
             <summary>Agrega una tabla al listado de tablas</summary>
         </member>
