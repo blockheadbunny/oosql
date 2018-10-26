@@ -126,7 +126,7 @@ namespace DataFramework {
             return ExecTable(Bch);
         }
 
-        /// <summary>Ejecuta el query proveido y devuelve la primer tabla del resultado convirtiendo cada registro en el typo solicitado</summary>
+        /// <summary>Ejecuta el query proveido y devuelve la primer tabla del resultado convirtiendo cada registro en el tipo solicitado</summary>
         public List<T> ExecList<T>(IQryable query) where T : new() {
             DataTable dttRes = ExecTable(query);
             List<T> entities = new List<T>();
@@ -141,6 +141,12 @@ namespace DataFramework {
                 entities.Add(entity);
             }
             return entities;
+        }
+
+        /// <summary>Ejecuta el query proveido y lo convierte al tipo solicitado</summary>
+        public T ExecEntity<T>(IQryable query) where T : new()
+        {
+            return ExecList<T>(query).FirstOrDefault();
         }
 
         /// <summary>Ejecuta el query proveido y devuelve el primer renglon de la primer tabla del resultado</summary>
