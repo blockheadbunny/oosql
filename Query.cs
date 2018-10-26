@@ -405,6 +405,16 @@ namespace DataFramework {
         }
 
         /// <summary>Agrega una tabla al listado de tablas a unir bajo inner join</summary>
+        public Query Join(string tableAlias, string table, string schema, string database) {
+            return Join(dbJoi.Inner, tableAlias, table, schema, database);
+        }
+
+        /// <summary>Agrega una tabla al listado de tablas a unir bajo inner join</summary>
+        public Query Join(string tableAlias, string table, string schema) {
+            return Join(dbJoi.Inner, tableAlias, table, schema, "");
+        }
+
+        /// <summary>Agrega una tabla al listado de tablas a unir bajo inner join</summary>
         public Query Join(string tableAlias, string table) {
             return Join(dbJoi.Inner, tableAlias, table, "", "");
         }

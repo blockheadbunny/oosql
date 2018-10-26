@@ -608,6 +608,12 @@
         <member name="M:DataFramework.Query.Join(DataFramework.Constructor.dbJoi,System.String,System.String)">
             <summary>Agrega una tabla al listado de tablas a unir</summary>
         </member>
+        <member name="M:DataFramework.Query.Join(System.String,System.String,System.String,System.String)">
+            <summary>Agrega una tabla al listado de tablas a unir bajo inner join</summary>
+        </member>
+        <member name="M:DataFramework.Query.Join(System.String,System.String,System.String)">
+            <summary>Agrega una tabla al listado de tablas a unir bajo inner join</summary>
+        </member>
         <member name="M:DataFramework.Query.Join(System.String,System.String)">
             <summary>Agrega una tabla al listado de tablas a unir bajo inner join</summary>
         </member>
