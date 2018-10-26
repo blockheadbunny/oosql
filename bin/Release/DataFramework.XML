@@ -194,7 +194,10 @@
             <summary>Ejecuta el ultimo query almacenado y devuelve la primer tabla del resultado</summary>
         </member>
         <member name="M:DataFramework.DataManager.ExecList``1(DataFramework.IQryable)">
-            <summary>Ejecuta el query proveido y devuelve la primer tabla del resultado convirtiendo cada registro en el typo solicitado</summary>
+            <summary>Ejecuta el query proveido y devuelve la primer tabla del resultado convirtiendo cada registro en el tipo solicitado</summary>
+        </member>
+        <member name="M:DataFramework.DataManager.ExecEntity``1(DataFramework.IQryable)">
+            <summary>Ejecuta el query proveido y lo convierte al tipo solicitado</summary>
         </member>
         <member name="M:DataFramework.DataManager.ExecRow(DataFramework.IQryable)">
             <summary>Ejecuta el query proveido y devuelve el primer renglon de la primer tabla del resultado</summary>
