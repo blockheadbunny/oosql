@@ -337,10 +337,10 @@ namespace DataFramework {
 
         /// <summary>Expresión lógica que permite uso de OR y agrega comillas en caso de ser requeridas</summary>
         public static Expression WhereVal(dbCom comp, Expression val, params string[] values) {
-            Expression[] valoresExpresion = values.Select(v => (Expression)AddSingleQuotesIfMissing(v)).ToArray();
-            Comparison whr = Log(dbLog.Where, comp, val, valoresExpresion);
+            Expression[] quotedValues = values.Select(v => (Expression)AddSingleQuotesIfMissing(v)).ToArray();
+            Comparison whr = Log(dbLog.Where, comp, val, quotedValues);
             return new Expression(dbLog.Where, whr);
-        }        
+        }
 
         /// <summary>And para expresión lógica</summary>
         public Expression And(dbCom comp, Expression val, params Expression[] values) {
@@ -351,6 +351,18 @@ namespace DataFramework {
         /// <summary>And para expresión lógica de equidad</summary>
         public Expression And(Expression val, params Expression[] values) {
             return And(dbCom.Equals, val, values);
+        }
+
+        /// <summary>And para expresión lógica agregando comillas en caso de ser requeridas</summary>
+        public Expression AndVal(dbCom comp, Expression val, params string[] values) {
+            Expression[] quotedValues = values.Select(v => (Expression)AddSingleQuotesIfMissing(v)).ToArray();
+            Comparison whr = Log(dbLog.And, comp, val, quotedValues);
+            return this.Operate(dbLog.And, whr);
+        }
+
+        /// <summary>And para expresión lógica de equidad agregando comillas en caso de ser requeridas</summary>
+        public Expression AndVal(Expression val, params string[] values) {
+            return AndVal(dbCom.Equals, val, values);
         }
 
         /// <summary>Or para expresión lógica</summary>
@@ -372,6 +384,23 @@ namespace DataFramework {
         /// <summary>Or para expresión lógica a partir de otra expresión lógica</summary>
         public Expression Or(Expression expr) {
             return this.Operate(dbLog.Or, expr);
+        }
+
+        /// <summary>Or para expresión lógica agregando comillas en caso de ser requeridas</summary>
+        public Expression OrVal(dbCom comp, Expression val, params string[] values) {
+            Expression[] quotedValues = values.Select(v => (Expression)AddSingleQuotesIfMissing(v)).ToArray();
+            Comparison whr = Log(dbLog.And, comp, val, quotedValues);
+            return this.Operate(dbLog.Or, whr);
+        }
+
+        /// <summary>Or para expresión lógica de equidad agregando comillas en caso de ser requeridas</summary>
+        public Expression OrVal(Expression val, params string[] values) {
+            if (values == null || values.Length == 0) {
+                return this.Operate(dbLog.Or, val);
+            }
+            else {
+                return OrVal(dbCom.Equals, val, values);
+            }
         }
 
         #endregion

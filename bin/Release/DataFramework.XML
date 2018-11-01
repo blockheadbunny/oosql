@@ -367,6 +367,12 @@
         <member name="M:DataFramework.Expression.And(DataFramework.Expression,DataFramework.Expression[])">
             <summary>And para expresión lógica de equidad</summary>
         </member>
+        <member name="M:DataFramework.Expression.AndVal(DataFramework.Constructor.dbCom,DataFramework.Expression,System.String[])">
+            <summary>And para expresión lógica agregando comillas en caso de ser requeridas</summary>
+        </member>
+        <member name="M:DataFramework.Expression.AndVal(DataFramework.Expression,System.String[])">
+            <summary>And para expresión lógica de equidad agregando comillas en caso de ser requeridas</summary>
+        </member>
         <member name="M:DataFramework.Expression.Or(DataFramework.Constructor.dbCom,DataFramework.Expression,DataFramework.Expression[])">
             <summary>Or para expresión lógica</summary>
         </member>
@@ -375,6 +381,12 @@
         </member>
         <member name="M:DataFramework.Expression.Or(DataFramework.Expression)">
             <summary>Or para expresión lógica a partir de otra expresión lógica</summary>
+        </member>
+        <member name="M:DataFramework.Expression.OrVal(DataFramework.Constructor.dbCom,DataFramework.Expression,System.String[])">
+            <summary>Or para expresión lógica agregando comillas en caso de ser requeridas</summary>
+        </member>
+        <member name="M:DataFramework.Expression.OrVal(DataFramework.Expression,System.String[])">
+            <summary>Or para expresión lógica de equidad agregando comillas en caso de ser requeridas</summary>
         </member>
         <member name="M:DataFramework.Expression.CaseWhen(DataFramework.Expression,System.Boolean,DataFramework.Constructor.dbCom,DataFramework.Expression,DataFramework.Expression[])">
             <summary>Inicia una estructura de control de flujo case</summary>
