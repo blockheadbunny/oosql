@@ -797,11 +797,14 @@
         <member name="M:DataFramework.Query.Agg(DataFramework.Constructor.dbAgr,DataFramework.Expression)">
             <summary>Agrega un campo con funcion agregada al listado de campos</summary>
         </member>
+        <member name="T:DataFramework.QueryExtensions">
+            <summary>Non standard methods</summary>
+        </member>
         <member name="M:DataFramework.QueryExtensions.SelEntity``1(DataFramework.Query,``0)">
-            <summary>Prepara el query para realizar una consulta select en base a las propiedades de un objeto agregando comillas a las cadenas</summary>
+            <summary>Prepares a select query based on an object properties adding missing quotes</summary>
         </member>
         <member name="M:DataFramework.QueryExtensions.SelEntities``1(DataFramework.Query,System.Collections.Generic.IEnumerable{``0})">
-            <summary>Prepara el query para realizar una consulta select en base a las propiedades de un objeto agregando comillas a las cadenas</summary>
+            <summary>Prepares a multi union select query based on an object properties adding missing quotes</summary>
         </member>
     </members>
 </doc>

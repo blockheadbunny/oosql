@@ -23,6 +23,10 @@ namespace DataFramework {
             particles.Add(new Particle(dbOpe.Qry, expr.ToString()));
         }
 
+        private Expression() {
+            particles.Add(new Particle(dbOpe.NoOp, "NULL"));
+        }
+
         private Expression(DateTime expr) {
             particles.Add(new Particle(dbOpe.NoOp, "'" + expr.ToString("yyyy-MM-ddTHH:mm:ss") + "'"));
         }
@@ -64,6 +68,7 @@ namespace DataFramework {
         public static implicit operator Expression(bool expr) { return new Expression((expr ? 1 : 0).ToString()); }
         public static implicit operator Expression(DateTime expr) { return new Expression(expr); }
         public static implicit operator Expression(Query expr) { return new Expression(expr); }
+        public static implicit operator Expression(DBNull expr) { return new Expression(); }
 
         /// <summary>Evalua la expressión y devuelve su representación textual</summary>
         public override string ToString() {
