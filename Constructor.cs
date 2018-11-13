@@ -525,6 +525,7 @@ namespace DataFramework {
             if (o is Query) { return new Expression((Query)o); }
             if (o is Enum) { return (Expression)Convert.ToInt32(o); }
             if (o is Expression) { return (Expression)o; }
+            if (o is DBNull) { return (Expression)DBNull.Value; }
             return (Expression)o.ToString();
         }
 
