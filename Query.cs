@@ -258,6 +258,23 @@ namespace DataFramework {
             return Merge("d", destiny, "o", origin);
         }
 
+        public Query MergeTarget(string alias, string table, string schema, string database) {
+            instruction = dbItr.mer;
+            merge = merge ?? new Merger();
+            merge.Destiny.Table = new Table(SanitizeSQL(table));
+            merge.Destiny.Alias = alias;
+            merge.Destiny.Schema = schema;
+            merge.Destiny.DataBase = database;
+            return this;
+        }
+
+        public Query MergeUsing(string alias, Query origin) {
+            merge = merge ?? new Merger();
+            merge.Origin.Query = origin;
+            merge.Origin.Alias = alias;
+            return this;
+        }
+
         #endregion
 
         #region Metodos Estructurales
