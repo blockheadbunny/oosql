@@ -110,9 +110,9 @@ namespace DataFramework {
             public string database;
 
             public override string ToString() {
-                return table
-                    + (!string.IsNullOrEmpty(schema) ? "." + schema : (!string.IsNullOrEmpty(database) ? "." : ""))
-                    + (!string.IsNullOrEmpty(database) ? "." + database : "");
+                return (!string.IsNullOrEmpty(database) ? database + "." : "")
+                    + (!string.IsNullOrEmpty(schema) ? schema + "." : (!string.IsNullOrEmpty(database) ? "." : ""))
+                    + table;
             }
         }
 
