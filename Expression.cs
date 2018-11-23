@@ -192,7 +192,7 @@ namespace DataFramework {
             return null;
         }
 
-        /// <summary>Convierte el valor en el tipo indicado</summary>
+        /// <summary>Converts value into selected data type</summary>
         public static Expression Cast(Expression expr, dbTyp type, params int[] ranges) {
             expr = expr.Operate(dbOpe.As, type.ToString().ToUpper());
             if (ranges.Length > 0) {
@@ -203,6 +203,11 @@ namespace DataFramework {
                 expr = expr.Operate(dbOpe.In, inExpr);
             }
             return expr.Fun(dbFun.Cast);
+        }
+
+        /// <summary>Converts value into selected data type</summary>
+        public Expression Cast(dbTyp type, params int[] range) {
+            return Expression.Cast(this, type, range);
         }
 
         /// <summary>Convierte el valor en el tipo indicado</summary>
@@ -257,6 +262,7 @@ namespace DataFramework {
             return target.Fun(dbFun.Len);
         }
 
+        /// <summary>Returns current length of target string</summary>
         public Expression Len() {
             return Expression.Len(this);
         }

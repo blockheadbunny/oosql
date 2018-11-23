@@ -299,7 +299,10 @@
             <summary>Devuelve el primer valor no nulo del listado</summary>
         </member>
         <member name="M:DataFramework.Expression.Cast(DataFramework.Expression,DataFramework.Constructor.dbTyp,System.Int32[])">
-            <summary>Convierte el valor en el tipo indicado</summary>
+            <summary>Converts value into selected data type</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Cast(DataFramework.Constructor.dbTyp,System.Int32[])">
+            <summary>Converts value into selected data type</summary>
         </member>
         <member name="M:DataFramework.Expression.Convert(DataFramework.Constructor.dbTyp,DataFramework.Expression,System.Int32[])">
             <summary>Convierte el valor en el tipo indicado</summary>
@@ -320,6 +323,9 @@
             <summary>Devuelve el segmento del texto indicado</summary>
         </member>
         <member name="M:DataFramework.Expression.Len(DataFramework.Expression)">
+            <summary>Returns current length of target string</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Len">
             <summary>Returns current length of target string</summary>
         </member>
         <member name="M:DataFramework.Expression.Replace(DataFramework.Expression,DataFramework.Expression,DataFramework.Expression)">
