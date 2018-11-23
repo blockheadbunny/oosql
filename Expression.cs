@@ -252,6 +252,15 @@ namespace DataFramework {
             return target.Fun(dbFun.SubString);
         }
 
+        /// <summary>Returns current length of target string</summary>
+        public static Expression Len(Expression target) {
+            return target.Fun(dbFun.Len);
+        }
+
+        public Expression Len() {
+            return Expression.Len(this);
+        }
+
         /// <summary>Reemplaza un patron dentro de una cadena</summary>
         public static Expression Replace(Expression target, Expression pattern, Expression replacement) {
             target = target.Operate(dbOpe.Comma, pattern);

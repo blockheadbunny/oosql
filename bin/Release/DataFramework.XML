@@ -319,6 +319,9 @@
         <member name="M:DataFramework.Expression.SubString(DataFramework.Expression,System.Int32,System.Int32)">
             <summary>Devuelve el segmento del texto indicado</summary>
         </member>
+        <member name="M:DataFramework.Expression.Len(DataFramework.Expression)">
+            <summary>Returns current length of target string</summary>
+        </member>
         <member name="M:DataFramework.Expression.Replace(DataFramework.Expression,DataFramework.Expression,DataFramework.Expression)">
             <summary>Reemplaza un patron dentro de una cadena</summary>
         </member>
