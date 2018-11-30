@@ -663,13 +663,16 @@
             <summary>Agrega una condición de union de tipo expressión para el origen y el destino de la consulta merge</summary>
         </member>
         <member name="M:DataFramework.Query.MergeWhen(System.Boolean)">
-            <summary>Agrega un nuevo criterio a comparar de registros de origen y destino en la consulta merge</summary>
+            <summary>Adds a "matched" or "not matched" condition to the merge action</summary>
         </member>
         <member name="M:DataFramework.Query.MergeWhen(DataFramework.Constructor.dbCom,DataFramework.Expression,DataFramework.Expression[])">
-            <summary>Agrega una condición al criterio a comparar de registros de origen y destino en la consulta merge</summary>
+            <summary>Adds a condition to the merge action</summary>
+        </member>
+        <member name="M:DataFramework.Query.MergeWhen(DataFramework.Expression)">
+            <summary>Adds a logical condition to the merge action</summary>
         </member>
         <member name="M:DataFramework.Query.MergeWhen(DataFramework.Expression,DataFramework.Expression[])">
-            <summary>Agrega una condición de igualdad al criterio a comparar de registros de origen y destino en la consulta merge</summary>
+            <summary>Adds an equality condition to the merge action</summary>
         </member>
         <member name="M:DataFramework.Query.MergeThen(DataFramework.Constructor.dbMrA,System.Collections.Generic.Dictionary{System.String,System.Object})">
             <summary>Especifica la acción a realizar para la comparación en la consulta merge</summary>

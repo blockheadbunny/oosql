@@ -489,13 +489,13 @@ namespace DataFramework {
             return this;
         }
 
-        /// <summary>Agrega un nuevo criterio a comparar de registros de origen y destino en la consulta merge</summary>
+        /// <summary>Adds a "matched" or "not matched" condition to the merge action</summary>
         public Query MergeWhen(bool matched) {
             merge.MergeWhen(matched);
             return this;
         }
 
-        /// <summary>Agrega una condición al criterio a comparar de registros de origen y destino en la consulta merge</summary>
+        /// <summary>Adds a condition to the merge action</summary>
         public Query MergeWhen(Constructor.dbCom comp, Expression comparator, params Expression[] values) {
             Comparison whr = new Comparison();
             whr.comparator = comparator.ToString();
@@ -508,7 +508,15 @@ namespace DataFramework {
             return this;
         }
 
-        /// <summary>Agrega una condición de igualdad al criterio a comparar de registros de origen y destino en la consulta merge</summary>
+        /// <summary>Adds a logical condition to the merge action</summary>
+        public Query MergeWhen(Expression logicalExpression) {
+            Comparison whr = new Comparison();
+            whr.expr = logicalExpression;
+            merge.MergeWhen(whr);
+            return this;
+        }
+
+        /// <summary>Adds an equality condition to the merge action</summary>
         public Query MergeWhen(Expression comparator, params Expression[] values) {
             return MergeWhen(dbCom.Equals, comparator, values);
         }
