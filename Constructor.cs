@@ -13,7 +13,7 @@ namespace DataFramework {
         public enum dbItr { noQuery, sProc, sel, ins, upd, del, mer, fld };
 
         /// <summary>Tipos de Comparaciones</summary>
-        public enum dbCom { Equals, MoreThan, LessThan, MoreThanOrEquals, LessThanOrEquals, DifferentFrom, Iss, IssNot, IssIn, IssNotIn, Like };
+        public enum dbCom { Equals, MoreThan, LessThan, MoreThanOrEquals, LessThanOrEquals, DifferentFrom, Iss, IssNot, IssIn, IssNotIn, Like, NotLike };
 
         /// <summary>Tipos de uniones de tablas</summary>
         public enum dbJoi { Inner, Left, Right, Full, Cross };
@@ -565,6 +565,8 @@ namespace DataFramework {
                     return "NOT IN";
                 case dbCom.Like:
                     return "LIKE";
+                case dbCom.NotLike:
+                    return "NOT LIKE";
             }
             return "";
         }
