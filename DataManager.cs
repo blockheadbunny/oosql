@@ -135,7 +135,12 @@ namespace DataFramework {
                 T entity = new T();
                 foreach (PropertyInfo prop in properties) {
                     if (dttRes.Columns.Contains(prop.Name)) {
-                        prop.SetValue(entity, row[prop.Name], null);
+                        if (row[prop.Name] is DBNull) {
+                            prop.SetValue(entity, null, null);
+                        }
+                        else {
+                            prop.SetValue(entity, row[prop.Name], null);
+                        }
                     }
                 }
                 entities.Add(entity);
