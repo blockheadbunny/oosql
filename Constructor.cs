@@ -13,7 +13,7 @@ namespace DataFramework {
         public enum dbItr { noQuery, sProc, sel, ins, upd, del, mer, fld };
 
         /// <summary>Tipos de Comparaciones</summary>
-        public enum dbCom { Equals, MoreThan, LessThan, MoreThanOrEquals, LessThanOrEquals, DifferentFrom, Iss, IssNot, IssIn, IssNotIn, Like };
+        public enum dbCom { Equals, MoreThan, LessThan, MoreThanOrEquals, LessThanOrEquals, DifferentFrom, Iss, IssNot, IssIn, IssNotIn, Like, NotLike };
 
         /// <summary>Tipos de uniones de tablas</summary>
         public enum dbJoi { Inner, Left, Right, Full, Cross };
@@ -37,7 +37,7 @@ namespace DataFramework {
         public enum dbOpe { NoOp, Funct, Agg, Over, Qry, Addition, Substraction, Multiplication, Division, Modulo, Case, Else, Log, Comma, As, In }
 
         /// <summary>Funciones de base expresiones</summary>
-        public enum dbFun { Round, Coalesce, Cast, Convert, CharIndex, Left, Mid, Right, SubString, Replace, Stuff, DateDiff, Year, Month, Day, GetDate, Upper, Lower }
+        public enum dbFun { Round, Coalesce, Cast, Convert, CharIndex, Left, Mid, Right, Len, SubString, Replace, Stuff, DateDiff, Year, Month, Day, GetDate, Upper, Lower }
 
         /// <summary>Operadores Logicos</summary>
         public enum dbLog { Where, And, Or }
@@ -110,7 +110,9 @@ namespace DataFramework {
             public string database;
 
             public override string ToString() {
-                return table;
+                return (!string.IsNullOrEmpty(database) ? database + "." : "")
+                    + (!string.IsNullOrEmpty(schema) ? schema + "." : (!string.IsNullOrEmpty(database) ? "." : ""))
+                    + table;
             }
         }
 
@@ -525,6 +527,7 @@ namespace DataFramework {
             if (o is Query) { return new Expression((Query)o); }
             if (o is Enum) { return (Expression)Convert.ToInt32(o); }
             if (o is Expression) { return (Expression)o; }
+            if (o is DBNull) { return (Expression)DBNull.Value; }
             return (Expression)o.ToString();
         }
 
@@ -562,6 +565,8 @@ namespace DataFramework {
                     return "NOT IN";
                 case dbCom.Like:
                     return "LIKE";
+                case dbCom.NotLike:
+                    return "NOT LIKE";
             }
             return "";
         }

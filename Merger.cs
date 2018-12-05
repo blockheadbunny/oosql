@@ -6,9 +6,20 @@ namespace DataFramework {
     internal class Merger {
         internal class MergerDestiny {
             public Constructor.Table Table { get; set; }
+
             public string Alias {
                 get { return Table.tableAlias; }
                 set { Table.tableAlias = value; }
+            }
+
+            public string Schema {
+                get { return Table.schema; }
+                set { Table.schema = value; }
+            }
+
+            public string DataBase {
+                get { return Table.database; }
+                set { Table.database = value; }
             }
 
             public override string ToString() {

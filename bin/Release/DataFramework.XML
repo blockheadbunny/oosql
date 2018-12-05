@@ -299,7 +299,10 @@
             <summary>Devuelve el primer valor no nulo del listado</summary>
         </member>
         <member name="M:DataFramework.Expression.Cast(DataFramework.Expression,DataFramework.Constructor.dbTyp,System.Int32[])">
-            <summary>Convierte el valor en el tipo indicado</summary>
+            <summary>Converts value into selected data type</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Cast(DataFramework.Constructor.dbTyp,System.Int32[])">
+            <summary>Converts value into selected data type</summary>
         </member>
         <member name="M:DataFramework.Expression.Convert(DataFramework.Constructor.dbTyp,DataFramework.Expression,System.Int32[])">
             <summary>Convierte el valor en el tipo indicado</summary>
@@ -318,6 +321,12 @@
         </member>
         <member name="M:DataFramework.Expression.SubString(DataFramework.Expression,System.Int32,System.Int32)">
             <summary>Devuelve el segmento del texto indicado</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Len(DataFramework.Expression)">
+            <summary>Returns current length of target string</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Len">
+            <summary>Returns current length of target string</summary>
         </member>
         <member name="M:DataFramework.Expression.Replace(DataFramework.Expression,DataFramework.Expression,DataFramework.Expression)">
             <summary>Reemplaza un patron dentro de una cadena</summary>
@@ -367,6 +376,12 @@
         <member name="M:DataFramework.Expression.And(DataFramework.Expression,DataFramework.Expression[])">
             <summary>And para expresión lógica de equidad</summary>
         </member>
+        <member name="M:DataFramework.Expression.AndVal(DataFramework.Constructor.dbCom,DataFramework.Expression,System.String[])">
+            <summary>And para expresión lógica agregando comillas en caso de ser requeridas</summary>
+        </member>
+        <member name="M:DataFramework.Expression.AndVal(DataFramework.Expression,System.String[])">
+            <summary>And para expresión lógica de equidad agregando comillas en caso de ser requeridas</summary>
+        </member>
         <member name="M:DataFramework.Expression.Or(DataFramework.Constructor.dbCom,DataFramework.Expression,DataFramework.Expression[])">
             <summary>Or para expresión lógica</summary>
         </member>
@@ -375,6 +390,12 @@
         </member>
         <member name="M:DataFramework.Expression.Or(DataFramework.Expression)">
             <summary>Or para expresión lógica a partir de otra expresión lógica</summary>
+        </member>
+        <member name="M:DataFramework.Expression.OrVal(DataFramework.Constructor.dbCom,DataFramework.Expression,System.String[])">
+            <summary>Or para expresión lógica agregando comillas en caso de ser requeridas</summary>
+        </member>
+        <member name="M:DataFramework.Expression.OrVal(DataFramework.Expression,System.String[])">
+            <summary>Or para expresión lógica de equidad agregando comillas en caso de ser requeridas</summary>
         </member>
         <member name="M:DataFramework.Expression.CaseWhen(DataFramework.Expression,System.Boolean,DataFramework.Constructor.dbCom,DataFramework.Expression,DataFramework.Expression[])">
             <summary>Inicia una estructura de control de flujo case</summary>
@@ -642,13 +663,16 @@
             <summary>Agrega una condición de union de tipo expressión para el origen y el destino de la consulta merge</summary>
         </member>
         <member name="M:DataFramework.Query.MergeWhen(System.Boolean)">
-            <summary>Agrega un nuevo criterio a comparar de registros de origen y destino en la consulta merge</summary>
+            <summary>Adds a "matched" or "not matched" condition to the merge action</summary>
         </member>
         <member name="M:DataFramework.Query.MergeWhen(DataFramework.Constructor.dbCom,DataFramework.Expression,DataFramework.Expression[])">
-            <summary>Agrega una condición al criterio a comparar de registros de origen y destino en la consulta merge</summary>
+            <summary>Adds a condition to the merge action</summary>
+        </member>
+        <member name="M:DataFramework.Query.MergeWhen(DataFramework.Expression)">
+            <summary>Adds a logical condition to the merge action</summary>
         </member>
         <member name="M:DataFramework.Query.MergeWhen(DataFramework.Expression,DataFramework.Expression[])">
-            <summary>Agrega una condición de igualdad al criterio a comparar de registros de origen y destino en la consulta merge</summary>
+            <summary>Adds an equality condition to the merge action</summary>
         </member>
         <member name="M:DataFramework.Query.MergeThen(DataFramework.Constructor.dbMrA,System.Collections.Generic.Dictionary{System.String,System.Object})">
             <summary>Especifica la acción a realizar para la comparación en la consulta merge</summary>
@@ -784,6 +808,15 @@
         </member>
         <member name="M:DataFramework.Query.Agg(DataFramework.Constructor.dbAgr,DataFramework.Expression)">
             <summary>Agrega un campo con funcion agregada al listado de campos</summary>
+        </member>
+        <member name="T:DataFramework.QueryExtensions">
+            <summary>Non standard methods</summary>
+        </member>
+        <member name="M:DataFramework.QueryExtensions.SelEntity``1(DataFramework.Query,``0)">
+            <summary>Prepares a select query based on an object properties adding missing quotes</summary>
+        </member>
+        <member name="M:DataFramework.QueryExtensions.SelEntities``1(DataFramework.Query,System.Collections.Generic.IEnumerable{``0})">
+            <summary>Prepares a multi union select query based on an object properties adding missing quotes</summary>
         </member>
     </members>
 </doc>
