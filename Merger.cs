@@ -39,6 +39,7 @@ namespace DataFramework {
 
         internal class MergerAction {
             public bool Matched;
+            public Constructor.dbMby By { get; internal set; }
             public List<Constructor.Comparison> Conditions = new List<Constructor.Comparison>();
             public Constructor.dbMrA Action;
             public Dictionary<string, object> Values;
@@ -67,9 +68,10 @@ namespace DataFramework {
             Keys.Add(new Constructor.Comparison() { expr = where });
         }
 
-        public void MergeWhen(bool matched) {
+        public void MergeWhen(bool matched, Constructor.dbMby by) {
             MergerAction action = new MergerAction();
             action.Matched = matched;
+            action.By = by;
             Actions.Add(action);
         }
 

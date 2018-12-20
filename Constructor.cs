@@ -51,6 +51,9 @@ namespace DataFramework {
         /// <summary>Acciones a realizar en merge</summary>
         public enum dbMrA { Insert, Update, Delete }
 
+        /// <summary>Data origin to compare in merge when</summary>
+        public enum dbMby { None, Source, Target }
+
         /// <summary>Tipos de output en una consulta</summary>
         public enum dbOut { Undefined, Inserted, Deleted }
 
@@ -354,6 +357,7 @@ namespace DataFramework {
                     sqlQuery += ConcatWhere(" ON", merge.Keys);
                     foreach (Merger.MergerAction act in merge.Actions) {
                         sqlQuery += " WHEN " + (act.Matched ? "MATCHED" : "NOT MATCHED");
+                        sqlQuery += (act.By == dbMby.None ? "" : " BY " + act.By.ToString().ToUpper());
                         sqlQuery += (act.Conditions.Count > 0 ? ConcatWhere(" AND", act.Conditions) : "") + " THEN";
                         sqlQuery += " " + act.Action.ToString().ToUpper();
                         switch (act.Action) {

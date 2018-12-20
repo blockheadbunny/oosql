@@ -82,6 +82,9 @@
         <member name="T:DataFramework.Constructor.dbMrA">
             <summary>Acciones a realizar en merge</summary>
         </member>
+        <member name="T:DataFramework.Constructor.dbMby">
+            <summary>Data origin to compare in merge when</summary>
+        </member>
         <member name="T:DataFramework.Constructor.dbOut">
             <summary>Tipos de output en una consulta</summary>
         </member>
@@ -661,6 +664,9 @@
         </member>
         <member name="M:DataFramework.Query.MergeOn(DataFramework.Expression)">
             <summary>Agrega una condición de union de tipo expressión para el origen y el destino de la consulta merge</summary>
+        </member>
+        <member name="M:DataFramework.Query.MergeWhen(System.Boolean,DataFramework.Constructor.dbMby)">
+            <summary>Adds a "matched" or "not matched" condition to the merge action based on an specific data origin</summary>
         </member>
         <member name="M:DataFramework.Query.MergeWhen(System.Boolean)">
             <summary>Adds a "matched" or "not matched" condition to the merge action</summary>
