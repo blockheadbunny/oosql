@@ -13,7 +13,7 @@ namespace DataFramework {
         public enum dbItr { noQuery, sProc, sel, ins, upd, del, mer, fld };
 
         /// <summary>Tipos de Comparaciones</summary>
-        public enum dbCom { Equals, MoreThan, LessThan, MoreThanOrEquals, LessThanOrEquals, DifferentFrom, Iss, IssNot, IssIn, IssNotIn, Like };
+        public enum dbCom { Equals, MoreThan, LessThan, MoreThanOrEquals, LessThanOrEquals, DifferentFrom, Iss, IssNot, IssIn, IssNotIn, Like, NotLike };
 
         /// <summary>Tipos de uniones de tablas</summary>
         public enum dbJoi { Inner, Left, Right, Full, Cross };
@@ -37,7 +37,7 @@ namespace DataFramework {
         public enum dbOpe { NoOp, Funct, Agg, Over, Qry, Addition, Substraction, Multiplication, Division, Modulo, Case, Else, Log, Comma, As, In }
 
         /// <summary>Funciones de base expresiones</summary>
-        public enum dbFun { Round, Coalesce, Cast, Convert, CharIndex, Left, Mid, Right, SubString, Replace, Stuff, DateDiff, Year, Month, Day, GetDate, Upper, Lower }
+        public enum dbFun { Round, Coalesce, Cast, Convert, CharIndex, Left, Mid, Right, Len, SubString, Replace, Stuff, DateDiff, Year, Month, Day, GetDate, Upper, Lower }
 
         /// <summary>Operadores Logicos</summary>
         public enum dbLog { Where, And, Or }
@@ -50,6 +50,9 @@ namespace DataFramework {
 
         /// <summary>Acciones a realizar en merge</summary>
         public enum dbMrA { Insert, Update, Delete }
+
+        /// <summary>Data origin to compare in merge when</summary>
+        public enum dbMby { None, Source, Target }
 
         /// <summary>Tipos de output en una consulta</summary>
         public enum dbOut { Undefined, Inserted, Deleted }
@@ -110,7 +113,9 @@ namespace DataFramework {
             public string database;
 
             public override string ToString() {
-                return table;
+                return (!string.IsNullOrEmpty(database) ? database + "." : "")
+                    + (!string.IsNullOrEmpty(schema) ? schema + "." : (!string.IsNullOrEmpty(database) ? "." : ""))
+                    + table;
             }
         }
 
@@ -330,6 +335,7 @@ namespace DataFramework {
                         + (string.IsNullOrEmpty(updateFrom.schema) ? "" : updateFrom.schema + ".")
                         + updateFrom.table;
                     sqlQuery += ConcatList(" SET", " ", lstStrSet, ",");
+                    sqlQuery += output.ToString();
                     sqlQuery += lstUnion[0].lstFrom.Count > 0 ? " FROM" + ConcatJoin(lstUnion[0]) : "";
                     sqlQuery += ConcatWhere(lstUnion[0].lstWhere);
 
@@ -351,6 +357,7 @@ namespace DataFramework {
                     sqlQuery += ConcatWhere(" ON", merge.Keys);
                     foreach (Merger.MergerAction act in merge.Actions) {
                         sqlQuery += " WHEN " + (act.Matched ? "MATCHED" : "NOT MATCHED");
+                        sqlQuery += (act.By == dbMby.None ? "" : " BY " + act.By.ToString().ToUpper());
                         sqlQuery += (act.Conditions.Count > 0 ? ConcatWhere(" AND", act.Conditions) : "") + " THEN";
                         sqlQuery += " " + act.Action.ToString().ToUpper();
                         switch (act.Action) {
@@ -525,6 +532,7 @@ namespace DataFramework {
             if (o is Query) { return new Expression((Query)o); }
             if (o is Enum) { return (Expression)Convert.ToInt32(o); }
             if (o is Expression) { return (Expression)o; }
+            if (o is DBNull) { return (Expression)DBNull.Value; }
             return (Expression)o.ToString();
         }
 
@@ -562,6 +570,8 @@ namespace DataFramework {
                     return "NOT IN";
                 case dbCom.Like:
                     return "LIKE";
+                case dbCom.NotLike:
+                    return "NOT LIKE";
             }
             return "";
         }

@@ -23,6 +23,10 @@ namespace DataFramework {
             particles.Add(new Particle(dbOpe.Qry, expr.ToString()));
         }
 
+        private Expression() {
+            particles.Add(new Particle(dbOpe.NoOp, "NULL"));
+        }
+
         private Expression(DateTime expr) {
             particles.Add(new Particle(dbOpe.NoOp, "'" + expr.ToString("yyyy-MM-ddTHH:mm:ss") + "'"));
         }
@@ -64,6 +68,7 @@ namespace DataFramework {
         public static implicit operator Expression(bool expr) { return new Expression((expr ? 1 : 0).ToString()); }
         public static implicit operator Expression(DateTime expr) { return new Expression(expr); }
         public static implicit operator Expression(Query expr) { return new Expression(expr); }
+        public static implicit operator Expression(DBNull expr) { return new Expression(); }
 
         /// <summary>Evalua la expressión y devuelve su representación textual</summary>
         public override string ToString() {
@@ -187,7 +192,7 @@ namespace DataFramework {
             return null;
         }
 
-        /// <summary>Convierte el valor en el tipo indicado</summary>
+        /// <summary>Converts value into selected data type</summary>
         public static Expression Cast(Expression expr, dbTyp type, params int[] ranges) {
             expr = expr.Operate(dbOpe.As, type.ToString().ToUpper());
             if (ranges.Length > 0) {
@@ -198,6 +203,11 @@ namespace DataFramework {
                 expr = expr.Operate(dbOpe.In, inExpr);
             }
             return expr.Fun(dbFun.Cast);
+        }
+
+        /// <summary>Converts value into selected data type</summary>
+        public Expression Cast(dbTyp type, params int[] range) {
+            return Expression.Cast(this, type, range);
         }
 
         /// <summary>Convierte el valor en el tipo indicado</summary>
@@ -245,6 +255,16 @@ namespace DataFramework {
             target = target.Operate(dbOpe.Comma, start);
             target = target.Operate(dbOpe.Comma, length);
             return target.Fun(dbFun.SubString);
+        }
+
+        /// <summary>Returns current length of target string</summary>
+        public static Expression Len(Expression target) {
+            return target.Fun(dbFun.Len);
+        }
+
+        /// <summary>Returns current length of target string</summary>
+        public Expression Len() {
+            return Expression.Len(this);
         }
 
         /// <summary>Reemplaza un patron dentro de una cadena</summary>
@@ -337,10 +357,10 @@ namespace DataFramework {
 
         /// <summary>Expresión lógica que permite uso de OR y agrega comillas en caso de ser requeridas</summary>
         public static Expression WhereVal(dbCom comp, Expression val, params string[] values) {
-            Expression[] valoresExpresion = values.Select(v => (Expression)AddSingleQuotesIfMissing(v)).ToArray();
-            Comparison whr = Log(dbLog.Where, comp, val, valoresExpresion);
+            Expression[] quotedValues = values.Select(v => (Expression)AddSingleQuotesIfMissing(v)).ToArray();
+            Comparison whr = Log(dbLog.Where, comp, val, quotedValues);
             return new Expression(dbLog.Where, whr);
-        }        
+        }
 
         /// <summary>And para expresión lógica</summary>
         public Expression And(dbCom comp, Expression val, params Expression[] values) {
@@ -351,6 +371,18 @@ namespace DataFramework {
         /// <summary>And para expresión lógica de equidad</summary>
         public Expression And(Expression val, params Expression[] values) {
             return And(dbCom.Equals, val, values);
+        }
+
+        /// <summary>And para expresión lógica agregando comillas en caso de ser requeridas</summary>
+        public Expression AndVal(dbCom comp, Expression val, params string[] values) {
+            Expression[] quotedValues = values.Select(v => (Expression)AddSingleQuotesIfMissing(v)).ToArray();
+            Comparison whr = Log(dbLog.And, comp, val, quotedValues);
+            return this.Operate(dbLog.And, whr);
+        }
+
+        /// <summary>And para expresión lógica de equidad agregando comillas en caso de ser requeridas</summary>
+        public Expression AndVal(Expression val, params string[] values) {
+            return AndVal(dbCom.Equals, val, values);
         }
 
         /// <summary>Or para expresión lógica</summary>
@@ -372,6 +404,23 @@ namespace DataFramework {
         /// <summary>Or para expresión lógica a partir de otra expresión lógica</summary>
         public Expression Or(Expression expr) {
             return this.Operate(dbLog.Or, expr);
+        }
+
+        /// <summary>Or para expresión lógica agregando comillas en caso de ser requeridas</summary>
+        public Expression OrVal(dbCom comp, Expression val, params string[] values) {
+            Expression[] quotedValues = values.Select(v => (Expression)AddSingleQuotesIfMissing(v)).ToArray();
+            Comparison whr = Log(dbLog.And, comp, val, quotedValues);
+            return this.Operate(dbLog.Or, whr);
+        }
+
+        /// <summary>Or para expresión lógica de equidad agregando comillas en caso de ser requeridas</summary>
+        public Expression OrVal(Expression val, params string[] values) {
+            if (values == null || values.Length == 0) {
+                return this.Operate(dbLog.Or, val);
+            }
+            else {
+                return OrVal(dbCom.Equals, val, values);
+            }
         }
 
         #endregion
