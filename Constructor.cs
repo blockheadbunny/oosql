@@ -332,6 +332,7 @@ namespace DataFramework {
                         + (string.IsNullOrEmpty(updateFrom.schema) ? "" : updateFrom.schema + ".")
                         + updateFrom.table;
                     sqlQuery += ConcatList(" SET", " ", lstStrSet, ",");
+                    sqlQuery += output.ToString();
                     sqlQuery += lstUnion[0].lstFrom.Count > 0 ? " FROM" + ConcatJoin(lstUnion[0]) : "";
                     sqlQuery += ConcatWhere(lstUnion[0].lstWhere);
 
