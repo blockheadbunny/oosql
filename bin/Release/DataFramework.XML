@@ -40,6 +40,12 @@
         <member name="M:DataFramework.Batch.Declare(DataFramework.Constructor.dbTyp,System.String,System.Int32[])">
             <summary>Agrega una instruccion de declaracion de variable</summary>
         </member>
+        <member name="M:DataFramework.Batch.IF(DataFramework.Expression,DataFramework.IQryable,DataFramework.IQryable)">
+            <summary>Add a boolean condition with false part to the batch</summary>
+        </member>
+        <member name="M:DataFramework.Batch.IF(DataFramework.Expression,DataFramework.IQryable)">
+            <summary>Add a boolean condition to the batch</summary>
+        </member>
         <member name="T:DataFramework.Constructor.dbItr">
             <summary>Listado de instrucciones a ejecutar</summary>
         </member>

@@ -121,5 +121,16 @@ namespace DataFramework {
             Structure stu = new Structure(Structure.StrucOperation.declare, Structure.StrucType.var, type, name, lengths);
             lstQuery.Add(stu);
         }
+
+        /// <summary>Add a boolean condition with false part to the batch</summary>
+        public void IF(Expression condition, IQryable truePart, IQryable falsePart) {
+            BooleanCondition bol = new BooleanCondition(condition, truePart, falsePart);
+            lstQuery.Add(bol);
+        }
+
+        /// <summary>Add a boolean condition to the batch</summary>
+        public void IF(Expression condition, IQryable truePart) {
+            IF(condition, truePart, null);
+        }
     }
 }
