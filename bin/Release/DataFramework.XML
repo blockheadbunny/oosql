@@ -22,6 +22,9 @@
         <member name="M:DataFramework.Batch.AddStatement(DataFramework.Batch.SetStatement,System.Boolean)">
             <summary>Activa o desactiva la opcion indicada para todo el batch</summary>
         </member>
+        <member name="M:DataFramework.Batch.Use(System.String)">
+            <summary>Adds a database changer instruction</summary>
+        </member>
         <member name="M:DataFramework.Batch.Tran">
             <summary>Agrega una instruccion de inicio de transaccion al batch</summary>
         </member>

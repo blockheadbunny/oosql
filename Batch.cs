@@ -89,6 +89,11 @@ namespace DataFramework {
             lstStatements.Add(bchOpt);
         }
 
+        /// <summary>Adds a database changer instruction</summary>
+        public void Use(string database) {
+            lstQuery.Add(new Instruction(database));
+        }
+
         /// <summary>Agrega una instruccion de inicio de transaccion al batch</summary>
         public void Tran() {
             lstQuery.Add(new Instruction(Instruction.ItrType.tran));

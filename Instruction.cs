@@ -5,6 +5,7 @@ using System.Collections.Generic;
 namespace DataFramework {
     internal class Instruction : IQryable {
         public enum ItrType {
+            use,
             tran,
             commit,
             rollback
@@ -13,9 +14,15 @@ namespace DataFramework {
         public ItrType Type { get; set; }
         public bool SingleTransaction { get; set; }
         public string Id { get; set; }
+        public string DataBase { get; set; }
 
         public Instruction(ItrType type) {
             Type = type;
+        }
+
+        public Instruction(string database) {
+            Type = ItrType.use;
+            DataBase = database;
         }
 
         public override string ToString() {
@@ -38,6 +45,9 @@ namespace DataFramework {
                     if (SingleTransaction && Id == null) {
                         buffer.Append(" TRANSACTION " + Id);
                     }
+                    break;
+                case ItrType.use:
+                    buffer.Append("USE " + DataBase);
                     break;
             }
             return buffer.ToString();
