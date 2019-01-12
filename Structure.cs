@@ -20,11 +20,12 @@ namespace DataFramework {
         }
 
         public enum StrucOperation { declare, create, alter, drop }
-        public enum StrucType { var, table }
+        public enum StrucType { var, table, custom }
 
         private StrucOperation Operation { get; set; }
         private StrucType Type { get; set; }
         private string Name { get; set; }
+        private string CustomType { get; set; }
         private Expression Value { get; set; }
         private Constructor.dbTyp VarType { get; set; }
         private int[] Lengths { get; set; }
@@ -51,6 +52,14 @@ namespace DataFramework {
             Operation = operation;
             Type = type;
             Name = name;
+        }
+
+        public Structure(StrucOperation operation, StrucType type, string name, string customName, string schemeName)
+        {
+            Operation = operation;
+            Type = type;
+            Name = name;
+            CustomType = (schemeName.Length == 0 ? "dbo" : schemeName) + '.' + customName;
         }
 
         public Structure AddColumn(Constructor.dbTyp type, string name, bool isNullable, params int[] lengths) {
@@ -87,6 +96,9 @@ namespace DataFramework {
                     .ToArray();
                 declaration.Append(string.Join(", ", serializedColumns));
                 declaration.Append(" )");
+            }
+            else if (Type == StrucType.custom) {
+                declaration.Append(" AS " + CustomType);
             }
             else {
                 string[] lens = Lengths.Select(l => l.ToString()).ToArray();
