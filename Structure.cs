@@ -20,18 +20,19 @@ namespace DataFramework {
         }
 
         public enum StrucOperation { declare, create, alter, drop }
-        public enum StrucType { var, table, custom }
+        public enum StrucType { var, table }
 
         private StrucOperation Operation { get; set; }
         private StrucType Type { get; set; }
         private string Name { get; set; }
         private string CustomType { get; set; }
+        private string Schema { get; set; }
         private Expression Value { get; set; }
         private Constructor.dbTyp VarType { get; set; }
         private int[] Lengths { get; set; }
         private List<Column> Columns = new List<Column>();
 
-        public Structure(StrucOperation operation, StrucType type, Constructor.dbTyp varType, Expression value, string name, int[] lengths) {
+        public Structure(StrucOperation operation, StrucType type, Constructor.dbTyp varType, Expression value, string name, params int[] lengths) {
             Operation = operation;
             Type = type;
             Name = name;
@@ -40,7 +41,7 @@ namespace DataFramework {
             Lengths = lengths;
         }
 
-        public Structure(StrucOperation operation, StrucType type, Constructor.dbTyp varType, string name, int[] lengths) {
+        public Structure(StrucOperation operation, StrucType type, Constructor.dbTyp varType, string name, params int[] lengths) {
             Operation = operation;
             Type = type;
             Name = name;
@@ -48,18 +49,27 @@ namespace DataFramework {
             Lengths = lengths;
         }
 
+        public Structure(StrucOperation operation, StrucType type, Constructor.dbTyp varType, string name, string customType) {
+            Operation = operation;
+            Type = type;
+            VarType = varType;
+            Name = name;
+            CustomType = customType;
+        }
+
+        public Structure(StrucOperation operation, StrucType type, Constructor.dbTyp varType, string name, string customType, string schema) {
+            Operation = operation;
+            Type = type;
+            VarType = varType;
+            Name = name;
+            CustomType = customType;
+            Schema = schema;
+        }
+
         public Structure(StrucOperation operation, StrucType type, string name) {
             Operation = operation;
             Type = type;
             Name = name;
-        }
-
-        public Structure(StrucOperation operation, StrucType type, string name, string customName, string schemeName)
-        {
-            Operation = operation;
-            Type = type;
-            Name = name;
-            CustomType = (schemeName.Length == 0 ? "dbo" : schemeName) + '.' + customName;
         }
 
         public Structure AddColumn(Constructor.dbTyp type, string name, bool isNullable, params int[] lengths) {
@@ -97,12 +107,14 @@ namespace DataFramework {
                 declaration.Append(string.Join(", ", serializedColumns));
                 declaration.Append(" )");
             }
-            else if (Type == StrucType.custom) {
-                declaration.Append(" AS " + CustomType);
-            }
             else {
-                string[] lens = Lengths.Select(l => l.ToString()).ToArray();
-                declaration.Append(" " + VarType.ToString().ToUpper());
+                string[] lens = (Lengths ?? new int[] { }).Select(l => l.ToString()).ToArray();
+                if (VarType == Constructor.dbTyp.Custom) {
+                    declaration.Append(" AS " + (Schema == null ? "" : Schema + ".") + CustomType);
+                }
+                else {
+                    declaration.Append(" " + VarType.ToString().ToUpper());
+                }
                 declaration.Append(lens.Length > 0 ? "(" + string.Join(", ", lens) + ")" : "");
                 declaration.Append(Value != null ? " = " + Value.ToString() : "");
             }
