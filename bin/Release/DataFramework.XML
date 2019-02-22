@@ -196,7 +196,7 @@
         <member name="M:DataFramework.DataManager.Exec">
             <summary>Ejecuta el ultimo query almacenado y devuelve un dataset con los resultados del mismo</summary>
         </member>
-        <member name="M:DataFramework.DataManager.ExecTran(DataFramework.Query[])">
+        <member name="M:DataFramework.DataManager.ExecTran(DataFramework.IQryable[])">
             <summary>Ejecuta los queries enviados en una transacción de rollback automático</summary>
         </member>
         <member name="M:DataFramework.DataManager.ExecTable(DataFramework.IQryable)">

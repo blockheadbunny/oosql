@@ -105,7 +105,7 @@ namespace DataFramework {
         }
 
         /// <summary>Ejecuta los queries enviados en una transacción de rollback automático</summary>
-        public DataSet ExecTran(params Query[] queries) {
+        public DataSet ExecTran(params IQryable[] queries) {
             Batch b = new Batch(Batch.Option.Transaction);
             b.AddStatement(Batch.SetStatement.xact_abort, true);
             b.AddInstruction(queries);
