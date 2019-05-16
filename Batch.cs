@@ -109,6 +109,11 @@ namespace DataFramework {
             lstQuery.Add(new Instruction(Instruction.ItrType.rollback));
         }
 
+        /// <summary>Inserts a return instruction</summary>
+        public void Return() {
+            lstQuery.Add(new Instruction(Instruction.ItrType.returnn));
+        }
+
         /// <summary>Agrega una instruccion de declaracion de tabla</summary>
         public void Declare(string name) {
             Structure stu = new Structure(Structure.StrucOperation.declare, Structure.StrucType.table, name);

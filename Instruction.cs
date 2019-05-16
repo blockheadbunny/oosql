@@ -8,7 +8,8 @@ namespace DataFramework {
             use,
             tran,
             commit,
-            rollback
+            rollback,
+            returnn
         }
 
         public ItrType Type { get; set; }
@@ -48,6 +49,9 @@ namespace DataFramework {
                     break;
                 case ItrType.use:
                     buffer.Append("USE " + DataBase);
+                    break;
+                case ItrType.returnn:
+                    buffer.Append("RETURN");
                     break;
             }
             return buffer.ToString();
