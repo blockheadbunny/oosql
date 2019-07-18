@@ -656,6 +656,8 @@ namespace DataFramework {
             validaciones.Add("([-+]?[0-9]+[.]?[0-9]*)");
             //Numeros con o sin signo y con o sin punto (obligatorio numero a la derecha del punto)
             validaciones.Add("([-+]?[0-9]*[.]?[0-9]+)");
+            //Hexadecimal
+            validaciones.Add("0x[0-9A-Fa-f]*");
 
             //Concatenar validaciones en un solo regex
             foreach (string val in validaciones) {
