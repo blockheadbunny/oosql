@@ -524,6 +524,7 @@ namespace DataFramework {
             if (o is int?) { return (Expression)((int?)o).Value; }
             if (o is long) { return (Expression)(long)o; }
             if (o is decimal) { return (Expression)(decimal)o; }
+            if (o is decimal?) { return (Expression)((decimal?)o).Value; }
             if (o is float) { return (Expression)(float)o; }
             if (o is double) { return (Expression)(double)o; }
             if (o is bool) { return (Expression)(bool)o; }
