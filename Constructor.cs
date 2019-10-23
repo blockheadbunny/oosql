@@ -45,6 +45,9 @@ namespace DataFramework {
         /// <summary>Tipos de datos</summary>
         public enum dbTyp { Int, Varchar, Date, DateTime, Decimal, Bit, Custom }
 
+        /// <summary>Var size</summary>
+        public enum dbSiz { Max, Other }
+
         /// <summary>Intervalos de tiempo</summary>
         public enum dbTim { Year, Quarter, Month, DayOfYear, Day, Week, Hour, Minute, Second, Millisecond, Microsecond, Nanosecond }
 

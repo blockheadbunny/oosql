@@ -88,6 +88,9 @@
         <member name="T:DataFramework.Constructor.dbTyp">
             <summary>Tipos de datos</summary>
         </member>
+        <member name="T:DataFramework.Constructor.dbSiz">
+            <summary>Var size</summary>
+        </member>
         <member name="T:DataFramework.Constructor.dbTim">
             <summary>Intervalos de tiempo</summary>
         </member>
@@ -313,11 +316,20 @@
         <member name="M:DataFramework.Expression.Coalesce(DataFramework.Expression[])">
             <summary>Devuelve el primer valor no nulo del listado</summary>
         </member>
+        <member name="M:DataFramework.Expression.Cast(DataFramework.Expression,DataFramework.Constructor.dbTyp,DataFramework.Constructor.dbSiz,System.Int32[])">
+            <summary>Converts value into selected data type</summary>
+        </member>
         <member name="M:DataFramework.Expression.Cast(DataFramework.Expression,DataFramework.Constructor.dbTyp,System.Int32[])">
             <summary>Converts value into selected data type</summary>
         </member>
+        <member name="M:DataFramework.Expression.CastMax(DataFramework.Expression,DataFramework.Constructor.dbTyp)">
+            <summary>Converts value into selected data type with max as size</summary>
+        </member>
         <member name="M:DataFramework.Expression.Cast(DataFramework.Constructor.dbTyp,System.Int32[])">
             <summary>Converts value into selected data type</summary>
+        </member>
+        <member name="M:DataFramework.Expression.CastMax(DataFramework.Constructor.dbTyp)">
+            <summary>Converts value into selected data type with max as size</summary>
         </member>
         <member name="M:DataFramework.Expression.Convert(DataFramework.Constructor.dbTyp,DataFramework.Expression,System.Int32[])">
             <summary>Convierte el valor en el tipo indicado</summary>

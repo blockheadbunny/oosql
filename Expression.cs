@@ -193,21 +193,43 @@ namespace DataFramework {
         }
 
         /// <summary>Converts value into selected data type</summary>
-        public static Expression Cast(Expression expr, dbTyp type, params int[] ranges) {
+        private static Expression Cast(Expression expr, dbTyp type, dbSiz size, params int[] ranges) {
             expr = expr.Operate(dbOpe.As, type.ToString().ToUpper());
-            if (ranges.Length > 0) {
-                Expression inExpr = (Expression)ranges[0];
-                for (int i = 1; i < ranges.Length; i++) {
-                    inExpr = inExpr.Operate(dbOpe.Comma, ranges[i].ToString());
-                }
+            if (size == dbSiz.Max) {
+                Expression inExpr = (Expression)dbSiz.Max.ToString().ToUpper();
                 expr = expr.Operate(dbOpe.In, inExpr);
+                return expr.Fun(dbFun.Cast);
+            }
+            else {
+                if (ranges.Length > 0) {
+                    Expression inExpr = (Expression)ranges[0];
+                    for (int i = 1; i < ranges.Length; i++) {
+                        inExpr = inExpr.Operate(dbOpe.Comma, ranges[i].ToString());
+                    }
+                    expr = expr.Operate(dbOpe.In, inExpr);
+                }
             }
             return expr.Fun(dbFun.Cast);
         }
 
         /// <summary>Converts value into selected data type</summary>
+        public static Expression Cast(Expression expr, dbTyp type, params int[] ranges) {
+            return Cast(expr, type, dbSiz.Other, ranges);
+        }
+
+        /// <summary>Converts value into selected data type with max as size</summary>
+        public static Expression CastMax(Expression expr, dbTyp type) {
+            return Cast(expr, type, dbSiz.Max);
+        }
+
+        /// <summary>Converts value into selected data type</summary>
         public Expression Cast(dbTyp type, params int[] range) {
-            return Expression.Cast(this, type, range);
+            return Expression.Cast(this, type, dbSiz.Other, range);
+        }
+
+        /// <summary>Converts value into selected data type with max as size</summary>
+        public Expression CastMax(dbTyp type) {
+            return Expression.Cast(this, type, dbSiz.Max);
         }
 
         /// <summary>Convierte el valor en el tipo indicado</summary>
