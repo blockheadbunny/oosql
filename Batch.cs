@@ -89,6 +89,11 @@ namespace DataFramework {
             lstStatements.Add(bchOpt);
         }
 
+        /// <summary>Adds a database changer instruction</summary>
+        public void Use(string database) {
+            lstQuery.Add(new Instruction(database));
+        }
+
         /// <summary>Agrega una instruccion de inicio de transaccion al batch</summary>
         public void Tran() {
             lstQuery.Add(new Instruction(Instruction.ItrType.tran));
@@ -102,6 +107,11 @@ namespace DataFramework {
         /// <summary>Agrega una instruccion de terminacion de transaccion al batch</summary>
         public void Rollback() {
             lstQuery.Add(new Instruction(Instruction.ItrType.rollback));
+        }
+
+        /// <summary>Inserts a return instruction</summary>
+        public void Return() {
+            lstQuery.Add(new Instruction(Instruction.ItrType.returnn));
         }
 
         /// <summary>Agrega una instruccion de declaracion de tabla</summary>
@@ -120,6 +130,17 @@ namespace DataFramework {
         public void Declare(Constructor.dbTyp type, string name, params int[] lengths) {
             Structure stu = new Structure(Structure.StrucOperation.declare, Structure.StrucType.var, type, name, lengths);
             lstQuery.Add(stu);
+        }
+
+        /// <summary>Add a boolean condition with false part to the batch</summary>
+        public void IF(Expression condition, IQryable truePart, IQryable falsePart) {
+            BooleanCondition bol = new BooleanCondition(condition, truePart, falsePart);
+            lstQuery.Add(bol);
+        }
+
+        /// <summary>Add a boolean condition to the batch</summary>
+        public void IF(Expression condition, IQryable truePart) {
+            IF(condition, truePart, null);
         }
     }
 }

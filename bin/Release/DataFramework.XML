@@ -22,6 +22,9 @@
         <member name="M:DataFramework.Batch.AddStatement(DataFramework.Batch.SetStatement,System.Boolean)">
             <summary>Activa o desactiva la opcion indicada para todo el batch</summary>
         </member>
+        <member name="M:DataFramework.Batch.Use(System.String)">
+            <summary>Adds a database changer instruction</summary>
+        </member>
         <member name="M:DataFramework.Batch.Tran">
             <summary>Agrega una instruccion de inicio de transaccion al batch</summary>
         </member>
@@ -31,6 +34,9 @@
         <member name="M:DataFramework.Batch.Rollback">
             <summary>Agrega una instruccion de terminacion de transaccion al batch</summary>
         </member>
+        <member name="M:DataFramework.Batch.Return">
+            <summary>Inserts a return instruction</summary>
+        </member>
         <member name="M:DataFramework.Batch.Declare(System.String)">
             <summary>Agrega una instruccion de declaracion de tabla</summary>
         </member>
@@ -39,6 +45,12 @@
         </member>
         <member name="M:DataFramework.Batch.Declare(DataFramework.Constructor.dbTyp,System.String,System.Int32[])">
             <summary>Agrega una instruccion de declaracion de variable</summary>
+        </member>
+        <member name="M:DataFramework.Batch.IF(DataFramework.Expression,DataFramework.IQryable,DataFramework.IQryable)">
+            <summary>Add a boolean condition with false part to the batch</summary>
+        </member>
+        <member name="M:DataFramework.Batch.IF(DataFramework.Expression,DataFramework.IQryable)">
+            <summary>Add a boolean condition to the batch</summary>
         </member>
         <member name="T:DataFramework.Constructor.dbItr">
             <summary>Listado de instrucciones a ejecutar</summary>
@@ -75,6 +87,9 @@
         </member>
         <member name="T:DataFramework.Constructor.dbTyp">
             <summary>Tipos de datos</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.dbSiz">
+            <summary>Var size</summary>
         </member>
         <member name="T:DataFramework.Constructor.dbTim">
             <summary>Intervalos de tiempo</summary>
@@ -187,7 +202,7 @@
         <member name="M:DataFramework.DataManager.Exec">
             <summary>Ejecuta el ultimo query almacenado y devuelve un dataset con los resultados del mismo</summary>
         </member>
-        <member name="M:DataFramework.DataManager.ExecTran(DataFramework.Query[])">
+        <member name="M:DataFramework.DataManager.ExecTran(DataFramework.IQryable[])">
             <summary>Ejecuta los queries enviados en una transacción de rollback automático</summary>
         </member>
         <member name="M:DataFramework.DataManager.ExecTable(DataFramework.IQryable)">
@@ -301,11 +316,20 @@
         <member name="M:DataFramework.Expression.Coalesce(DataFramework.Expression[])">
             <summary>Devuelve el primer valor no nulo del listado</summary>
         </member>
+        <member name="M:DataFramework.Expression.Cast(DataFramework.Expression,DataFramework.Constructor.dbTyp,DataFramework.Constructor.dbSiz,System.Int32[])">
+            <summary>Converts value into selected data type</summary>
+        </member>
         <member name="M:DataFramework.Expression.Cast(DataFramework.Expression,DataFramework.Constructor.dbTyp,System.Int32[])">
             <summary>Converts value into selected data type</summary>
         </member>
+        <member name="M:DataFramework.Expression.CastMax(DataFramework.Expression,DataFramework.Constructor.dbTyp)">
+            <summary>Converts value into selected data type with max as size</summary>
+        </member>
         <member name="M:DataFramework.Expression.Cast(DataFramework.Constructor.dbTyp,System.Int32[])">
             <summary>Converts value into selected data type</summary>
+        </member>
+        <member name="M:DataFramework.Expression.CastMax(DataFramework.Constructor.dbTyp)">
+            <summary>Converts value into selected data type with max as size</summary>
         </member>
         <member name="M:DataFramework.Expression.Convert(DataFramework.Constructor.dbTyp,DataFramework.Expression,System.Int32[])">
             <summary>Convierte el valor en el tipo indicado</summary>

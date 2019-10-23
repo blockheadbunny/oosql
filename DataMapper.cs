@@ -6,6 +6,7 @@ using System.Data;
 namespace DataFramework
 {
     /// <summary>Facilita consultas de lectura y escritura de objetos logicos</summary>
+    [Obsolete]
     public class DataMapper
     {
         private class FieldMap
