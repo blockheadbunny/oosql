@@ -158,7 +158,7 @@
             <summary>Convierte el objeto a expression dependiendo de su tipo</summary>
         </member>
         <member name="M:DataFramework.Constructor.AddSingleQuotesIfMissing(System.String)">
-            <summary>Agrega comillas a la cadena en caso de que esta no posea comillas al principio y al final</summary>
+            <summary>Adds quotes to the start and ending of the string if they are missing</summary>
         </member>
         <member name="M:DataFramework.Constructor.dbComToString(DataFramework.Constructor.dbCom)">
             <summary>Devuelve los caracteres específicos para la comparación de base de datos</summary>

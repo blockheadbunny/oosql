@@ -540,13 +540,13 @@ namespace DataFramework {
             return (Expression)o.ToString();
         }
 
-        /// <summary>Agrega comillas a la cadena en caso de que esta no posea comillas al principio y al final</summary>
+        /// <summary>Adds quotes to the start and ending of the string if they are missing</summary>
         protected static string AddSingleQuotesIfMissing(string s) {
-            Regex rgxApos = new Regex("^'([^']|'')*'$");
-            if (!rgxApos.IsMatch(s)) {
-                return "N'" + s + "'";
-            }
-            return s;
+            Regex rgxApos = new Regex("^N?'(.*)'$");
+            string withoutSurroundingApos = rgxApos.Replace(s, "$1");
+            string withDuppedApos = withoutSurroundingApos.Replace("'", "''");
+            string withSurroundingAndDuppedApos = "N'" + withDuppedApos + "'";
+            return withSurroundingAndDuppedApos;
         }
 
         /// <summary>Devuelve los caracteres específicos para la comparación de base de datos</summary>
