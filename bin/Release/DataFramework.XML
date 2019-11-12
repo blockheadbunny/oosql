@@ -764,7 +764,7 @@
         <member name="M:DataFramework.Query.Having(DataFramework.Expression)">
             <summary>Agrega una condicion al listado de condiciones de agrupacion</summary>
         </member>
-        <member name="M:DataFramework.Query.OrderBy(System.String,DataFramework.Constructor.dbOrd)">
+        <member name="M:DataFramework.Query.OrderBy(DataFramework.Expression,DataFramework.Constructor.dbOrd)">
             <summary>Agrega un campo al listado de campos de orden</summary>
         </member>
         <member name="M:DataFramework.Query.OrderBy(System.String[])">

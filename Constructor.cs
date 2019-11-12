@@ -171,6 +171,15 @@ namespace DataFramework {
             public string fieldAlias;
         }
 
+        protected internal class Order {
+            public Expression field { get; set; }
+            public dbOrd order { get; set; }
+
+            public override string ToString() {
+                return field.ToString() + " " + order.ToString().ToUpper();
+            }
+        }
+
         /// <summary>Estructura de consulta de uso repetido</summary>
         protected internal class CommonTableExpression {
             public string alias;
@@ -233,7 +242,7 @@ namespace DataFramework {
         protected Query insQuery;
         protected Table updateFrom;
         protected List<string[]> lstSet = new List<string[]>();
-        protected List<string> lstOrderBy = new List<string>();
+        protected internal List<Order> lstOrderBy = new List<Order>();
         protected CommonTableExpression cte = new CommonTableExpression();
         internal Merger merge;
 
@@ -292,7 +301,7 @@ namespace DataFramework {
                         if (lstUnion[u].type == dbUni.NotUnited) { break; }
                     }
 
-                    sqlQuery += ConcatList(" ORDER BY", " ", lstOrderBy, ",");
+                    sqlQuery += ConcatList(" ORDER BY", " ", lstOrderBy.Select(e => e.ToString()), ",");
                     sqlQuery += curUnion.forXml != null ? " FOR XML " + curUnion.forXml.mode.ToString().ToUpper() + (curUnion.forXml.element != null ? " (" + curUnion.forXml.element + ")" : "") : "";
 
                     break;

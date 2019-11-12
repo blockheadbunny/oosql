@@ -667,8 +667,8 @@ namespace DataFramework {
         }
 
         /// <summary>Agrega un campo al listado de campos de orden</summary>
-        public Query OrderBy(string field, dbOrd order) {
-            lstOrderBy.Add((SanitizeSQL(field) + " " + order.ToString().ToUpper()).Trim());
+        public Query OrderBy(Expression field, dbOrd order) {
+            lstOrderBy.Add(new Order() { field = field, order = order });
             return this;
         }
 
