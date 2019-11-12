@@ -172,6 +172,11 @@ namespace DataFramework {
         public static Expression operator *(Expression expr1, Expression expr2) { return expr1.Operate(dbOpe.Multiplication, expr2); }
         public static Expression operator /(Expression expr1, Expression expr2) { return expr1.Operate(dbOpe.Division, expr2); }
         public static Expression operator %(Expression expr1, Expression expr2) { return expr1.Operate(dbOpe.Modulo, expr2); }
+
+        /// <summary>Gets the absolute value of the number</summary>
+        public static Expression Abs(Expression value) {
+            return value.Fun(dbFun.Abs);
+        }
         #endregion
 
         #region BuiltIn Functions

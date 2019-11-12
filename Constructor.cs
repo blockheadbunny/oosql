@@ -37,7 +37,7 @@ namespace DataFramework {
         public enum dbOpe { NoOp, Funct, Agg, Over, Qry, Addition, Substraction, Multiplication, Division, Modulo, Case, Else, Log, Comma, As, In }
 
         /// <summary>Funciones de base expresiones</summary>
-        public enum dbFun { Round, Coalesce, Cast, Convert, CharIndex, Left, Mid, Right, Len, SubString, Replace, Stuff, DateDiff, Year, Month, Day, GetDate, Upper, Lower }
+        public enum dbFun { Abs, Round, Coalesce, Cast, Convert, CharIndex, Left, Mid, Right, Len, SubString, Replace, Stuff, DateDiff, Year, Month, Day, GetDate, Upper, Lower }
 
         /// <summary>Operadores Logicos</summary>
         public enum dbLog { Where, And, Or }
