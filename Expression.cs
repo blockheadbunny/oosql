@@ -309,6 +309,14 @@ namespace DataFramework {
             return target.Fun(dbFun.Stuff);
         }
 
+        /// <summary>Adds a quantity to a component of a date</summary>
+        public static Expression DateAdd(dbTim datepart, Expression quantity, Expression targetDate) {
+            Expression expr = new Expression(datepart);
+            expr = expr.Operate(dbOpe.Comma, quantity);
+            expr = expr.Operate(dbOpe.Comma, targetDate);
+            return expr.Fun(dbFun.DateAdd);
+        }
+
         /// <summary>Devuelve la diferencia entre las dos fechas indicadas</summary>
         public static Expression DateDiff(dbTim datepart, Expression startDate, Expression endDate) {
             Expression expr = new Expression(datepart);
