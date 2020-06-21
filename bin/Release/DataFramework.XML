@@ -608,6 +608,15 @@
         <member name="M:DataFramework.Query.Merge(System.String,DataFramework.Query)">
             <summary>Prepara el query para realizar una consulta merge y asigna las tablas afectadas</summary>
         </member>
+        <member name="M:DataFramework.Query.MergeTarget(System.String,System.String,System.String,System.String)">
+            <summary>Adds a target table to the merge statement</summary>
+        </member>
+        <member name="M:DataFramework.Query.MergeTarget(System.String,System.String,System.String)">
+            <summary>Adds a target table to the merge statement</summary>
+        </member>
+        <member name="M:DataFramework.Query.MergeUsing(System.String,DataFramework.Query)">
+            <summary>Adds an origin table to the merge statement</summary>
+        </member>
         <member name="M:DataFramework.Query.FromAs(System.String,DataFramework.Query)">
             <summary>Agrega una tabla basada en un query con un alias al listado de tablas</summary>
         </member>

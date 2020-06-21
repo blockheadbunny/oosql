@@ -258,6 +258,7 @@ namespace DataFramework {
             return Merge("d", destiny, "o", origin);
         }
 
+        /// <summary>Adds a target table to the merge statement</summary>
         public Query MergeTarget(string alias, string table, string schema, string database) {
             instruction = dbItr.mer;
             merge = merge ?? new Merger();
@@ -268,6 +269,17 @@ namespace DataFramework {
             return this;
         }
 
+        /// <summary>Adds a target table to the merge statement</summary>
+        public Query MergeTarget(string alias, string table, string schema) {
+            instruction = dbItr.mer;
+            merge = merge ?? new Merger();
+            merge.Destiny.Table = new Table(SanitizeSQL(table));
+            merge.Destiny.Alias = alias;
+            merge.Destiny.Schema = schema;
+            return this;
+        }
+
+        /// <summary>Adds an origin table to the merge statement</summary>
         public Query MergeUsing(string alias, Query origin) {
             merge = merge ?? new Merger();
             merge.Origin.Query = origin;
