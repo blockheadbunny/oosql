@@ -17,7 +17,7 @@ namespace DataFramework {
 
         public Batch Bch { get; set; }
         public Query Qry { get { return Bch.Qry; } }
-        public DataMapper Map { get; set; }
+        [Obsolete]public DataMapper Map { get; set; }
 
         public DataManager(string ConectionString) {
             strCon = StripConnString(ConectionString);
@@ -60,6 +60,7 @@ namespace DataFramework {
         }
 
         /// <summary>Crea un nuevo mapeador en base a una tabla y lo alista para su posterior ejecucion</summary>
+        [Obsolete]
         public DataMapper NewMapper(string table) {
             DataMapper newMpr = new DataMapper(table);
             Map = newMpr;
@@ -104,7 +105,7 @@ namespace DataFramework {
         }
 
         /// <summary>Ejecuta los queries enviados en una transacción de rollback automático</summary>
-        public DataSet ExecTran(params Query[] queries) {
+        public DataSet ExecTran(params IQryable[] queries) {
             Batch b = new Batch(Batch.Option.Transaction);
             b.AddStatement(Batch.SetStatement.xact_abort, true);
             b.AddInstruction(queries);
@@ -135,7 +136,12 @@ namespace DataFramework {
                 T entity = new T();
                 foreach (PropertyInfo prop in properties) {
                     if (dttRes.Columns.Contains(prop.Name)) {
-                        prop.SetValue(entity, row[prop.Name], null);
+                        if (row[prop.Name] is DBNull) {
+                            prop.SetValue(entity, null, null);
+                        }
+                        else {
+                            prop.SetValue(entity, row[prop.Name], null);
+                        }
                     }
                 }
                 entities.Add(entity);
@@ -180,6 +186,7 @@ namespace DataFramework {
         }
 
         /// <summary>Ejecuta el mapeo proveido y devuelve un dataset con los resultados del mismo</summary>
+        [Obsolete]
         public DataSet ExecMap(DataMapper DataMapper, DataMapper.Type MapType) {
             DataSet dtsRes = Exec(DataMapper.MapQuery(MapType));
             if (MapType == DataMapper.Type.Sel & dtsRes.Tables.Count > 0) {
@@ -189,6 +196,7 @@ namespace DataFramework {
         }
 
         /// <summary>Ejecuta el ultimo mapeo almacenado y devuelve un dataset con los resultados del mismo</summary>
+        [Obsolete]
         public DataSet ExecMap(DataMapper.Type MapType) {
             return ExecMap(Map, MapType);
         }

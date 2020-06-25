@@ -489,10 +489,15 @@ namespace DataFramework {
             return this;
         }
 
+        /// <summary>Adds a "matched" or "not matched" condition to the merge action based on an specific data origin</summary>
+        public Query MergeWhen(bool matched, Constructor.dbMby by) {
+            merge.MergeWhen(matched, by);
+            return this;
+        }
+
         /// <summary>Adds a "matched" or "not matched" condition to the merge action</summary>
         public Query MergeWhen(bool matched) {
-            merge.MergeWhen(matched);
-            return this;
+            return MergeWhen(matched, dbMby.None);
         }
 
         /// <summary>Adds a condition to the merge action</summary>

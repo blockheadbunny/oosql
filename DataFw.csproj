@@ -66,6 +66,7 @@
     <Compile Include="DataMapper.cs" />
     <Compile Include="Expression.cs" />
     <Compile Include="FileManager.cs" />
+    <Compile Include="BooleanCondition.cs" />
     <Compile Include="Instruction.cs" />
     <Compile Include="IQryable.cs" />
     <Compile Include="Mapper.cs" />

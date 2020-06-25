@@ -43,13 +43,19 @@ namespace DataFramework {
         public enum dbLog { Where, And, Or }
 
         /// <summary>Tipos de datos</summary>
-        public enum dbTyp { Int, Varchar, Date, DateTime, Decimal, Bit }
+        public enum dbTyp { Int, Varchar, NVarchar, Char, NChar, Date, DateTime, Decimal, Bit, Varbinary, Custom }
+
+        /// <summary>Var size</summary>
+        public enum dbSiz { Max, Other }
 
         /// <summary>Intervalos de tiempo</summary>
         public enum dbTim { Year, Quarter, Month, DayOfYear, Day, Week, Hour, Minute, Second, Millisecond, Microsecond, Nanosecond }
 
         /// <summary>Acciones a realizar en merge</summary>
         public enum dbMrA { Insert, Update, Delete }
+
+        /// <summary>Data origin to compare in merge when</summary>
+        public enum dbMby { None, Source, Target }
 
         /// <summary>Tipos de output en una consulta</summary>
         public enum dbOut { Undefined, Inserted, Deleted }
@@ -332,6 +338,7 @@ namespace DataFramework {
                         + (string.IsNullOrEmpty(updateFrom.schema) ? "" : updateFrom.schema + ".")
                         + updateFrom.table;
                     sqlQuery += ConcatList(" SET", " ", lstStrSet, ",");
+                    sqlQuery += output.ToString();
                     sqlQuery += lstUnion[0].lstFrom.Count > 0 ? " FROM" + ConcatJoin(lstUnion[0]) : "";
                     sqlQuery += ConcatWhere(lstUnion[0].lstWhere);
 
@@ -353,6 +360,7 @@ namespace DataFramework {
                     sqlQuery += ConcatWhere(" ON", merge.Keys);
                     foreach (Merger.MergerAction act in merge.Actions) {
                         sqlQuery += " WHEN " + (act.Matched ? "MATCHED" : "NOT MATCHED");
+                        sqlQuery += (act.By == dbMby.None ? "" : " BY " + act.By.ToString().ToUpper());
                         sqlQuery += (act.Conditions.Count > 0 ? ConcatWhere(" AND", act.Conditions) : "") + " THEN";
                         sqlQuery += " " + act.Action.ToString().ToUpper();
                         switch (act.Action) {
@@ -519,6 +527,7 @@ namespace DataFramework {
             if (o is int?) { return (Expression)((int?)o).Value; }
             if (o is long) { return (Expression)(long)o; }
             if (o is decimal) { return (Expression)(decimal)o; }
+            if (o is decimal?) { return (Expression)((decimal?)o).Value; }
             if (o is float) { return (Expression)(float)o; }
             if (o is double) { return (Expression)(double)o; }
             if (o is bool) { return (Expression)(bool)o; }
@@ -651,6 +660,8 @@ namespace DataFramework {
             validaciones.Add("([-+]?[0-9]+[.]?[0-9]*)");
             //Numeros con o sin signo y con o sin punto (obligatorio numero a la derecha del punto)
             validaciones.Add("([-+]?[0-9]*[.]?[0-9]+)");
+            //Hexadecimal
+            validaciones.Add("0x[0-9A-Fa-f]*");
 
             //Concatenar validaciones en un solo regex
             foreach (string val in validaciones) {
