@@ -37,13 +37,13 @@ namespace DataFramework {
         public enum dbOpe { NoOp, Funct, Agg, Over, Qry, Addition, Substraction, Multiplication, Division, Modulo, Case, Else, Log, Comma, As, In }
 
         /// <summary>Funciones de base expresiones</summary>
-        public enum dbFun { Round, Coalesce, Cast, Convert, CharIndex, Left, Mid, Right, Len, SubString, Replace, Stuff, DateDiff, Year, Month, Day, GetDate, Upper, Lower }
+        public enum dbFun { Abs, Round, Coalesce, Cast, Convert, CharIndex, Left, Mid, Right, Len, SubString, Replace, Stuff, DateAdd, DateDiff, Year, Month, Day, GetDate, Upper, Lower }
 
         /// <summary>Operadores Logicos</summary>
         public enum dbLog { Where, And, Or }
 
         /// <summary>Tipos de datos</summary>
-        public enum dbTyp { Int, Varchar, NVarchar, Char, NChar, Date, DateTime, Decimal, Bit, Varbinary, Custom }
+        public enum dbTyp { BigInt, Int, SmallInt, TinyInt, Varchar, NVarchar, Char, NChar, Date, DateTime, Decimal, Bit, Varbinary, Custom }
 
         /// <summary>Var size</summary>
         public enum dbSiz { Max, Other }
@@ -171,6 +171,15 @@ namespace DataFramework {
             public string fieldAlias;
         }
 
+        protected internal class Order {
+            public Expression field { get; set; }
+            public dbOrd order { get; set; }
+
+            public override string ToString() {
+                return field.ToString() + " " + order.ToString().ToUpper();
+            }
+        }
+
         /// <summary>Estructura de consulta de uso repetido</summary>
         protected internal class CommonTableExpression {
             public string alias;
@@ -233,7 +242,7 @@ namespace DataFramework {
         protected Query insQuery;
         protected Table updateFrom;
         protected List<string[]> lstSet = new List<string[]>();
-        protected List<string> lstOrderBy = new List<string>();
+        protected internal List<Order> lstOrderBy = new List<Order>();
         protected CommonTableExpression cte = new CommonTableExpression();
         internal Merger merge;
 
@@ -292,7 +301,7 @@ namespace DataFramework {
                         if (lstUnion[u].type == dbUni.NotUnited) { break; }
                     }
 
-                    sqlQuery += ConcatList(" ORDER BY", " ", lstOrderBy, ",");
+                    sqlQuery += ConcatList(" ORDER BY", " ", lstOrderBy.Select(e => e.ToString()), ",");
                     sqlQuery += curUnion.forXml != null ? " FOR XML " + curUnion.forXml.mode.ToString().ToUpper() + (curUnion.forXml.element != null ? " (" + curUnion.forXml.element + ")" : "") : "";
 
                     break;
@@ -540,13 +549,13 @@ namespace DataFramework {
             return (Expression)o.ToString();
         }
 
-        /// <summary>Agrega comillas a la cadena en caso de que esta no posea comillas al principio y al final</summary>
+        /// <summary>Adds quotes to the start and ending of the string if they are missing</summary>
         protected static string AddSingleQuotesIfMissing(string s) {
-            Regex rgxApos = new Regex("^'([^']|'')*'$");
-            if (!rgxApos.IsMatch(s)) {
-                return "N'" + s + "'";
-            }
-            return s;
+            Regex rgxApos = new Regex("^N?'(.*)'$");
+            string withoutSurroundingApos = rgxApos.Replace(s, "$1");
+            string withDuppedApos = withoutSurroundingApos.Replace("'", "''");
+            string withSurroundingAndDuppedApos = "N'" + withDuppedApos + "'";
+            return withSurroundingAndDuppedApos;
         }
 
         /// <summary>Devuelve los caracteres específicos para la comparación de base de datos</summary>

@@ -172,6 +172,11 @@ namespace DataFramework {
         public static Expression operator *(Expression expr1, Expression expr2) { return expr1.Operate(dbOpe.Multiplication, expr2); }
         public static Expression operator /(Expression expr1, Expression expr2) { return expr1.Operate(dbOpe.Division, expr2); }
         public static Expression operator %(Expression expr1, Expression expr2) { return expr1.Operate(dbOpe.Modulo, expr2); }
+
+        /// <summary>Gets the absolute value of the number</summary>
+        public static Expression Abs(Expression value) {
+            return value.Fun(dbFun.Abs);
+        }
         #endregion
 
         #region BuiltIn Functions
@@ -302,6 +307,14 @@ namespace DataFramework {
             target = target.Operate(dbOpe.Comma, length);
             target = target.Operate(dbOpe.Comma, replaceWith);
             return target.Fun(dbFun.Stuff);
+        }
+
+        /// <summary>Adds a quantity to a component of a date</summary>
+        public static Expression DateAdd(dbTim datepart, Expression quantity, Expression targetDate) {
+            Expression expr = new Expression(datepart);
+            expr = expr.Operate(dbOpe.Comma, quantity);
+            expr = expr.Operate(dbOpe.Comma, targetDate);
+            return expr.Fun(dbFun.DateAdd);
         }
 
         /// <summary>Devuelve la diferencia entre las dos fechas indicadas</summary>

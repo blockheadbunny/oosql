@@ -158,7 +158,7 @@
             <summary>Convierte el objeto a expression dependiendo de su tipo</summary>
         </member>
         <member name="M:DataFramework.Constructor.AddSingleQuotesIfMissing(System.String)">
-            <summary>Agrega comillas a la cadena en caso de que esta no posea comillas al principio y al final</summary>
+            <summary>Adds quotes to the start and ending of the string if they are missing</summary>
         </member>
         <member name="M:DataFramework.Constructor.dbComToString(DataFramework.Constructor.dbCom)">
             <summary>Devuelve los caracteres específicos para la comparación de base de datos</summary>
@@ -310,6 +310,9 @@
         <member name="M:DataFramework.Expression.Fun(DataFramework.Constructor.dbFun,System.String[])">
             <summary>Engloba la expresión en una funcion de sql</summary>
         </member>
+        <member name="M:DataFramework.Expression.Abs(DataFramework.Expression)">
+            <summary>Gets the absolute value of the number</summary>
+        </member>
         <member name="M:DataFramework.Expression.Round(DataFramework.Expression,System.Int32)">
             <summary>Cantidad redondeada</summary>
         </member>
@@ -360,6 +363,9 @@
         </member>
         <member name="M:DataFramework.Expression.Stuff(DataFramework.Expression,System.Int32,System.Int32,System.String)">
             <summary>Inserta una cadena dentro de otra cadena</summary>
+        </member>
+        <member name="M:DataFramework.Expression.DateAdd(DataFramework.Constructor.dbTim,DataFramework.Expression,DataFramework.Expression)">
+            <summary>Adds a quantity to a component of a date</summary>
         </member>
         <member name="M:DataFramework.Expression.DateDiff(DataFramework.Constructor.dbTim,DataFramework.Expression,DataFramework.Expression)">
             <summary>Devuelve la diferencia entre las dos fechas indicadas</summary>
@@ -602,6 +608,15 @@
         <member name="M:DataFramework.Query.Merge(System.String,DataFramework.Query)">
             <summary>Prepara el query para realizar una consulta merge y asigna las tablas afectadas</summary>
         </member>
+        <member name="M:DataFramework.Query.MergeTarget(System.String,System.String,System.String,System.String)">
+            <summary>Adds a target table to the merge statement</summary>
+        </member>
+        <member name="M:DataFramework.Query.MergeTarget(System.String,System.String,System.String)">
+            <summary>Adds a target table to the merge statement</summary>
+        </member>
+        <member name="M:DataFramework.Query.MergeUsing(System.String,DataFramework.Query)">
+            <summary>Adds an origin table to the merge statement</summary>
+        </member>
         <member name="M:DataFramework.Query.FromAs(System.String,DataFramework.Query)">
             <summary>Agrega una tabla basada en un query con un alias al listado de tablas</summary>
         </member>
@@ -764,7 +779,7 @@
         <member name="M:DataFramework.Query.Having(DataFramework.Expression)">
             <summary>Agrega una condicion al listado de condiciones de agrupacion</summary>
         </member>
-        <member name="M:DataFramework.Query.OrderBy(System.String,DataFramework.Constructor.dbOrd)">
+        <member name="M:DataFramework.Query.OrderBy(DataFramework.Expression,DataFramework.Constructor.dbOrd)">
             <summary>Agrega un campo al listado de campos de orden</summary>
         </member>
         <member name="M:DataFramework.Query.OrderBy(System.String[])">

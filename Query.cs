@@ -258,6 +258,7 @@ namespace DataFramework {
             return Merge("d", destiny, "o", origin);
         }
 
+        /// <summary>Adds a target table to the merge statement</summary>
         public Query MergeTarget(string alias, string table, string schema, string database) {
             instruction = dbItr.mer;
             merge = merge ?? new Merger();
@@ -268,6 +269,17 @@ namespace DataFramework {
             return this;
         }
 
+        /// <summary>Adds a target table to the merge statement</summary>
+        public Query MergeTarget(string alias, string table, string schema) {
+            instruction = dbItr.mer;
+            merge = merge ?? new Merger();
+            merge.Destiny.Table = new Table(SanitizeSQL(table));
+            merge.Destiny.Alias = alias;
+            merge.Destiny.Schema = schema;
+            return this;
+        }
+
+        /// <summary>Adds an origin table to the merge statement</summary>
         public Query MergeUsing(string alias, Query origin) {
             merge = merge ?? new Merger();
             merge.Origin.Query = origin;
@@ -667,8 +679,8 @@ namespace DataFramework {
         }
 
         /// <summary>Agrega un campo al listado de campos de orden</summary>
-        public Query OrderBy(string field, dbOrd order) {
-            lstOrderBy.Add((SanitizeSQL(field) + " " + order.ToString().ToUpper()).Trim());
+        public Query OrderBy(Expression field, dbOrd order) {
+            lstOrderBy.Add(new Order() { field = field, order = order });
             return this;
         }
 
