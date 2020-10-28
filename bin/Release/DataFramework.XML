@@ -313,6 +313,9 @@
         <member name="M:DataFramework.Expression.Abs(DataFramework.Expression)">
             <summary>Gets the absolute value of the number</summary>
         </member>
+        <member name="M:DataFramework.Expression.NewId">
+            <summary>Creates a new GUID</summary>
+        </member>
         <member name="M:DataFramework.Expression.Round(DataFramework.Expression,System.Int32)">
             <summary>Cantidad redondeada</summary>
         </member>

@@ -180,6 +180,11 @@ namespace DataFramework {
         #endregion
 
         #region BuiltIn Functions
+        /// <summary>Creates a new GUID</summary>
+        public static Expression NewId() {
+            return new Expression("").Fun(dbFun.NewId);
+        }
+
         /// <summary>Cantidad redondeada</summary>
         public static Expression Round(Expression value, int decimals) {
             value = value.Operate(dbOpe.Comma, decimals);
