@@ -565,5 +565,11 @@ namespace DataFramework {
             return new Expression(dbWTy.win, default(dbAgr), func, "NULL", orderBy, partitionBy);
         }
         #endregion
+
+        #region Bitwise Operators
+        public static Expression operator &(Expression expr1, Expression expr2) { return expr1.Operate(dbOpe.BitAnd, expr2); }
+        public static Expression operator |(Expression expr1, Expression expr2) { return expr1.Operate(dbOpe.BitOr, expr2); }
+        public static Expression operator ^(Expression expr1, Expression expr2) { return expr1.Operate(dbOpe.BitXOr, expr2); }
+        #endregion
     }
 }

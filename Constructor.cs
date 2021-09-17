@@ -34,7 +34,7 @@ namespace DataFramework {
         public enum dbUni { NotUnited, Union, UnionAll };
 
         /// <summary>Operadores para expresiones</summary>
-        public enum dbOpe { NoOp, Funct, Agg, Over, Qry, Addition, Substraction, Multiplication, Division, Modulo, Case, Else, Log, Comma, As, In }
+        public enum dbOpe { NoOp, Funct, Agg, Over, Qry, Addition, Substraction, Multiplication, Division, Modulo, Case, Else, Log, Comma, As, In, BitAnd, BitOr, BitXOr, BitNot }
 
         /// <summary>Funciones de base expresiones</summary>
         public enum dbFun { Abs, Round, Coalesce, Cast, Convert, CharIndex, Left, Mid, Right, Len, SubString, Replace, Stuff, DateAdd, DateDiff, Year, Month, Day, GetDate, Upper, Lower, NewId }
@@ -621,6 +621,14 @@ namespace DataFramework {
                     return ",";
                 case dbOpe.As:
                     return "AS";
+                case dbOpe.BitAnd:
+                    return "&";
+                case dbOpe.BitOr:
+                    return "|";
+                case dbOpe.BitXOr:
+                    return "^";
+                case dbOpe.BitNot:
+                    return "~";
             }
             return "";
         }
