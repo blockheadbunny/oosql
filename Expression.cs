@@ -180,6 +180,11 @@ namespace DataFramework {
         #endregion
 
         #region BuiltIn Functions
+        /// <summary>Creates a new GUID</summary>
+        public static Expression NewId() {
+            return new Expression("").Fun(dbFun.NewId);
+        }
+
         /// <summary>Cantidad redondeada</summary>
         public static Expression Round(Expression value, int decimals) {
             value = value.Operate(dbOpe.Comma, decimals);
@@ -559,6 +564,12 @@ namespace DataFramework {
         public static Expression Over(Constructor.dbWin func, Dictionary<string, Constructor.dbOrd> orderBy, string[] partitionBy) {
             return new Expression(dbWTy.win, default(dbAgr), func, "NULL", orderBy, partitionBy);
         }
+        #endregion
+
+        #region Bitwise Operators
+        public static Expression operator &(Expression expr1, Expression expr2) { return expr1.Operate(dbOpe.BitAnd, expr2); }
+        public static Expression operator |(Expression expr1, Expression expr2) { return expr1.Operate(dbOpe.BitOr, expr2); }
+        public static Expression operator ^(Expression expr1, Expression expr2) { return expr1.Operate(dbOpe.BitXOr, expr2); }
         #endregion
     }
 }
