@@ -391,6 +391,9 @@
         <member name="M:DataFramework.Expression.Lower(DataFramework.Expression)">
             <summary>Convierte la cadena a mayusculas</summary>
         </member>
+        <member name="M:DataFramework.Expression.IsNumeric(DataFramework.Expression)">
+            <summary>Checks if the string can be converted to a number</summary>
+        </member>
         <member name="M:DataFramework.Expression.Where(DataFramework.Expression)">
             <summary>Expresión lógica que permite anidar otras expresiones</summary>
         </member>

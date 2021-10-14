@@ -359,6 +359,11 @@ namespace DataFramework {
         public static Expression Lower(Expression strToUpper) {
             return strToUpper.Fun(dbFun.Lower);
         }
+
+        /// <summary>Checks if the string can be converted to a number</summary>
+        public static Expression IsNumeric(Expression text) {
+            return text.Fun(dbFun.IsNumeric);
+        }
         #endregion
 
         #region Logical Expressions
