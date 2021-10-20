@@ -307,6 +307,7 @@ namespace DataFramework {
                     break;
 
                 case dbItr.ins:
+                    sqlQuery += string.IsNullOrEmpty(cte.alias) ? "" : ("WITH " + cte.alias + " AS ( " + cte.origin.ToString() + " ) ");
                     sqlQuery += "INSERT INTO "
                         + (string.IsNullOrEmpty(lstUnion[0].lstFrom[0].database) ? "" : lstUnion[0].lstFrom[0].database + ".")
                         + (string.IsNullOrEmpty(lstUnion[0].lstFrom[0].schema) ? "" : lstUnion[0].lstFrom[0].schema + ".")
