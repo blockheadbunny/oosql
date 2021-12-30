@@ -31,6 +31,15 @@ namespace DataFramework {
             particles.Add(new Particle(dbOpe.NoOp, "'" + expr.ToString("yyyy-MM-ddTHH:mm:ss") + "'"));
         }
 
+        private Expression(DateTime? expr) {
+            if (expr == null) {
+                particles.Add(new Particle(dbOpe.NoOp, "NULL"));
+            }
+            else {
+                particles.Add(new Particle(dbOpe.NoOp, "'" + ((DateTime)expr).ToString("yyyy-MM-ddTHH:mm:ss") + "'"));
+            }
+        }
+
         private Expression(dbFun funct, Expression expr) {
             particles.Add(new Particle(funct, expr));
         }
@@ -67,6 +76,7 @@ namespace DataFramework {
         public static implicit operator Expression(double expr) { return new Expression(expr.ToString("G", CultureInfo.InvariantCulture)); }
         public static implicit operator Expression(bool expr) { return new Expression((expr ? 1 : 0).ToString()); }
         public static implicit operator Expression(DateTime expr) { return new Expression(expr); }
+        public static implicit operator Expression(DateTime? expr) { return new Expression(expr); }
         public static implicit operator Expression(Query expr) { return new Expression(expr); }
         public static implicit operator Expression(DBNull expr) { return new Expression(); }
 
