@@ -53,58 +53,61 @@
             <summary>Add a boolean condition to the batch</summary>
         </member>
         <member name="T:DataFramework.Constructor.dbItr">
-            <summary>Listado de instrucciones a ejecutar</summary>
+            <summary>Executable instruction type</summary>
         </member>
         <member name="T:DataFramework.Constructor.dbCom">
-            <summary>Tipos de Comparaciones</summary>
+            <summary>Comparison type</summary>
         </member>
         <member name="T:DataFramework.Constructor.dbJoi">
-            <summary>Tipos de uniones de tablas</summary>
+            <summary>Table union type</summary>
         </member>
         <member name="T:DataFramework.Constructor.dbAgr">
-            <summary>Tipos de funciones agregadas</summary>
+            <summary>Aggregate function type</summary>
         </member>
         <member name="T:DataFramework.Constructor.dbWTy">
-            <summary>Tipo de funcion de ventana</summary>
+            <summary>Window function type</summary>
         </member>
         <member name="T:DataFramework.Constructor.dbWin">
-            <summary>Funciones de ventana</summary>
+            <summary>Window functions</summary>
         </member>
         <member name="T:DataFramework.Constructor.dbOrd">
-            <summary>Tipo de ordenamiento</summary>
+            <summary>Order type</summary>
         </member>
         <member name="T:DataFramework.Constructor.dbUni">
-            <summary>Tipo de Union</summary>
+            <summary>Union type</summary>
         </member>
         <member name="T:DataFramework.Constructor.dbOpe">
-            <summary>Operadores para expresiones</summary>
+            <summary>Expression operators</summary>
         </member>
         <member name="T:DataFramework.Constructor.dbFun">
-            <summary>Funciones de base expresiones</summary>
+            <summary>Expression based functions</summary>
         </member>
         <member name="T:DataFramework.Constructor.dbLog">
-            <summary>Operadores Logicos</summary>
+            <summary>Logic Operators</summary>
         </member>
         <member name="T:DataFramework.Constructor.dbTyp">
-            <summary>Tipos de datos</summary>
+            <summary>Data type</summary>
         </member>
         <member name="T:DataFramework.Constructor.dbSiz">
             <summary>Var size</summary>
         </member>
         <member name="T:DataFramework.Constructor.dbTim">
-            <summary>Intervalos de tiempo</summary>
+            <summary>Time interval type</summary>
         </member>
         <member name="T:DataFramework.Constructor.dbMrA">
-            <summary>Acciones a realizar en merge</summary>
+            <summary>Merge Actions</summary>
         </member>
         <member name="T:DataFramework.Constructor.dbMby">
             <summary>Data origin to compare in merge when</summary>
         </member>
         <member name="T:DataFramework.Constructor.dbOut">
-            <summary>Tipos de output en una consulta</summary>
+            <summary>Output type</summary>
         </member>
         <member name="T:DataFramework.Constructor.dbXml">
-            <summary>Metodo de serialización de resultados a xml</summary>
+            <summary>XML serialization method</summary>
+        </member>
+        <member name="T:DataFramework.Constructor.dbCMo">
+            <summary>Column Modifiers</summary>
         </member>
         <member name="T:DataFramework.Constructor.StoredProcedure">
             <summary>Procedimiento Almacenado</summary>
@@ -868,6 +871,12 @@
         </member>
         <member name="M:DataFramework.QueryExtensions.SelEntities``1(DataFramework.Query,System.Collections.Generic.IEnumerable{``0})">
             <summary>Prepares a multi union select query based on an object properties adding missing quotes</summary>
+        </member>
+        <member name="M:DataFramework.Structure.AddColumn(DataFramework.Constructor.dbTyp,System.String)">
+            <summary>Adds a nullable column without type lengths</summary>
+        </member>
+        <member name="M:DataFramework.Structure.AddColumn(DataFramework.Constructor.dbTyp,System.String,System.Boolean,System.Int32[])">
+            <summary>Adds a column with determined nullability and optional type lengths</summary>
         </member>
     </members>
 </doc>
