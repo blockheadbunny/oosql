@@ -43,6 +43,7 @@ namespace DataFramework {
             public List<Constructor.Comparison> Conditions = new List<Constructor.Comparison>();
             public Constructor.dbMrA Action;
             public Dictionary<string, object> Values;
+            public Dictionary<string, object> Pairs = new Dictionary<string, object>();
             public Constructor.OutputClause outputClause = new Constructor.OutputClause();
         }
 
@@ -91,6 +92,10 @@ namespace DataFramework {
 
         public void MergeOutCols(params Constructor.Field[] columns) {
             currentAction.outputClause.columns.AddRange(columns);
+        }
+
+        public void MergeUpdCol(string columna, object valor) {
+            currentAction.Pairs.Add(columna, valor);
         }
     }
 }

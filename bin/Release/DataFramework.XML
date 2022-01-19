@@ -834,16 +834,16 @@
             <summary>Agrega el query como origen de datos a la consulta insert</summary>
         </member>
         <member name="M:DataFramework.Query.SetUpd(System.Collections.Generic.Dictionary{System.String,System.Object})">
-            <summary>Agrega un campo a asignar en la instruccion update</summary>
+            <summary>Adds fields to the update instruction</summary>
         </member>
         <member name="M:DataFramework.Query.SetUpd(System.Collections.Generic.Dictionary{System.String,System.String})">
-            <summary>Agrega un campo a asignar en la instruccion update</summary>
+            <summary>Adds fields to the update instruction</summary>
         </member>
         <member name="M:DataFramework.Query.SetUpd(System.String,DataFramework.Expression)">
-            <summary>Agrega un campo a asignar en la instruccion update</summary>
+            <summary>Adds a field to the update instruction</summary>
         </member>
         <member name="M:DataFramework.Query.SetUpdVal(System.String,System.String)">
-            <summary>Agrega un valor a asignar en la instruccion update</summary>
+            <summary>Adds a field to the update instruction using quotes if necessary</summary>
         </member>
         <member name="M:DataFramework.Query.AggAs(DataFramework.Constructor.dbAgr,System.String,System.String)">
             <summary>Agrega un campo con funcion agregada al listado de campos</summary>

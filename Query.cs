@@ -564,8 +564,8 @@ namespace DataFramework {
 
         /// <summary>Especifica la acción a realizar para la comparación en la consulta merge</summary>
         public Query MergeThen(Constructor.dbMrA action) {
-            Dictionary<string, object> nullDic = null;
-            return MergeThen(action, nullDic);
+            Dictionary<string, object> emptyDic = new Dictionary<string, object>();
+            return MergeThen(action, emptyDic);
         }
 
         /// <summary>Agrega una condición de expresion lógica al listado de condiciones</summary>
@@ -831,27 +831,52 @@ namespace DataFramework {
             return this;
         }
 
-        /// <summary>Agrega un campo a asignar en la instruccion update</summary>
-        public Query SetUpd(Dictionary<string, Object> values) {
-            lstSet.AddRange(values.Select(v => new string[] { v.Key, ObjectToExpression((v.Value is string) ? AddSingleQuotesIfMissing((string)v.Value) : v.Value).ToString() }));
+        /// <summary>Adds fields to the update instruction</summary>
+        public Query SetUpd(Dictionary<string, object> values) {
+            if (instruction == dbItr.mer) {
+                foreach (KeyValuePair<string, object> kv in values) {
+                    merge.MergeUpdCol(kv.Key, kv.Value);
+                }
+            }
+            else {
+                lstSet.AddRange(values.Select(v => new string[] { v.Key, ObjectToExpression((v.Value is string) ? AddSingleQuotesIfMissing((string)v.Value) : v.Value).ToString() }));
+            }
             return this;
         }
 
-        /// <summary>Agrega un campo a asignar en la instruccion update</summary>
+        /// <summary>Adds fields to the update instruction</summary>
         public Query SetUpd(Dictionary<string, string> values) {
-            lstSet.AddRange(values.Select(v => new string[] { v.Key, v.Value }));
+            if (instruction == dbItr.mer) {
+                foreach (KeyValuePair<string, string> kv in values) {
+                    merge.MergeUpdCol(kv.Key, kv.Value);
+                }
+            }
+            else {
+                lstSet.AddRange(values.Select(v => new string[] { v.Key, v.Value }));
+            }
             return this;
         }
 
-        /// <summary>Agrega un campo a asignar en la instruccion update</summary>
+        /// <summary>Adds a field to the update instruction</summary>
         public Query SetUpd(string field, Expression newValue) {
-            lstSet.Add(new string[] { field, newValue != null ? newValue.ToString() : "NULL" });
+            if (instruction == dbItr.mer) {
+                merge.MergeUpdCol(field, newValue);
+            }
+            else {
+                lstSet.Add(new string[] { field, newValue != null ? newValue.ToString() : "NULL" });
+            }
             return this;
         }
 
-        /// <summary>Agrega un valor a asignar en la instruccion update</summary>
+        /// <summary>Adds a field to the update instruction using quotes if necessary</summary>
         public Query SetUpdVal(string field, string newValue) {
-            return SetUpd(field, AddSingleQuotesIfMissing(newValue));
+            if (instruction == dbItr.mer) {
+                merge.MergeUpdCol(field, AddSingleQuotesIfMissing(newValue));
+            }
+            else {
+                return SetUpd(field, AddSingleQuotesIfMissing(newValue));
+            }
+            return this;
         }
 
         /// <summary>Agrega un campo con funcion agregada al listado de campos</summary>

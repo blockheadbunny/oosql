@@ -383,7 +383,10 @@ namespace DataFramework {
                                 sqlQuery += act.outputClause.ToString();
                                 break;
                             case dbMrA.Update:
-                                sqlQuery += ConcatList(" SET", " ", act.Values.Keys.Select(k => merge.Destiny.Alias + "." + k + " = " + merge.Origin.Alias + "." + k), ",");
+                                sqlQuery += " SET";
+                                sqlQuery += ConcatList("", " ", act.Values.Keys.Select(k => merge.Destiny.Alias + "." + k + " = " + merge.Origin.Alias + "." + k), ",");
+                                sqlQuery += act.Values.Any() && act.Pairs.Any() ? "," : "";
+                                sqlQuery += ConcatList("", " ", act.Pairs.Select(kv => merge.Destiny.Alias + "." + kv.Key + " = " + ObjectToExpression(kv.Value).ToString()), ",");
                                 break;
                             case dbMrA.Delete:
                                 break;
