@@ -9,59 +9,62 @@ namespace DataFramework {
     public class Constructor : IQryable {
         #region Enumeradores
 
-        /// <summary>Listado de instrucciones a ejecutar</summary>
+        /// <summary>Executable instruction type</summary>
         public enum dbItr { noQuery, sProc, sel, ins, upd, del, mer, fld };
 
-        /// <summary>Tipos de Comparaciones</summary>
+        /// <summary>Comparison type</summary>
         public enum dbCom { Equals, MoreThan, LessThan, MoreThanOrEquals, LessThanOrEquals, DifferentFrom, Iss, IssNot, IssIn, IssNotIn, Like, NotLike };
 
-        /// <summary>Tipos de uniones de tablas</summary>
+        /// <summary>Table union type</summary>
         public enum dbJoi { Inner, Left, Right, Full, Cross };
 
-        /// <summary>Tipos de funciones agregadas</summary>
-        public enum dbAgr { count, countBig, min, max, sum, avg /*7 mas*/};
+        /// <summary>Aggregate function type</summary>
+        public enum dbAgr { count, countBig, min, max, sum, avg /*7 more*/};
 
-        /// <summary>Tipo de funcion de ventana</summary>
+        /// <summary>Window function type</summary>
         public enum dbWTy { agg, win };
 
-        /// <summary>Funciones de ventana</summary>
+        /// <summary>Window functions</summary>
         public enum dbWin { row_number, rank };
 
-        /// <summary>Tipo de ordenamiento</summary>
+        /// <summary>Order type</summary>
         public enum dbOrd { Asc, Desc };
 
-        /// <summary>Tipo de Union</summary>
+        /// <summary>Union type</summary>
         public enum dbUni { NotUnited, Union, UnionAll };
 
-        /// <summary>Operadores para expresiones</summary>
+        /// <summary>Expression operators</summary>
         public enum dbOpe { NoOp, Funct, Agg, Over, Qry, Addition, Substraction, Multiplication, Division, Modulo, Case, Else, Log, Comma, As, In, BitAnd, BitOr, BitXOr, BitNot }
 
-        /// <summary>Funciones de base expresiones</summary>
-        public enum dbFun { Abs, Round, Coalesce, Cast, Convert, CharIndex, Left, Mid, Right, Len, SubString, Replace, Stuff, DateAdd, DateDiff, Year, Month, Day, GetDate, Upper, Lower, NewId }
+        /// <summary>Expression based functions</summary>
+        public enum dbFun { Abs, Round, Coalesce, Cast, Convert, CharIndex, Left, Mid, Right, Len, SubString, Replace, Stuff, DateAdd, DateDiff, Year, Month, Day, GetDate, Upper, Lower, NewId, IsNumeric }
 
-        /// <summary>Operadores Logicos</summary>
+        /// <summary>Logic Operators</summary>
         public enum dbLog { Where, And, Or }
 
-        /// <summary>Tipos de datos</summary>
+        /// <summary>Data type</summary>
         public enum dbTyp { BigInt, Int, SmallInt, TinyInt, Varchar, NVarchar, Char, NChar, Date, DateTime, Decimal, Bit, Varbinary, Custom }
 
         /// <summary>Var size</summary>
         public enum dbSiz { Max, Other }
 
-        /// <summary>Intervalos de tiempo</summary>
+        /// <summary>Time interval type</summary>
         public enum dbTim { Year, Quarter, Month, DayOfYear, Day, Week, Hour, Minute, Second, Millisecond, Microsecond, Nanosecond }
 
-        /// <summary>Acciones a realizar en merge</summary>
+        /// <summary>Merge Actions</summary>
         public enum dbMrA { Insert, Update, Delete }
 
         /// <summary>Data origin to compare in merge when</summary>
         public enum dbMby { None, Source, Target }
 
-        /// <summary>Tipos de output en una consulta</summary>
+        /// <summary>Output type</summary>
         public enum dbOut { Undefined, Inserted, Deleted }
 
-        /// <summary>Metodo de serialización de resultados a xml</summary>
+        /// <summary>XML serialization method</summary>
         public enum dbXml { Raw, Auto, Explicit, Path }
+
+        /// <summary>Column Modifiers</summary>
+        public enum dbCMo { Filestream, Sparse, Identity, NotForReplication }
 
         #endregion
 
@@ -274,7 +277,7 @@ namespace DataFramework {
                     break;
 
                 case dbItr.sel:
-                    sqlQuery += string.IsNullOrEmpty(cte.alias) ? "" : ("WITH " + cte.alias + " AS ( " + cte.origin.ToString() + " ) ");
+                    sqlQuery += string.IsNullOrEmpty(cte.alias) ? "" : (";WITH " + cte.alias + " AS ( " + cte.origin.ToString() + " ) ");
                     for (int u = 0; u < lstUnion.Count; u++) {
                         List<Field> fieldsWithAgg = lstUnion[u].lstFields.ToArray().ToList();
 
@@ -307,6 +310,7 @@ namespace DataFramework {
                     break;
 
                 case dbItr.ins:
+                    sqlQuery += string.IsNullOrEmpty(cte.alias) ? "" : (";WITH " + cte.alias + " AS ( " + cte.origin.ToString() + " ) ");
                     sqlQuery += "INSERT INTO "
                         + (string.IsNullOrEmpty(lstUnion[0].lstFrom[0].database) ? "" : lstUnion[0].lstFrom[0].database + ".")
                         + (string.IsNullOrEmpty(lstUnion[0].lstFrom[0].schema) ? "" : lstUnion[0].lstFrom[0].schema + ".")
@@ -379,7 +383,10 @@ namespace DataFramework {
                                 sqlQuery += act.outputClause.ToString();
                                 break;
                             case dbMrA.Update:
-                                sqlQuery += ConcatList(" SET", " ", act.Values.Keys.Select(k => merge.Destiny.Alias + "." + k + " = " + merge.Origin.Alias + "." + k), ",");
+                                sqlQuery += " SET";
+                                sqlQuery += ConcatList("", " ", act.Values.Keys.Select(k => merge.Destiny.Alias + "." + k + " = " + merge.Origin.Alias + "." + k), ",");
+                                sqlQuery += act.Values.Any() && act.Pairs.Any() ? "," : "";
+                                sqlQuery += ConcatList("", " ", act.Pairs.Select(kv => merge.Destiny.Alias + "." + kv.Key + " = " + ObjectToExpression(kv.Value).ToString()), ",");
                                 break;
                             case dbMrA.Delete:
                                 break;
