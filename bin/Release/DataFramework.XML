@@ -612,10 +612,16 @@
             <summary>Prepara el query para realizar una consulta delete y asigna la tabla afectada</summary>
         </member>
         <member name="M:DataFramework.Query.Merge(System.String,System.String,System.String,DataFramework.Query)">
-            <summary>Prepara el query para realizar una consulta merge y asigna las tablas afectadas</summary>
+            <summary>Sets origin and target for a merge query</summary>
+        </member>
+        <member name="M:DataFramework.Query.Merge(System.String,System.String,System.String,System.String)">
+            <summary>Sets origin and target for a merge query</summary>
         </member>
         <member name="M:DataFramework.Query.Merge(System.String,DataFramework.Query)">
-            <summary>Prepara el query para realizar una consulta merge y asigna las tablas afectadas</summary>
+            <summary>Sets origin and target for a merge query</summary>
+        </member>
+        <member name="M:DataFramework.Query.Merge(System.String,System.String)">
+            <summary>Sets origin and target for a merge query</summary>
         </member>
         <member name="M:DataFramework.Query.MergeTarget(System.String,System.String,System.String,System.String)">
             <summary>Adds a target table to the merge statement</summary>

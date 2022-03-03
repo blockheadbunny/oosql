@@ -242,19 +242,36 @@ namespace DataFramework {
             return From(table);
         }
 
-        /// <summary>Prepara el query para realizar una consulta merge y asigna las tablas afectadas</summary>
-        public Query Merge(string aliasDestiny, string destiny, string aliasOrigin, Query origin) {
-            instruction = dbItr.mer;
-            merge = new Merger();
+        private Query Merge(string aliasDestiny, string destiny, string aliasOrigin) {
             merge.Destiny.Table = new Table(SanitizeSQL(destiny));
-            merge.Destiny.Alias = aliasDestiny;
-            merge.Origin.Query = origin;
-            merge.Origin.Alias = aliasOrigin;
+            merge.Destiny.Alias = SanitizeSQL(aliasDestiny);
+            merge.Origin.Alias = SanitizeSQL(aliasOrigin);
             return this;
         }
 
-        /// <summary>Prepara el query para realizar una consulta merge y asigna las tablas afectadas</summary>
+        /// <summary>Sets origin and target for a merge query</summary>
+        public Query Merge(string aliasDestiny, string destiny, string aliasOrigin, Query origin) {
+            instruction = dbItr.mer;
+            merge = new Merger();
+            merge.Origin.Query = origin;
+            return Merge(aliasDestiny, destiny, aliasOrigin);
+        }
+
+        /// <summary>Sets origin and target for a merge query</summary>
+        public Query Merge(string aliasDestiny, string destiny, string aliasOrigin, string origin) {
+            instruction = dbItr.mer;
+            merge = new Merger();
+            merge.Origin.DatabaseSelectableObject = SanitizeSQL(origin);
+            return Merge(aliasDestiny, destiny, aliasOrigin);
+        }
+
+        /// <summary>Sets origin and target for a merge query</summary>
         public Query Merge(string destiny, Query origin) {
+            return Merge("d", destiny, "o", origin);
+        }
+
+        /// <summary>Sets origin and target for a merge query</summary>
+        public Query Merge(string destiny, string origin) {
             return Merge("d", destiny, "o", origin);
         }
 
