@@ -187,18 +187,28 @@ namespace DataFramework {
         public static Expression Abs(Expression value) {
             return value.Fun(dbFun.Abs);
         }
+
+        /// <summary>Rounded Amount</summary>
+        public static Expression Round(Expression value, int decimals) {
+            value = value.Operate(dbOpe.Comma, decimals);
+            return value.Fun(dbFun.Round);
+        }
+
+        /// <summary>Greatest integer less than or equal to input</summary>
+        public static Expression Ceiling(Expression value) {
+            return value.Fun(dbFun.Ceiling);
+        }
+
+        /// <summary>Greatest integer less than or equal to input</summary>
+        public static Expression Floor(Expression value) {
+            return value.Fun(dbFun.Floor);
+        }
         #endregion
 
         #region BuiltIn Functions
         /// <summary>Creates a new GUID</summary>
         public static Expression NewId() {
             return new Expression("").Fun(dbFun.NewId);
-        }
-
-        /// <summary>Cantidad redondeada</summary>
-        public static Expression Round(Expression value, int decimals) {
-            value = value.Operate(dbOpe.Comma, decimals);
-            return value.Fun(dbFun.Round);
         }
 
         /// <summary>Devuelve el primer valor no nulo del listado</summary>
@@ -557,11 +567,11 @@ namespace DataFramework {
 
         #region Window Functions
         public static Expression Over(Constructor.dbWin func, string[] orderBy) {
-            return new Expression(dbWTy.win, default(dbAgr), func, "NULL", orderBy.ToDictionary(s => s, s => dbOrd.Asc), new string[] { });
+            return new Expression(dbWTy.win, default(dbAgr), func, DBNull.Value, orderBy.ToDictionary(s => s, s => dbOrd.Asc), new string[] { });
         }
 
         public static Expression Over(Constructor.dbWin func, string[] orderBy, string[] partitionBy) {
-            return new Expression(dbWTy.win, default(dbAgr), func, "NULL", orderBy.ToDictionary(s => s, s => dbOrd.Asc), partitionBy);
+            return new Expression(dbWTy.win, default(dbAgr), func, DBNull.Value, orderBy.ToDictionary(s => s, s => dbOrd.Asc), partitionBy);
         }
 
         //public static Expression Over(Constructor.dbAgr aggregate, Expression expr, string[] orderBy) {
@@ -573,11 +583,11 @@ namespace DataFramework {
         //}
 
         public static Expression Over(Constructor.dbWin func, Dictionary<string, Constructor.dbOrd> orderBy) {
-            return new Expression(dbWTy.win, default(dbAgr), func, "NULL", orderBy, new string[] { });
+            return new Expression(dbWTy.win, default(dbAgr), func, DBNull.Value, orderBy, new string[] { });
         }
 
         public static Expression Over(Constructor.dbWin func, Dictionary<string, Constructor.dbOrd> orderBy, string[] partitionBy) {
-            return new Expression(dbWTy.win, default(dbAgr), func, "NULL", orderBy, partitionBy);
+            return new Expression(dbWTy.win, default(dbAgr), func, DBNull.Value, orderBy, partitionBy);
         }
         #endregion
 

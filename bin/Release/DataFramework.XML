@@ -316,11 +316,17 @@
         <member name="M:DataFramework.Expression.Abs(DataFramework.Expression)">
             <summary>Gets the absolute value of the number</summary>
         </member>
+        <member name="M:DataFramework.Expression.Round(DataFramework.Expression,System.Int32)">
+            <summary>Rounded Amount</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Ceiling(DataFramework.Expression)">
+            <summary>Greatest integer more than or equal to input</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Floor(DataFramework.Expression)">
+            <summary>Greatest integer less than or equal to input</summary>
+        </member>
         <member name="M:DataFramework.Expression.NewId">
             <summary>Creates a new GUID</summary>
-        </member>
-        <member name="M:DataFramework.Expression.Round(DataFramework.Expression,System.Int32)">
-            <summary>Cantidad redondeada</summary>
         </member>
         <member name="M:DataFramework.Expression.Coalesce(DataFramework.Expression[])">
             <summary>Devuelve el primer valor no nulo del listado</summary>
