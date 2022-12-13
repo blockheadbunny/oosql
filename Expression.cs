@@ -27,6 +27,11 @@ namespace DataFramework {
             particles.Add(new Particle(dbOpe.NoOp, "NULL"));
         }
 
+        private Expression(byte[] bytes) {
+            string byteExpression = "0x" + BitConverter.ToString(bytes).Replace("-", "");
+            particles.Add(new Particle(dbOpe.NoOp, byteExpression));
+        }
+
         private Expression(DateTime expr) {
             particles.Add(new Particle(dbOpe.NoOp, "'" + expr.ToString("yyyy-MM-ddTHH:mm:ss") + "'"));
         }
@@ -71,10 +76,12 @@ namespace DataFramework {
         public static implicit operator Expression(string expr) { return new Expression(expr); }
         public static implicit operator Expression(long expr) { return new Expression(expr.ToString()); }
         public static implicit operator Expression(int expr) { return new Expression(expr.ToString()); }
+        public static implicit operator Expression(short expr) { return new Expression(expr.ToString()); }
         public static implicit operator Expression(decimal expr) { return new Expression(expr.ToString("G", CultureInfo.InvariantCulture)); }
         public static implicit operator Expression(float expr) { return new Expression(expr.ToString("G", CultureInfo.InvariantCulture)); }
         public static implicit operator Expression(double expr) { return new Expression(expr.ToString("G", CultureInfo.InvariantCulture)); }
         public static implicit operator Expression(bool expr) { return new Expression((expr ? 1 : 0).ToString()); }
+        public static implicit operator Expression(byte[] expr) { return new Expression(expr); }
         public static implicit operator Expression(DateTime expr) { return new Expression(expr); }
         public static implicit operator Expression(DateTime? expr) { return new Expression(expr); }
         public static implicit operator Expression(Query expr) { return new Expression(expr); }
@@ -194,7 +201,7 @@ namespace DataFramework {
             return value.Fun(dbFun.Round);
         }
 
-        /// <summary>Greatest integer less than or equal to input</summary>
+        /// <summary>Greatest integer more than or equal to input</summary>
         public static Expression Ceiling(Expression value) {
             return value.Fun(dbFun.Ceiling);
         }
