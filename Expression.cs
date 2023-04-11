@@ -169,18 +169,19 @@ namespace DataFramework {
         }
 
         /// <summary>Engloba la expresión en una funcion de sql</summary>
-        public Expression Fun(dbFun funct, params string[] extraParams) {
+        public Expression Fun(dbFun funct, params Expression[] extraParams) {
+            Expression expr = this;
             if (extraParams != null && extraParams.Length > 0) {
-                foreach (string prm in extraParams) {
+                foreach (Expression prm in extraParams) {
                     if (funct == dbFun.Cast) {
-                        Operate(dbOpe.As, prm);
+                        expr = expr.Operate(dbOpe.As, prm);
                     }
                     else {
-                        Operate(dbOpe.Comma, prm);
+                        expr = expr.Operate(dbOpe.Comma, prm);
                     }
                 }
             }
-            return new Expression(funct, this);
+            return new Expression(funct, expr);
         }
 
         #region Arithmetic Operations
@@ -288,6 +289,15 @@ namespace DataFramework {
             exprType = exprType.Operate(dbOpe.Comma, expr);
             exprType = exprType.Operate(dbOpe.Comma, style);
             return exprType.Fun(dbFun.Convert);
+        }
+
+        /// <summary>Concatenates two or more strings</summary>
+        public static Expression Concat(params Expression[] strings) {
+            if (strings == null || !strings.Any()) {
+                throw new ArgumentException("No args for concat expression", "strings");
+            }
+            Expression firstArg = strings[0];
+            return firstArg.Fun(dbFun.Concat, strings.Skip(1).ToArray());
         }
 
         /// <summary>Busca la expresion en dentro de una cadena iniciando en el caracter indicado</summary>

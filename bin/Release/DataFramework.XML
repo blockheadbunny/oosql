@@ -310,7 +310,7 @@
         <member name="M:DataFramework.Expression.Operate(DataFramework.Constructor.dbLog,DataFramework.Expression)">
             <summary>Operacion para expresiones lógicas compuestas</summary>
         </member>
-        <member name="M:DataFramework.Expression.Fun(DataFramework.Constructor.dbFun,System.String[])">
+        <member name="M:DataFramework.Expression.Fun(DataFramework.Constructor.dbFun,DataFramework.Expression[])">
             <summary>Engloba la expresión en una funcion de sql</summary>
         </member>
         <member name="M:DataFramework.Expression.Abs(DataFramework.Expression)">
@@ -351,6 +351,9 @@
         </member>
         <member name="M:DataFramework.Expression.Convert(System.Int32,DataFramework.Constructor.dbTyp,DataFramework.Expression,System.Int32[])">
             <summary>Convierte el valor de tipo fecha en el tipo indicado</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Concat(DataFramework.Expression[])">
+            <summary>Concatenates two or more strings</summary>
         </member>
         <member name="M:DataFramework.Expression.CharIndex(DataFramework.Expression,DataFramework.Expression,System.Int32)">
             <summary>Busca la expresion en dentro de una cadena iniciando en el caracter indicado</summary>
