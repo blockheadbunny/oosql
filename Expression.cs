@@ -319,11 +319,21 @@ namespace DataFramework {
             return value.Fun(dbFun.Right);
         }
 
-        /// <summary>Devuelve el segmento del texto indicado</summary>
+        /// <summary>Returns a fragment of a string</summary>
         public static Expression SubString(Expression target, int start, int length) {
             target = target.Operate(dbOpe.Comma, start);
             target = target.Operate(dbOpe.Comma, length);
             return target.Fun(dbFun.SubString);
+        }
+
+        /// <summary>Removes the spaces at the star of a string</summary>
+        public static Expression Ltrim(Expression target) {
+            return target.Fun(dbFun.Ltrim);
+        }
+
+        /// <summary>Removes the spaces at the end of a string</summary>
+        public static Expression Rtrim(Expression target) {
+            return target.Fun(dbFun.Rtrim);
         }
 
         /// <summary>Returns current length of target string</summary>
@@ -336,14 +346,14 @@ namespace DataFramework {
             return Expression.Len(this);
         }
 
-        /// <summary>Reemplaza un patron dentro de una cadena</summary>
+        /// <summary>Replaces a pattern inside a string</summary>
         public static Expression Replace(Expression target, Expression pattern, Expression replacement) {
             target = target.Operate(dbOpe.Comma, pattern);
             target = target.Operate(dbOpe.Comma, replacement);
             return target.Fun(dbFun.Replace);
         }
 
-        /// <summary>Inserta una cadena dentro de otra cadena</summary>
+        /// <summary>Inserts a string inside another</summary>
         public static Expression Stuff(Expression target, int start, int length, string replaceWith) {
             target = target.Operate(dbOpe.Comma, start);
             target = target.Operate(dbOpe.Comma, length);
