@@ -377,22 +377,29 @@ namespace DataFramework {
             return expr.Fun(dbFun.DateDiff);
         }
 
-        /// <summary>Obtiene el componente anio de la fecha</summary>
+        /// <summary>Extracts the requested part of a date or datetime</summary>
+        public static Expression DatePart(dbTim datepart, Expression date) {
+            Expression expr = new Expression(datepart);
+            expr = expr.Operate(dbOpe.Comma, date);
+            return expr.Fun(dbFun.DatePart);
+        }
+
+        /// <summary>Extracts the year component of a date or datetime</summary>
         public static Expression Year(Expression date) {
             return date.Fun(dbFun.Year);
         }
 
-        /// <summary>Obtiene el componente mes de la fecha</summary>
+        /// <summary>Extracts the month component of a date or datetime</summary>
         public static Expression Month(Expression date) {
             return date.Fun(dbFun.Month);
         }
 
-        /// <summary>Obtiene el componente dia la fecha</summary>
+        /// <summary>Extracts the day component of a date or datetime</summary>
         public static Expression Day(Expression date) {
             return date.Fun(dbFun.Day);
         }
 
-        /// <summary>Obtiene la fecha y hora al momento de su uso</summary>
+        /// <summary>Gets the current date and time</summary>
         public static Expression GetDate() {
             return new Expression("").Fun(dbFun.GetDate);
         }

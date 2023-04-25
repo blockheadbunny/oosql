@@ -391,17 +391,20 @@
         <member name="M:DataFramework.Expression.DateDiff(DataFramework.Constructor.dbTim,DataFramework.Expression,DataFramework.Expression)">
             <summary>Devuelve la diferencia entre las dos fechas indicadas</summary>
         </member>
+        <member name="M:DataFramework.Expression.DatePart(DataFramework.Constructor.dbTim,DataFramework.Expression)">
+            <summary>Extracts the requested part of a date or datetime</summary>
+        </member>
         <member name="M:DataFramework.Expression.Year(DataFramework.Expression)">
-            <summary>Obtiene el componente anio de la fecha</summary>
+            <summary>Extracts the year component of a date or datetime</summary>
         </member>
         <member name="M:DataFramework.Expression.Month(DataFramework.Expression)">
-            <summary>Obtiene el componente mes de la fecha</summary>
+            <summary>Extracts the month component of a date or datetime</summary>
         </member>
         <member name="M:DataFramework.Expression.Day(DataFramework.Expression)">
-            <summary>Obtiene el componente dia la fecha</summary>
+            <summary>Extracts the day component of a date or datetime</summary>
         </member>
         <member name="M:DataFramework.Expression.GetDate">
-            <summary>Obtiene la fecha y hora al momento de su uso</summary>
+            <summary>Gets the current date and time</summary>
         </member>
         <member name="M:DataFramework.Expression.Upper(DataFramework.Expression)">
             <summary>Convierte la cadena a mayusculas</summary>
