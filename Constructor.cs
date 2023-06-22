@@ -558,6 +558,9 @@ namespace DataFramework {
 
         /// <summary>Adds quotes to the start and ending of the string if they are missing</summary>
         protected static string AddSingleQuotesIfMissing(string s) {
+            if (s == null) {
+                return null;
+            }
             Regex rgxApos = new Regex("^N?'(.*)'$");
             string withoutSurroundingApos = rgxApos.Replace(s, "$1");
             string withDuppedApos = withoutSurroundingApos.Replace("'", "''");
