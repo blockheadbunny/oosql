@@ -43,7 +43,7 @@ namespace DataFramework {
         public enum dbLog { Where, And, Or }
 
         /// <summary>Data type</summary>
-        public enum dbTyp { BigInt, Int, SmallInt, TinyInt, Varchar, NVarchar, Char, NChar, Date, DateTime, Decimal, Bit, Varbinary, Custom }
+        public enum dbTyp { BigInt, Int, SmallInt, TinyInt, Varchar, NVarchar, Char, NChar, Date, DateTime, Time, Decimal, Bit, Varbinary, Custom }
 
         /// <summary>Var size</summary>
         public enum dbSiz { Max, Other }
