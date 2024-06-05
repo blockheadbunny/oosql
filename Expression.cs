@@ -27,6 +27,11 @@ namespace DataFramework {
             particles.Add(new Particle(dbOpe.NoOp, "NULL"));
         }
 
+        private Expression(byte[] bytes) {
+            string byteExpression = "0x" + BitConverter.ToString(bytes).Replace("-", "");
+            particles.Add(new Particle(dbOpe.NoOp, byteExpression));
+        }
+
         private Expression(DateTime expr) {
             particles.Add(new Particle(dbOpe.NoOp, "'" + expr.ToString("yyyy-MM-ddTHH:mm:ss") + "'"));
         }
@@ -71,10 +76,12 @@ namespace DataFramework {
         public static implicit operator Expression(string expr) { return new Expression(expr); }
         public static implicit operator Expression(long expr) { return new Expression(expr.ToString()); }
         public static implicit operator Expression(int expr) { return new Expression(expr.ToString()); }
+        public static implicit operator Expression(short expr) { return new Expression(expr.ToString()); }
         public static implicit operator Expression(decimal expr) { return new Expression(expr.ToString("G", CultureInfo.InvariantCulture)); }
         public static implicit operator Expression(float expr) { return new Expression(expr.ToString("G", CultureInfo.InvariantCulture)); }
         public static implicit operator Expression(double expr) { return new Expression(expr.ToString("G", CultureInfo.InvariantCulture)); }
         public static implicit operator Expression(bool expr) { return new Expression((expr ? 1 : 0).ToString()); }
+        public static implicit operator Expression(byte[] expr) { return new Expression(expr); }
         public static implicit operator Expression(DateTime expr) { return new Expression(expr); }
         public static implicit operator Expression(DateTime? expr) { return new Expression(expr); }
         public static implicit operator Expression(Query expr) { return new Expression(expr); }
@@ -162,18 +169,19 @@ namespace DataFramework {
         }
 
         /// <summary>Engloba la expresión en una funcion de sql</summary>
-        public Expression Fun(dbFun funct, params string[] extraParams) {
+        public Expression Fun(dbFun funct, params Expression[] extraParams) {
+            Expression expr = this;
             if (extraParams != null && extraParams.Length > 0) {
-                foreach (string prm in extraParams) {
+                foreach (Expression prm in extraParams) {
                     if (funct == dbFun.Cast) {
-                        Operate(dbOpe.As, prm);
+                        expr = expr.Operate(dbOpe.As, prm);
                     }
                     else {
-                        Operate(dbOpe.Comma, prm);
+                        expr = expr.Operate(dbOpe.Comma, prm);
                     }
                 }
             }
-            return new Expression(funct, this);
+            return new Expression(funct, expr);
         }
 
         #region Arithmetic Operations
@@ -187,18 +195,28 @@ namespace DataFramework {
         public static Expression Abs(Expression value) {
             return value.Fun(dbFun.Abs);
         }
+
+        /// <summary>Rounded Amount</summary>
+        public static Expression Round(Expression value, int decimals) {
+            value = value.Operate(dbOpe.Comma, decimals);
+            return value.Fun(dbFun.Round);
+        }
+
+        /// <summary>Greatest integer more than or equal to input</summary>
+        public static Expression Ceiling(Expression value) {
+            return value.Fun(dbFun.Ceiling);
+        }
+
+        /// <summary>Greatest integer less than or equal to input</summary>
+        public static Expression Floor(Expression value) {
+            return value.Fun(dbFun.Floor);
+        }
         #endregion
 
         #region BuiltIn Functions
         /// <summary>Creates a new GUID</summary>
         public static Expression NewId() {
             return new Expression("").Fun(dbFun.NewId);
-        }
-
-        /// <summary>Cantidad redondeada</summary>
-        public static Expression Round(Expression value, int decimals) {
-            value = value.Operate(dbOpe.Comma, decimals);
-            return value.Fun(dbFun.Round);
         }
 
         /// <summary>Devuelve el primer valor no nulo del listado</summary>
@@ -273,6 +291,15 @@ namespace DataFramework {
             return exprType.Fun(dbFun.Convert);
         }
 
+        /// <summary>Concatenates two or more strings</summary>
+        public static Expression Concat(params Expression[] strings) {
+            if (strings == null || !strings.Any()) {
+                throw new ArgumentException("No args for concat expression", "strings");
+            }
+            Expression firstArg = strings[0];
+            return firstArg.Fun(dbFun.Concat, strings.Skip(1).ToArray());
+        }
+
         /// <summary>Busca la expresion en dentro de una cadena iniciando en el caracter indicado</summary>
         public static Expression CharIndex(Expression find, Expression search, int startLocation) {
             find = find.Operate(dbOpe.Comma, search);
@@ -292,11 +319,21 @@ namespace DataFramework {
             return value.Fun(dbFun.Right);
         }
 
-        /// <summary>Devuelve el segmento del texto indicado</summary>
+        /// <summary>Returns a fragment of a string</summary>
         public static Expression SubString(Expression target, int start, int length) {
             target = target.Operate(dbOpe.Comma, start);
             target = target.Operate(dbOpe.Comma, length);
             return target.Fun(dbFun.SubString);
+        }
+
+        /// <summary>Removes the spaces at the star of a string</summary>
+        public static Expression Ltrim(Expression target) {
+            return target.Fun(dbFun.Ltrim);
+        }
+
+        /// <summary>Removes the spaces at the end of a string</summary>
+        public static Expression Rtrim(Expression target) {
+            return target.Fun(dbFun.Rtrim);
         }
 
         /// <summary>Returns current length of target string</summary>
@@ -309,14 +346,14 @@ namespace DataFramework {
             return Expression.Len(this);
         }
 
-        /// <summary>Reemplaza un patron dentro de una cadena</summary>
+        /// <summary>Replaces a pattern inside a string</summary>
         public static Expression Replace(Expression target, Expression pattern, Expression replacement) {
             target = target.Operate(dbOpe.Comma, pattern);
             target = target.Operate(dbOpe.Comma, replacement);
             return target.Fun(dbFun.Replace);
         }
 
-        /// <summary>Inserta una cadena dentro de otra cadena</summary>
+        /// <summary>Inserts a string inside another</summary>
         public static Expression Stuff(Expression target, int start, int length, string replaceWith) {
             target = target.Operate(dbOpe.Comma, start);
             target = target.Operate(dbOpe.Comma, length);
@@ -340,22 +377,29 @@ namespace DataFramework {
             return expr.Fun(dbFun.DateDiff);
         }
 
-        /// <summary>Obtiene el componente anio de la fecha</summary>
+        /// <summary>Extracts the requested part of a date or datetime</summary>
+        public static Expression DatePart(dbTim datepart, Expression date) {
+            Expression expr = new Expression(datepart);
+            expr = expr.Operate(dbOpe.Comma, date);
+            return expr.Fun(dbFun.DatePart);
+        }
+
+        /// <summary>Extracts the year component of a date or datetime</summary>
         public static Expression Year(Expression date) {
             return date.Fun(dbFun.Year);
         }
 
-        /// <summary>Obtiene el componente mes de la fecha</summary>
+        /// <summary>Extracts the month component of a date or datetime</summary>
         public static Expression Month(Expression date) {
             return date.Fun(dbFun.Month);
         }
 
-        /// <summary>Obtiene el componente dia la fecha</summary>
+        /// <summary>Extracts the day component of a date or datetime</summary>
         public static Expression Day(Expression date) {
             return date.Fun(dbFun.Day);
         }
 
-        /// <summary>Obtiene la fecha y hora al momento de su uso</summary>
+        /// <summary>Gets the current date and time</summary>
         public static Expression GetDate() {
             return new Expression("").Fun(dbFun.GetDate);
         }
@@ -557,11 +601,11 @@ namespace DataFramework {
 
         #region Window Functions
         public static Expression Over(Constructor.dbWin func, string[] orderBy) {
-            return new Expression(dbWTy.win, default(dbAgr), func, "NULL", orderBy.ToDictionary(s => s, s => dbOrd.Asc), new string[] { });
+            return new Expression(dbWTy.win, default(dbAgr), func, DBNull.Value, orderBy.ToDictionary(s => s, s => dbOrd.Asc), new string[] { });
         }
 
         public static Expression Over(Constructor.dbWin func, string[] orderBy, string[] partitionBy) {
-            return new Expression(dbWTy.win, default(dbAgr), func, "NULL", orderBy.ToDictionary(s => s, s => dbOrd.Asc), partitionBy);
+            return new Expression(dbWTy.win, default(dbAgr), func, DBNull.Value, orderBy.ToDictionary(s => s, s => dbOrd.Asc), partitionBy);
         }
 
         //public static Expression Over(Constructor.dbAgr aggregate, Expression expr, string[] orderBy) {
@@ -573,11 +617,11 @@ namespace DataFramework {
         //}
 
         public static Expression Over(Constructor.dbWin func, Dictionary<string, Constructor.dbOrd> orderBy) {
-            return new Expression(dbWTy.win, default(dbAgr), func, "NULL", orderBy, new string[] { });
+            return new Expression(dbWTy.win, default(dbAgr), func, DBNull.Value, orderBy, new string[] { });
         }
 
         public static Expression Over(Constructor.dbWin func, Dictionary<string, Constructor.dbOrd> orderBy, string[] partitionBy) {
-            return new Expression(dbWTy.win, default(dbAgr), func, "NULL", orderBy, partitionBy);
+            return new Expression(dbWTy.win, default(dbAgr), func, DBNull.Value, orderBy, partitionBy);
         }
         #endregion
 

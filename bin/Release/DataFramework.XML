@@ -310,17 +310,23 @@
         <member name="M:DataFramework.Expression.Operate(DataFramework.Constructor.dbLog,DataFramework.Expression)">
             <summary>Operacion para expresiones lógicas compuestas</summary>
         </member>
-        <member name="M:DataFramework.Expression.Fun(DataFramework.Constructor.dbFun,System.String[])">
+        <member name="M:DataFramework.Expression.Fun(DataFramework.Constructor.dbFun,DataFramework.Expression[])">
             <summary>Engloba la expresión en una funcion de sql</summary>
         </member>
         <member name="M:DataFramework.Expression.Abs(DataFramework.Expression)">
             <summary>Gets the absolute value of the number</summary>
         </member>
+        <member name="M:DataFramework.Expression.Round(DataFramework.Expression,System.Int32)">
+            <summary>Rounded Amount</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Ceiling(DataFramework.Expression)">
+            <summary>Greatest integer more than or equal to input</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Floor(DataFramework.Expression)">
+            <summary>Greatest integer less than or equal to input</summary>
+        </member>
         <member name="M:DataFramework.Expression.NewId">
             <summary>Creates a new GUID</summary>
-        </member>
-        <member name="M:DataFramework.Expression.Round(DataFramework.Expression,System.Int32)">
-            <summary>Cantidad redondeada</summary>
         </member>
         <member name="M:DataFramework.Expression.Coalesce(DataFramework.Expression[])">
             <summary>Devuelve el primer valor no nulo del listado</summary>
@@ -346,6 +352,9 @@
         <member name="M:DataFramework.Expression.Convert(System.Int32,DataFramework.Constructor.dbTyp,DataFramework.Expression,System.Int32[])">
             <summary>Convierte el valor de tipo fecha en el tipo indicado</summary>
         </member>
+        <member name="M:DataFramework.Expression.Concat(DataFramework.Expression[])">
+            <summary>Concatenates two or more strings</summary>
+        </member>
         <member name="M:DataFramework.Expression.CharIndex(DataFramework.Expression,DataFramework.Expression,System.Int32)">
             <summary>Busca la expresion en dentro de una cadena iniciando en el caracter indicado</summary>
         </member>
@@ -356,7 +365,13 @@
             <summary>Devuelve la cantidad de caracteres indicados de la parte derecha de la cadena</summary>
         </member>
         <member name="M:DataFramework.Expression.SubString(DataFramework.Expression,System.Int32,System.Int32)">
-            <summary>Devuelve el segmento del texto indicado</summary>
+            <summary>Returns a fragment of a string</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Ltrim(DataFramework.Expression)">
+            <summary>Removes the spaces at the star of a string</summary>
+        </member>
+        <member name="M:DataFramework.Expression.Rtrim(DataFramework.Expression)">
+            <summary>Removes the spaces at the end of a string</summary>
         </member>
         <member name="M:DataFramework.Expression.Len(DataFramework.Expression)">
             <summary>Returns current length of target string</summary>
@@ -365,10 +380,10 @@
             <summary>Returns current length of target string</summary>
         </member>
         <member name="M:DataFramework.Expression.Replace(DataFramework.Expression,DataFramework.Expression,DataFramework.Expression)">
-            <summary>Reemplaza un patron dentro de una cadena</summary>
+            <summary>Replaces a pattern inside a string</summary>
         </member>
         <member name="M:DataFramework.Expression.Stuff(DataFramework.Expression,System.Int32,System.Int32,System.String)">
-            <summary>Inserta una cadena dentro de otra cadena</summary>
+            <summary>Inserts a string inside another</summary>
         </member>
         <member name="M:DataFramework.Expression.DateAdd(DataFramework.Constructor.dbTim,DataFramework.Expression,DataFramework.Expression)">
             <summary>Adds a quantity to a component of a date</summary>
@@ -376,17 +391,20 @@
         <member name="M:DataFramework.Expression.DateDiff(DataFramework.Constructor.dbTim,DataFramework.Expression,DataFramework.Expression)">
             <summary>Devuelve la diferencia entre las dos fechas indicadas</summary>
         </member>
+        <member name="M:DataFramework.Expression.DatePart(DataFramework.Constructor.dbTim,DataFramework.Expression)">
+            <summary>Extracts the requested part of a date or datetime</summary>
+        </member>
         <member name="M:DataFramework.Expression.Year(DataFramework.Expression)">
-            <summary>Obtiene el componente anio de la fecha</summary>
+            <summary>Extracts the year component of a date or datetime</summary>
         </member>
         <member name="M:DataFramework.Expression.Month(DataFramework.Expression)">
-            <summary>Obtiene el componente mes de la fecha</summary>
+            <summary>Extracts the month component of a date or datetime</summary>
         </member>
         <member name="M:DataFramework.Expression.Day(DataFramework.Expression)">
-            <summary>Obtiene el componente dia la fecha</summary>
+            <summary>Extracts the day component of a date or datetime</summary>
         </member>
         <member name="M:DataFramework.Expression.GetDate">
-            <summary>Obtiene la fecha y hora al momento de su uso</summary>
+            <summary>Gets the current date and time</summary>
         </member>
         <member name="M:DataFramework.Expression.Upper(DataFramework.Expression)">
             <summary>Convierte la cadena a mayusculas</summary>
@@ -612,10 +630,16 @@
             <summary>Prepara el query para realizar una consulta delete y asigna la tabla afectada</summary>
         </member>
         <member name="M:DataFramework.Query.Merge(System.String,System.String,System.String,DataFramework.Query)">
-            <summary>Prepara el query para realizar una consulta merge y asigna las tablas afectadas</summary>
+            <summary>Sets origin and target for a merge query</summary>
+        </member>
+        <member name="M:DataFramework.Query.Merge(System.String,System.String,System.String,System.String)">
+            <summary>Sets origin and target for a merge query</summary>
         </member>
         <member name="M:DataFramework.Query.Merge(System.String,DataFramework.Query)">
-            <summary>Prepara el query para realizar una consulta merge y asigna las tablas afectadas</summary>
+            <summary>Sets origin and target for a merge query</summary>
+        </member>
+        <member name="M:DataFramework.Query.Merge(System.String,System.String)">
+            <summary>Sets origin and target for a merge query</summary>
         </member>
         <member name="M:DataFramework.Query.MergeTarget(System.String,System.String,System.String,System.String)">
             <summary>Adds a target table to the merge statement</summary>

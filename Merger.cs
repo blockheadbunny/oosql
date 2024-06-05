@@ -30,10 +30,11 @@ namespace DataFramework {
         internal class MergerOrigin {
             public Constructor.Table Table { get; set; }
             public Query Query { get; set; }
+            public string DatabaseSelectableObject { get; set; }
             public string Alias;
 
             public override string ToString() {
-                return Table != null ? Table.ToString() : "( " + Query.ToString() + " )";
+                return Table != null ? Table.ToString() : (Query != null ? ("( " + Query.ToString() + " )") : DatabaseSelectableObject);
             }
         }
 

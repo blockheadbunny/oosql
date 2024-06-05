@@ -37,13 +37,13 @@ namespace DataFramework {
         public enum dbOpe { NoOp, Funct, Agg, Over, Qry, Addition, Substraction, Multiplication, Division, Modulo, Case, Else, Log, Comma, As, In, BitAnd, BitOr, BitXOr, BitNot }
 
         /// <summary>Expression based functions</summary>
-        public enum dbFun { Abs, Round, Coalesce, Cast, Convert, CharIndex, Left, Mid, Right, Len, SubString, Replace, Stuff, DateAdd, DateDiff, Year, Month, Day, GetDate, Upper, Lower, NewId, IsNumeric }
+        public enum dbFun { Abs, Round, Ceiling, Floor, Coalesce, Cast, Convert, Concat, CharIndex, Left, Mid, Right, Len, SubString, Ltrim, Rtrim, Replace, Stuff, DateAdd, DateDiff, DatePart, Year, Month, Day, GetDate, Upper, Lower, NewId, IsNumeric }
 
         /// <summary>Logic Operators</summary>
         public enum dbLog { Where, And, Or }
 
         /// <summary>Data type</summary>
-        public enum dbTyp { BigInt, Int, SmallInt, TinyInt, Varchar, NVarchar, Char, NChar, Date, DateTime, Decimal, Bit, Varbinary, Custom }
+        public enum dbTyp { BigInt, Int, SmallInt, TinyInt, Varchar, NVarchar, Char, NChar, Date, DateTime, Time, Decimal, Bit, Varbinary, Custom }
 
         /// <summary>Var size</summary>
         public enum dbSiz { Max, Other }
@@ -246,7 +246,7 @@ namespace DataFramework {
         protected Table updateFrom;
         protected List<string[]> lstSet = new List<string[]>();
         protected internal List<Order> lstOrderBy = new List<Order>();
-        protected CommonTableExpression cte = new CommonTableExpression();
+        protected List<CommonTableExpression> ctes = new List<CommonTableExpression>();
         internal Merger merge;
 
         protected internal UnionSelect curUnion {
@@ -277,7 +277,7 @@ namespace DataFramework {
                     break;
 
                 case dbItr.sel:
-                    sqlQuery += string.IsNullOrEmpty(cte.alias) ? "" : (";WITH " + cte.alias + " AS ( " + cte.origin.ToString() + " ) ");
+                    sqlQuery += !ctes.Any() ? "" : (";WITH " + string.Join(", ", ctes.Select(c => c.alias + " AS ( " + c.origin.ToString() + " )").ToArray()) + " ");
                     for (int u = 0; u < lstUnion.Count; u++) {
                         List<Field> fieldsWithAgg = lstUnion[u].lstFields.ToArray().ToList();
 
@@ -310,7 +310,7 @@ namespace DataFramework {
                     break;
 
                 case dbItr.ins:
-                    sqlQuery += string.IsNullOrEmpty(cte.alias) ? "" : (";WITH " + cte.alias + " AS ( " + cte.origin.ToString() + " ) ");
+                    sqlQuery += !ctes.Any() ? "" : (";WITH " + string.Join(", ", ctes.Select(c => c.alias + " AS ( " + c.origin.ToString() + " )").ToArray()) + " ");
                     sqlQuery += "INSERT INTO "
                         + (string.IsNullOrEmpty(lstUnion[0].lstFrom[0].database) ? "" : lstUnion[0].lstFrom[0].database + ".")
                         + (string.IsNullOrEmpty(lstUnion[0].lstFrom[0].schema) ? "" : lstUnion[0].lstFrom[0].schema + ".")
@@ -558,6 +558,9 @@ namespace DataFramework {
 
         /// <summary>Adds quotes to the start and ending of the string if they are missing</summary>
         protected static string AddSingleQuotesIfMissing(string s) {
+            if (s == null) {
+                return null;
+            }
             Regex rgxApos = new Regex("^N?'(.*)'$");
             string withoutSurroundingApos = rgxApos.Replace(s, "$1");
             string withDuppedApos = withoutSurroundingApos.Replace("'", "''");
