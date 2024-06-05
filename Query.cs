@@ -711,8 +711,11 @@ namespace DataFramework {
 
         /// <summary>Genera una expresion de tabla comun</summary>
         public Query With(string alias, Query origin) {
-            cte.alias = alias;
-            cte.origin = origin;
+            CommonTableExpression cte = new CommonTableExpression() {
+                alias = alias,
+                origin = origin
+            };
+            ctes.Add(cte);
             return this;
         }
 

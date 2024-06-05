@@ -246,7 +246,7 @@ namespace DataFramework {
         protected Table updateFrom;
         protected List<string[]> lstSet = new List<string[]>();
         protected internal List<Order> lstOrderBy = new List<Order>();
-        protected CommonTableExpression cte = new CommonTableExpression();
+        protected List<CommonTableExpression> ctes = new List<CommonTableExpression>();
         internal Merger merge;
 
         protected internal UnionSelect curUnion {
@@ -277,7 +277,7 @@ namespace DataFramework {
                     break;
 
                 case dbItr.sel:
-                    sqlQuery += string.IsNullOrEmpty(cte.alias) ? "" : (";WITH " + cte.alias + " AS ( " + cte.origin.ToString() + " ) ");
+                    sqlQuery += !ctes.Any() ? "" : (";WITH " + string.Join(", ", ctes.Select(c => c.alias + " AS ( " + c.origin.ToString() + " )").ToArray()) + " ");
                     for (int u = 0; u < lstUnion.Count; u++) {
                         List<Field> fieldsWithAgg = lstUnion[u].lstFields.ToArray().ToList();
 
@@ -310,7 +310,7 @@ namespace DataFramework {
                     break;
 
                 case dbItr.ins:
-                    sqlQuery += string.IsNullOrEmpty(cte.alias) ? "" : (";WITH " + cte.alias + " AS ( " + cte.origin.ToString() + " ) ");
+                    sqlQuery += !ctes.Any() ? "" : (";WITH " + string.Join(", ", ctes.Select(c => c.alias + " AS ( " + c.origin.ToString() + " )").ToArray()) + " ");
                     sqlQuery += "INSERT INTO "
                         + (string.IsNullOrEmpty(lstUnion[0].lstFrom[0].database) ? "" : lstUnion[0].lstFrom[0].database + ".")
                         + (string.IsNullOrEmpty(lstUnion[0].lstFrom[0].schema) ? "" : lstUnion[0].lstFrom[0].schema + ".")
