@@ -25,7 +25,7 @@ namespace DataFramework {
         public enum dbWTy { agg, win };
 
         /// <summary>Window functions</summary>
-        public enum dbWin { row_number, rank };
+        public enum dbWin { row_number, rank, sum };
 
         /// <summary>Order type</summary>
         public enum dbOrd { Asc, Desc };
