@@ -367,7 +367,8 @@ namespace DataFramework {
                     break;
 
                 case dbItr.mer:
-                    sqlQuery += ";MERGE";
+                    sqlQuery += !ctes.Any() ? "" : (";WITH " + string.Join(", ", ctes.Select(c => c.alias + " AS ( " + c.origin.ToString() + " )").ToArray()) + " ");
+                    sqlQuery += "MERGE";
                     sqlQuery += " " + merge.Destiny.ToString() + " AS " + merge.Destiny.Alias;
                     sqlQuery += " USING " + merge.Origin.ToString() + " AS " + merge.Origin.Alias;
                     sqlQuery += ConcatWhere(" ON", merge.Keys);
