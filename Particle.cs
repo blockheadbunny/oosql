@@ -61,6 +61,7 @@ namespace DataFramework {
         public Particle(dbWTy wty, dbAgr agg, dbWin win, Expression expr, Dictionary<string, Constructor.dbOrd> orderBy, string[] partitionBy) {
             Operation = dbOpe.Over;
             Wty = wty;
+            Win = win;
             OrderBy = orderBy;
             PartitionBy = partitionBy;
             SetValue(expr);
