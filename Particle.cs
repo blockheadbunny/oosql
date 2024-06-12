@@ -69,6 +69,9 @@ namespace DataFramework {
 
         /// <summary>Asigna el valor que se opera</summary>
         private void SetValue(Expression expr) {
+            if (expr == null) {
+                return;
+            }
             if (expr.IsComplex || expr.IsFunction || expr.IsAggregate || expr.IsLogical) {
                 ComplexValue = expr;
             }
