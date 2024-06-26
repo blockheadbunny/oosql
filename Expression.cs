@@ -119,7 +119,7 @@ namespace DataFramework {
                     case dbOpe.Over:
                         string partitionBy = part.PartitionBy.Any() ? "PARTITION BY " + string.Join(", ", part.PartitionBy) + " " : "";
                         string orderBy = "ORDER BY " + string.Join(", ", part.OrderBy.Select(kv => kv.Key + " " + kv.Value.ToString().ToUpper()).ToArray());
-                        expression.Append(part.Win.ToString().ToUpper() + "() OVER (" + partitionBy + orderBy + ")");
+                        expression.Append(part.Win.ToString().ToUpper() + "(" + ((part.Value ?? (part.ComplexValue?.ToString())) ?? "")  + ") OVER (" + partitionBy + orderBy + ")");
                         break;
                     case dbOpe.Qry:
                         expression.Append("( " + part.GetValue(true) + " )");
@@ -600,28 +600,36 @@ namespace DataFramework {
         #endregion
 
         #region Window Functions
+        public static Expression Over(Constructor.dbWin func, Expression value, string[] orderBy) {
+            return new Expression(dbWTy.win, default(dbAgr), func, value, orderBy.ToDictionary(s => s, s => dbOrd.Asc), new string[] { });
+        }
+
+        public static Expression Over(Constructor.dbWin func, Expression value, string[] orderBy, string[] partitionBy) {
+            return new Expression(dbWTy.win, default(dbAgr), func, value, orderBy.ToDictionary(s => s, s => dbOrd.Asc), partitionBy);
+        }
+
+        public static Expression Over(Constructor.dbWin func, Expression value, Dictionary<string, Constructor.dbOrd> orderBy) {
+            return new Expression(dbWTy.win, default(dbAgr), func, value, orderBy, new string[] { });
+        }
+
+        public static Expression Over(Constructor.dbWin func, Expression value, Dictionary<string, Constructor.dbOrd> orderBy, string[] partitionBy) {
+            return new Expression(dbWTy.win, default(dbAgr), func, value, orderBy, partitionBy);
+        }
+
         public static Expression Over(Constructor.dbWin func, string[] orderBy) {
-            return new Expression(dbWTy.win, default(dbAgr), func, DBNull.Value, orderBy.ToDictionary(s => s, s => dbOrd.Asc), new string[] { });
+            return new Expression(dbWTy.win, default(dbAgr), func, null, orderBy.ToDictionary(s => s, s => dbOrd.Asc), new string[] { });
         }
 
         public static Expression Over(Constructor.dbWin func, string[] orderBy, string[] partitionBy) {
-            return new Expression(dbWTy.win, default(dbAgr), func, DBNull.Value, orderBy.ToDictionary(s => s, s => dbOrd.Asc), partitionBy);
+            return new Expression(dbWTy.win, default(dbAgr), func, null, orderBy.ToDictionary(s => s, s => dbOrd.Asc), partitionBy);
         }
 
-        //public static Expression Over(Constructor.dbAgr aggregate, Expression expr, string[] orderBy) {
-        //    return null;
-        //}
-
-        //public static Expression Over(Constructor.dbAgr aggregate, Expression expr, string[] orderBy, string[] partitionBy) {
-        //    return null;
-        //}
-
         public static Expression Over(Constructor.dbWin func, Dictionary<string, Constructor.dbOrd> orderBy) {
-            return new Expression(dbWTy.win, default(dbAgr), func, DBNull.Value, orderBy, new string[] { });
+            return new Expression(dbWTy.win, default(dbAgr), func, null, orderBy, new string[] { });
         }
 
         public static Expression Over(Constructor.dbWin func, Dictionary<string, Constructor.dbOrd> orderBy, string[] partitionBy) {
-            return new Expression(dbWTy.win, default(dbAgr), func, DBNull.Value, orderBy, partitionBy);
+            return new Expression(dbWTy.win, default(dbAgr), func, null, orderBy, partitionBy);
         }
         #endregion
 

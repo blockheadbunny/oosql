@@ -61,6 +61,7 @@ namespace DataFramework {
         public Particle(dbWTy wty, dbAgr agg, dbWin win, Expression expr, Dictionary<string, Constructor.dbOrd> orderBy, string[] partitionBy) {
             Operation = dbOpe.Over;
             Wty = wty;
+            Win = win;
             OrderBy = orderBy;
             PartitionBy = partitionBy;
             SetValue(expr);
@@ -68,6 +69,9 @@ namespace DataFramework {
 
         /// <summary>Asigna el valor que se opera</summary>
         private void SetValue(Expression expr) {
+            if (expr == null) {
+                return;
+            }
             if (expr.IsComplex || expr.IsFunction || expr.IsAggregate || expr.IsLogical) {
                 ComplexValue = expr;
             }
