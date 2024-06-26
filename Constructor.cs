@@ -249,6 +249,8 @@ namespace DataFramework {
         protected List<CommonTableExpression> ctes = new List<CommonTableExpression>();
         internal Merger merge;
 
+        private Regex validSQL = null;
+
         protected internal UnionSelect curUnion {
             get { return lstUnion.Last(); }
         }
@@ -665,9 +667,6 @@ namespace DataFramework {
                 strSQL = "NULL";
             }
 
-            List<string> validaciones = new List<string>();
-            string validSql = "";
-
             //Cadenas reservadas permitidas por SQL
             string[] reserved = { "NULL" };
             foreach (string rw in reserved) {
@@ -676,28 +675,30 @@ namespace DataFramework {
                 }
             }
 
-            //Cadenas vacias
-            validaciones.Add("");
-            //Comillas a principio y fin y sin comillas intermedias
-            validaciones.Add("(N?'([^']|'')*')");
-            //Corchetes al principio y fin sin corchetes intermedios
-            validaciones.Add(@"\[[^\[\]]+\]");
-            //Iniciando una letra y despues letras, numeros o guion bajo, un punto que puede o no estar y despues letras, numeros o guion bajo
-            validaciones.Add("(([$]|@|[a-zñA-ZÑ])[a-zñA-ZÑ0-9_]*([.][a-zñA-ZÑ][a-zñA-ZÑ0-9_]*)?)");
-            //Numeros con o sin signo y con o sin punto (obligatorio numero a la izquierda del punto)
-            validaciones.Add("([-+]?[0-9]+[.]?[0-9]*)");
-            //Numeros con o sin signo y con o sin punto (obligatorio numero a la derecha del punto)
-            validaciones.Add("([-+]?[0-9]*[.]?[0-9]+)");
-            //Hexadecimal
-            validaciones.Add("0x[0-9A-Fa-f]*");
+            if (validSQL == null) {
+                string[] validaciones = new string[] {
+                    //Cadenas vacias
+                    "",
+                    //Comillas a principio y fin y sin comillas intermedias
+                    "N?'([^']|'')*'",
+                    //Corchetes al principio y fin sin corchetes intermedios
+                    @"\[[^\[\]]+\]",
+                    //Iniciando una letra y despues letras, numeros o guion bajo, un punto que puede o no estar y despues letras, numeros o guion bajo
+                    "([$]|@|[a-zñA-ZÑ])[a-zñA-ZÑ0-9_]*([.][a-zñA-ZÑ][a-zñA-ZÑ0-9_]*)?",
+                    //Numeros con o sin signo y con o sin punto (obligatorio numero a la izquierda del punto)
+                    "[-+]?[0-9]+[.]?[0-9]*",
+                    //Numeros con o sin signo y con o sin punto (obligatorio numero a la derecha del punto)
+                    "[-+]?[0-9]*[.]?[0-9]+",
+                    //Hexadecimal
+                    "0x[0-9A-Fa-f]*"
+                };
 
-            //Concatenar validaciones en un solo regex
-            foreach (string val in validaciones) {
-                validSql += "^" + val + "$|";
+                //Concatenar validaciones en un solo regex
+                string pattern = "(^" + string.Join("$)|(^", validaciones) + "$)";
+                validSQL = new Regex(pattern);
             }
-            validSql = validSql.Remove(validSql.Length - 1);
 
-            if (!Regex.IsMatch(strSQL, validSql)) {
+            if (!validSQL.IsMatch(strSQL)) {
                 throw new System.Security.SecurityException("invalid sql input: \"" + strSQL + "\"");
             }
             return strSQL;
