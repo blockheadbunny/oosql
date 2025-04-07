@@ -11,6 +11,7 @@ namespace DataFramework {
             Dictionary<string, object> propPairs = row
                 .GetType()
                 .GetProperties()
+                .Where(p => p.CanRead)
                 .ToDictionary(p => p.Name, p => p.GetValue(row, null));
             return query.SelVal(propPairs);
         }
