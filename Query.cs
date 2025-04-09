@@ -493,7 +493,7 @@ namespace DataFramework {
         /// <summary>Agrega una condicion de union a valor para las tablas</summary>
         public Query JoinOnVal(dbCom comp, string value1, params string[] values) {
             Expression[] expr = values.Select(s => (Expression)(AddSingleQuotesIfMissing(s))).ToArray();
-            return JoinOn(dbCom.Equals, value1, expr);
+            return JoinOn(comp, value1, expr);
         }
 
         /// <summary>Agrega una condicion de union de equidad a valor para las tablas</summary>
