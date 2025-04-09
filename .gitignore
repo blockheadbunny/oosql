@@ -1,8 +1,9 @@
 bin/debug/
+bin/release/
 obj/
 *.user
 *.suo
 *.pdb
 .vs/
 
-bin/Debug/
+bin/Release/
