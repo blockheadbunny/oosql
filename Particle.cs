@@ -16,6 +16,7 @@ namespace DataFramework {
         public string[] PartitionBy { get; set; }
         public Comparison Compar { get; set; }
         public bool IsRootCase { get; set; }
+        public bool IsQuery { get; set; }
 
         public Particle(dbOpe oper, string val) {
             Operation = oper;
@@ -24,6 +25,7 @@ namespace DataFramework {
 
         public Particle(dbOpe oper, Expression expr) {
             Operation = oper;
+            IsQuery = expr.IsQuery;
             SetValue(expr);
         }
 
@@ -88,6 +90,9 @@ namespace DataFramework {
         /// <summary>Obtiene el valor de cadena sin la operación</summary>
         public string GetValue(bool addParenthesesToComplex) {
             if (ComplexValue == null) {
+                if (IsQuery) {
+                    return (addParenthesesToComplex ? "( " : "") + Value + (addParenthesesToComplex ? " )" : "");
+                }
                 if (Compar == null || Operation == dbOpe.Case) {
                     return Value;
                 }
