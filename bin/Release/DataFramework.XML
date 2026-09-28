@@ -641,6 +641,9 @@
         <member name="M:DataFramework.Query.Merge(System.String,System.String)">
             <summary>Sets origin and target for a merge query</summary>
         </member>
+        <member name="M:DataFramework.Query.MergeTarget(System.String,System.String,System.String,System.String,System.String)">
+            <summary>Adds a target table to the merge statement</summary>
+        </member>
         <member name="M:DataFramework.Query.MergeTarget(System.String,System.String,System.String,System.String)">
             <summary>Adds a target table to the merge statement</summary>
         </member>
@@ -653,6 +656,9 @@
         <member name="M:DataFramework.Query.FromAs(System.String,DataFramework.Query)">
             <summary>Agrega una tabla basada en un query con un alias al listado de tablas</summary>
         </member>
+        <member name="M:DataFramework.Query.FromAs(System.String,System.String,System.String,System.String,System.String)">
+            <summary>Agrega una tabla con un alias al listado de tablas</summary>
+        </member>
         <member name="M:DataFramework.Query.FromAs(System.String,System.String,System.String,System.String)">
             <summary>Agrega una tabla con un alias al listado de tablas</summary>
         </member>
@@ -661,6 +667,9 @@
         </member>
         <member name="M:DataFramework.Query.FromAs(System.String,System.String)">
             <summary>Agrega una tabla con un alias al listado de tablas</summary>
+        </member>
+        <member name="M:DataFramework.Query.From(System.String,System.String,System.String,System.String)">
+            <summary>Agrega una tabla al listado de tablas con esquema y base de datos</summary>
         </member>
         <member name="M:DataFramework.Query.From(System.String,System.String,System.String)">
             <summary>Agrega una tabla al listado de tablas con esquema y base de datos</summary>
@@ -695,6 +704,9 @@
         <member name="M:DataFramework.Query.Join(System.String,DataFramework.Query)">
             <summary>Agrega una tabla al listado de tablas a unir bajo inner join</summary>
         </member>
+        <member name="M:DataFramework.Query.Join(DataFramework.Constructor.dbJoi,System.String,System.String,System.String,System.String,System.String)">
+            <summary>Agrega una tabla al listado de tablas a unir</summary>
+        </member>
         <member name="M:DataFramework.Query.Join(DataFramework.Constructor.dbJoi,System.String,System.String,System.String,System.String)">
             <summary>Agrega una tabla al listado de tablas a unir</summary>
         </member>
@@ -703,6 +715,9 @@
         </member>
         <member name="M:DataFramework.Query.Join(DataFramework.Constructor.dbJoi,System.String,System.String)">
             <summary>Agrega una tabla al listado de tablas a unir</summary>
+        </member>
+        <member name="M:DataFramework.Query.Join(System.String,System.String,System.String,System.String,System.String)">
+            <summary>Agrega una tabla al listado de tablas a unir bajo inner join</summary>
         </member>
         <member name="M:DataFramework.Query.Join(System.String,System.String,System.String,System.String)">
             <summary>Agrega una tabla al listado de tablas a unir bajo inner join</summary>
