@@ -117,9 +117,11 @@ namespace DataFramework {
             public string table;
             public string schema;
             public string database;
+            public string linkedServer;
 
             public override string ToString() {
-                return (!string.IsNullOrEmpty(database) ? database + "." : "")
+                return (!string.IsNullOrEmpty(linkedServer) ? linkedServer + "." : "")
+                    + (!string.IsNullOrEmpty(database) ? database + "." : "")
                     + (!string.IsNullOrEmpty(schema) ? schema + "." : (!string.IsNullOrEmpty(database) ? "." : ""))
                     + table;
             }
@@ -479,7 +481,7 @@ namespace DataFramework {
                     }
                 }
                 //Agrega la tabla y su alias en caso de tener
-                sqlQuery.Append(" " + (tbl.database == "" ? "" : tbl.database + ".") + (tbl.schema == "" ? "" : tbl.schema + ".") + tbl.table + (tbl.tableAlias == "" ? "" : " AS " + tbl.tableAlias));
+                sqlQuery.Append(" " + (tbl.linkedServer == "" ? "" : tbl.linkedServer + ".") + (tbl.database == "" ? "" : tbl.database + ".") + (tbl.schema == "" ? "" : tbl.schema + ".") + tbl.table + (tbl.tableAlias == "" ? "" : " AS " + tbl.tableAlias));
                 //Si no es la primera tabla del from, agrega las condiciones de union con las previas
                 if (!isFirstTable) {
                     onWhere = "";

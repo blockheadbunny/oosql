@@ -22,6 +22,11 @@ namespace DataFramework {
                 set { Table.database = value; }
             }
 
+            public string LinkedServer {
+                get { return Table.linkedServer; }
+                set { Table.linkedServer = value; }
+            }
+
             public override string ToString() {
                 return Table.ToString();
             }

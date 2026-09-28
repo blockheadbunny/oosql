@@ -276,6 +276,18 @@ namespace DataFramework {
         }
 
         /// <summary>Adds a target table to the merge statement</summary>
+        public Query MergeTarget(string alias, string table, string schema, string database, string linkedServer) {
+            instruction = dbItr.mer;
+            merge = merge ?? new Merger();
+            merge.Destiny.Table = new Table(SanitizeSQL(table));
+            merge.Destiny.Alias = alias;
+            merge.Destiny.Schema = schema;
+            merge.Destiny.DataBase = database;
+            merge.Destiny.LinkedServer = linkedServer;
+            return this;
+        }
+
+        /// <summary>Adds a target table to the merge statement</summary>
         public Query MergeTarget(string alias, string table, string schema, string database) {
             instruction = dbItr.mer;
             merge = merge ?? new Merger();
@@ -318,38 +330,49 @@ namespace DataFramework {
         }
 
         /// <summary>Agrega una tabla con un alias al listado de tablas</summary>
-        public Query FromAs(string tableAlias, string table, string schema, string database) {
+        public Query FromAs(string tableAlias, string table, string schema, string database, string linkedServer) {
             Table tbl = new Table(SanitizeSQL(table));
             tbl.tableAlias = SanitizeSQL(tableAlias);
             tbl.schema = SanitizeSQL(schema);
             tbl.database = SanitizeSQL(database);
+            tbl.linkedServer = SanitizeSQL(linkedServer);
             curUnion.lstFrom.Add(tbl);
             return this;
         }
 
         /// <summary>Agrega una tabla con un alias al listado de tablas</summary>
+        public Query FromAs(string tableAlias, string table, string schema, string database) {
+            return FromAs(tableAlias, table, schema, database, "");
+        }
+
+        /// <summary>Agrega una tabla con un alias al listado de tablas</summary>
         public Query FromAs(string tableAlias, string table, string schema) {
-            return FromAs(tableAlias, table, schema, "");
+            return FromAs(tableAlias, table, schema, "", "");
         }
 
         /// <summary>Agrega una tabla con un alias al listado de tablas</summary>
         public Query FromAs(string tableAlias, string table) {
-            return FromAs(tableAlias, table, "", "");
+            return FromAs(tableAlias, table, "", "", "");
+        }
+
+        /// <summary>Agrega una tabla al listado de tablas con esquema y base de datos</summary>
+        public Query From(string table, string schema, string database, string linkedServer) {
+            return FromAs("", table, schema, database, linkedServer);
         }
 
         /// <summary>Agrega una tabla al listado de tablas con esquema y base de datos</summary>
         public Query From(string table, string schema, string database) {
-            return FromAs("", table, schema, database);
+            return FromAs("", table, schema, database, "");
         }
 
         /// <summary>Agrega una tabla al listado de tablas con esquema</summary>
         public Query From(string table, string schema) {
-            return FromAs("", table, schema, "");
+            return FromAs("", table, schema, "", "");
         }
 
         /// <summary>Agrega una tabla al listado de tablas</summary>
         public Query From(string table) {
-            return FromAs("", table, "", "");
+            return FromAs("", table, "", "", "");
         }
 
         /// <summary>Agrega una clausula de salida</summary>
@@ -413,6 +436,7 @@ namespace DataFramework {
             tbl.tableAlias = SanitizeSQL(tableAlias);
             tbl.schema = SanitizeSQL("");
             tbl.database = SanitizeSQL("");
+            tbl.linkedServer = SanitizeSQL("");
             curUnion.lstFrom.Add(tbl);
             if (curUnion.lstJoin.Any(j => j.tableAlias == tableAlias)) {
                 throw new Exception("Ya existe el alias " + SanitizeSQL(tableAlias) + " en la consulta");
@@ -427,11 +451,12 @@ namespace DataFramework {
         }
 
         /// <summary>Agrega una tabla al listado de tablas a unir</summary>
-        public Query Join(dbJoi joinType, string tableAlias, string table, string schema, string database) {
+        public Query Join(dbJoi joinType, string tableAlias, string table, string schema, string database, string linkedServer) {
             Table tbl = new Table(SanitizeSQL(table));
             tbl.tableAlias = SanitizeSQL(tableAlias);
             tbl.schema = SanitizeSQL(schema);
             tbl.database = SanitizeSQL(database);
+            tbl.linkedServer = SanitizeSQL(linkedServer);
             curUnion.lstFrom.Add(tbl);
             if (curUnion.lstJoin.Any(j => j.tableAlias == tableAlias)) {
                 throw new Exception("Ya existe el alias " + SanitizeSQL(tableAlias) + " en la consulta");
@@ -441,28 +466,38 @@ namespace DataFramework {
         }
 
         /// <summary>Agrega una tabla al listado de tablas a unir</summary>
+        public Query Join(dbJoi joinType, string tableAlias, string table, string schema, string database) {
+            return Join(joinType, tableAlias, table, schema, database, "");
+        }
+
+        /// <summary>Agrega una tabla al listado de tablas a unir</summary>
         public Query Join(dbJoi joinType, string tableAlias, string table, string schema) {
-            return Join(joinType, tableAlias, table, schema, "");
+            return Join(joinType, tableAlias, table, schema, "", "");
         }
 
         /// <summary>Agrega una tabla al listado de tablas a unir</summary>
         public Query Join(dbJoi joinType, string tableAlias, string table) {
-            return Join(joinType, tableAlias, table, "", "");
+            return Join(joinType, tableAlias, table, "", "", "");
+        }
+
+        /// <summary>Agrega una tabla al listado de tablas a unir bajo inner join</summary>
+        public Query Join(string tableAlias, string table, string schema, string database, string linkedServer) {
+            return Join(dbJoi.Inner, tableAlias, table, schema, database, linkedServer);
         }
 
         /// <summary>Agrega una tabla al listado de tablas a unir bajo inner join</summary>
         public Query Join(string tableAlias, string table, string schema, string database) {
-            return Join(dbJoi.Inner, tableAlias, table, schema, database);
+            return Join(dbJoi.Inner, tableAlias, table, schema, database, "");
         }
 
         /// <summary>Agrega una tabla al listado de tablas a unir bajo inner join</summary>
         public Query Join(string tableAlias, string table, string schema) {
-            return Join(dbJoi.Inner, tableAlias, table, schema, "");
+            return Join(dbJoi.Inner, tableAlias, table, schema, "", "");
         }
 
         /// <summary>Agrega una tabla al listado de tablas a unir bajo inner join</summary>
         public Query Join(string tableAlias, string table) {
-            return Join(dbJoi.Inner, tableAlias, table, "", "");
+            return Join(dbJoi.Inner, tableAlias, table, "", "", "");
         }
 
         /// <summary>Agrega una condicion de union para las tablas usando una expression</summary>

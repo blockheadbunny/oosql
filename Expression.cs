@@ -13,6 +13,7 @@ namespace DataFramework {
         public bool IsFunction { get { return particles[0].Operation == dbOpe.Funct; } }
         public bool IsAggregate { get { return particles[0].Operation == dbOpe.Agg; } }
         public bool IsLogical { get { return particles[0].Operation == dbOpe.Log; } }
+        public bool IsQuery { get { return particles[0].Operation == dbOpe.Qry; } }
 
         /// <summary>Inicia una nueva expresión matemática, lógica, de casos o de función</summary>
         public Expression(string expr) {
