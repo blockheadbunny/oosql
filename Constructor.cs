@@ -481,7 +481,7 @@ namespace DataFramework {
                     }
                 }
                 //Agrega la tabla y su alias en caso de tener
-                sqlQuery.Append(" " + (tbl.linkedServer == "" ? "" : tbl.linkedServer + ".") + (tbl.database == "" ? "" : tbl.database + ".") + (tbl.schema == "" ? "" : tbl.schema + ".") + tbl.table + (tbl.tableAlias == "" ? "" : " AS " + tbl.tableAlias));
+                sqlQuery.Append(" " + (string.IsNullOrEmpty(tbl.linkedServer) ? "" : tbl.linkedServer + ".") + (string.IsNullOrEmpty(tbl.database) ? "" : tbl.database + ".") + (string.IsNullOrEmpty(tbl.schema) ? "" : tbl.schema + ".") + tbl.table + (string.IsNullOrEmpty(tbl.tableAlias) ? "" : " AS " + tbl.tableAlias));
                 //Si no es la primera tabla del from, agrega las condiciones de union con las previas
                 if (!isFirstTable) {
                     onWhere = "";

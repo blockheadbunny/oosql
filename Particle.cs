@@ -13,7 +13,7 @@ namespace DataFramework {
         public dbWTy Wty { get; set; }
         public dbWin Win { get; set; }
         public Dictionary<Expression, Constructor.dbOrd> OrderBy { get; set; }
-        public string[] PartitionBy { get; set; }
+        public List<Expression> PartitionBy { get; set; }
         public Comparison Compar { get; set; }
         public bool IsRootCase { get; set; }
         public bool IsQuery { get; set; }
@@ -60,7 +60,7 @@ namespace DataFramework {
             SetValue(expr);
         }
 
-        public Particle(dbWTy wty, dbAgr agg, dbWin win, Expression expr, Dictionary<Expression, Constructor.dbOrd> orderBy, string[] partitionBy) {
+        public Particle(dbWTy wty, dbAgr agg, dbWin win, Expression expr, Dictionary<Expression, Constructor.dbOrd> orderBy, List<Expression> partitionBy) {
             Operation = dbOpe.Over;
             Wty = wty;
             Win = win;
